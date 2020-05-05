@@ -13,10 +13,10 @@
 ### Lista de Requerimientos 
 #### Requerimientos Funcionales Must-Have(8)
 1. FR-01 [#1](/../../issues/1)
-2. FR-02 [#10](/../../issues/10)
-3. FR-03 [#15](/../../issues/15)
-4. FR-04 [#14](/../../issues/14)
-5. FR-06 [#18](/../../issues/18)
+2. FR-02 [#10](https://github.com/cs2901-2020-1/open-book/issues/10)
+3. FR-03 [#15](https://github.com/cs2901-2020-1/open-book/issues/15)
+4. FR-04 [#14](https://github.com/cs2901-2020-1/open-book/issues/14)
+5. FR-06 [#18](https://github.com/cs2901-2020-1/open-book/issues/18)
 
 
 
