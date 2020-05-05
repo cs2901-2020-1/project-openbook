@@ -3,7 +3,7 @@
 |  **#** | **Código** | **Apellidos, Nombre** | **% Trabajo** |
 | :---: | :---: | :---: | :---: |
 |  1 | 201810532 | Vilchez Aguirre, Osman |  |
-|  2 |  |  |  |
+|  2 | 201810482 | Ascuña Coa, Victor Enrique |  |
 |  3 |  |  |  |
 |  4 |  |  |  |
 
