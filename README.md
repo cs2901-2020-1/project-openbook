@@ -13,10 +13,10 @@
 ### Lista de Requerimientos 
 #### Requerimientos Funcionales Must-Have(8)
 1. FR-01 [#1](/../../issues/1)
-2. FR-02 [#10](Como un profesor, podré subir contenido en formato pdf, video, imagenes)
-3. FR-03 [#15] (Como usuario, podré ver contenido basados en temas de física y matemáticas)
-4. FR-04 [#14] (Como un usuario, podré ver contenido rankeado recomendado por la misma plataforma)
-5. FR-06 [#18] (Como un usuario, podré comentar y valorar los contenidos subidos por los profesores)
+2. FR-02 [#10](/issues/10)
+3. FR-03 [#15](/issues/15)
+4. FR-04 [#14](/issues/14)
+5. FR-06 [#18](/issues/18)
 
 
 
