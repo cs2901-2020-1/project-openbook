@@ -2,10 +2,10 @@
 
 |  **#** | **Código** | **Apellidos, Nombre** | **% Trabajo** |
 | :---: | :---: | :---: | :---: |
-|  1 | 201810532 | Vilchez Aguirre, Osman |  |
-|  2 | 201810482 | Ascuña Coa, Victor Enrique |  |
-|  3 |  |  |  |
-|  4 |  |  |  |
+|  1 | 201810532 | Vilchez Aguirre, Osman | 100% |
+|  2 | 201810482 | Ascuña Coa, Victor     | 100% |
+|  3 | 201810711 | Mosquera Pumaricra, Raúl | 100% |
+|  4 | 201720086 | Rojas Cruz, Daniel  | 100% |
 
 
 ## Contenido
@@ -33,8 +33,8 @@
 5. NFR-05 [#23](https://github.com/cs2901-2020-1/open-book/issues/23)
 
 ### Resultados de las Técnicas de Recolección de Requerimientos
-1. [Técnica 1](docs/analysis/tecnica1.md)
-1. [Técnica 2](docs/analysis/tecnica2.md)
+1. [ENCUESTAS](https://docs.google.com/spreadsheets/d/13B5uVTJGGnSwJU4sAPqzLXOF3a3avQ92uQwEARpqyGw/edit?usp=sharing)
+2. [ENTREVISTAS](docs/analysis/tecnica2.md)
 
 ### Casos de Uso / Use Case
 1.  [UC-001 Crear una publicación con contenido](Use%20Cases/Text/UC001.pdf)
@@ -49,5 +49,4 @@
 10. [UC Diagram Profesor](Use%20Cases/Diagram/Profesor.PNG)
 
 ### Presentation / Presentación
-1. [Presentación Etapa de Análisis](docs/analysis/presentation.pdf)
-+
+1. [Presentación Etapa de Análisis](https://www.canva.com/design/DAD7aS64T8c/qS-Oocu2d7Vh_NETEIQMSA/view?utm_content=DAD7aS64T8c&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
