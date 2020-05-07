@@ -3,7 +3,7 @@
 |  **#** | **Código** | **Apellidos, Nombre** | **% Trabajo** |
 | :---: | :---: | :---: | :---: |
 |  1 | 201810532 | Vilchez Aguirre, Osman |  |
-|  2 |  |  |  |
+|  2 | 201810482 | Ascuña Coa, Victor Enrique |  |
 |  3 |  |  |  |
 |  4 |  |  |  |
 
@@ -37,10 +37,16 @@
 1. [Técnica 2](docs/analysis/tecnica2.md)
 
 ### Casos de Uso / Use Case
-1. [UC-01 Login](docs/analysis/UC01.md)
-2. [UC-02 Register](docs/analysis/UC02.md)
-3. [UC-03 Buscar contenido](docs/analysis/UC03.md)
-4. [UC Diagram](docs/analysis/UC_Diagram.md)
+1.  [UC-001 Crear una publicación con contenido](Use_Cases/analysis/UC01.md)
+2.  [UC-002 Se filtra el contenido más rankeado](docs/analysis/UC02.md)
+3.  [UC-003 Ver temas rankeados](docs/analysis/UC03.md)
+4.  [UC-004 Poder ver el contenido de manera offline](docs/analysis/UC03.md)
+5.  [UC-005 Escoger idiomas preferentes](docs/analysis/UC03.md)
+6.  [UC-006 Dashboard Personalizado](docs/analysis/UC03.md)
+7.  [UC-007 Comentar publicaciones](docs/analysis/UC03.md)
+8.  [UC Diagram Curador](docs/analysis/UC_Diagram.md)
+9.  [UC Diagram Estudiante](docs/analysis/UC_Diagram.md)
+10. [UC Diagram Profesor](docs/analysis/UC_Diagram.md)
 
 ### Presentation / Presentación
 1. [Presentación Etapa de Análisis](docs/analysis/presentation.pdf)
