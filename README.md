@@ -44,9 +44,9 @@
 5.  [UC-005 Escoger idiomas preferentes](Use%20Cases/Text/UC005.pdf)
 6.  [UC-006 Dashboard Personalizado](Use%20Cases/Text/UC006.pdf)
 7.  [UC-007 Comentar publicaciones](Use%20Cases/Text/UC007.pdf)
-8.  [UC Diagram Curador](Use%20Cases/Diagram/Curador.png)
-9.  [UC Diagram Estudiante](Use%20Cases/Diagram/Estudiante.png)
-10. [UC Diagram Profesor](Use%20Cases/Diagram/Profesor.png)
+8.  [UC Diagram Curador](Use%20Cases/Diagram/Curador.PNG)
+9.  [UC Diagram Estudiante](Use%20Cases/Diagram/Estudiante.PNG)
+10. [UC Diagram Profesor](Use%20Cases/Diagram/Profesor.PNG)
 
 ### Presentation / Presentación
 1. [Presentación Etapa de Análisis](docs/analysis/presentation.pdf)
