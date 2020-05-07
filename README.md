@@ -37,7 +37,7 @@
 1. [Técnica 2](docs/analysis/tecnica2.md)
 
 ### Casos de Uso / Use Case
-1.  [UC-001 Crear una publicación con contenido](Use_Cases/analysis/UC01.md)
+1.  [UC-001 Crear una publicación con contenido](Use Cases/Text/UC001.pdf)
 2.  [UC-002 Se filtra el contenido más rankeado](docs/analysis/UC02.md)
 3.  [UC-003 Ver temas rankeados](docs/analysis/UC03.md)
 4.  [UC-004 Poder ver el contenido de manera offline](docs/analysis/UC03.md)
