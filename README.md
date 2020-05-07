@@ -34,7 +34,7 @@
 
 ### Resultados de las Técnicas de Recolección de Requerimientos
 1. [ENCUESTAS](https://docs.google.com/spreadsheets/d/13B5uVTJGGnSwJU4sAPqzLXOF3a3avQ92uQwEARpqyGw/edit?usp=sharing)
-2. [ENTREVISTAS](docs/analysis/tecnica2.md)
+2. [ENTREVISTAS](https://github.com/cs2901-2020-1/project-openbook/blob/master/docs/T%C3%A9cnicas%20de%20recolecci%C3%B3n/T%C3%A9cnicas%20de%20Recolecci%C3%B3n.pdf)
 
 ### Casos de Uso / Use Case
 1.  [UC-001 Crear una publicación con contenido](Use%20Cases/Text/UC001.pdf)
