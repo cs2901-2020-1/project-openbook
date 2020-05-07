@@ -1,4 +1,4 @@
-# <Nombre_del_Proyecto>
+# Open Book Your Library
 
 |  **#** | **Código** | **Apellidos, Nombre** | **% Trabajo** |
 | :---: | :---: | :---: | :---: |
@@ -38,15 +38,15 @@
 
 ### Casos de Uso / Use Case
 1.  [UC-001 Crear una publicación con contenido](Use%20Cases/Text/UC001.pdf)
-2.  [UC-002 Se filtra el contenido más rankeado](docs/analysis/UC02.md)
-3.  [UC-003 Ver temas rankeados](docs/analysis/UC03.md)
-4.  [UC-004 Poder ver el contenido de manera offline](docs/analysis/UC03.md)
-5.  [UC-005 Escoger idiomas preferentes](docs/analysis/UC03.md)
-6.  [UC-006 Dashboard Personalizado](docs/analysis/UC03.md)
-7.  [UC-007 Comentar publicaciones](docs/analysis/UC03.md)
-8.  [UC Diagram Curador](docs/analysis/UC_Diagram.md)
-9.  [UC Diagram Estudiante](docs/analysis/UC_Diagram.md)
-10. [UC Diagram Profesor](docs/analysis/UC_Diagram.md)
+2.  [UC-002 Se filtra el contenido más rankeado](Use%20Cases/Text/UC002.pdf)
+3.  [UC-003 Ver temas rankeados](Use%20Cases/Text/UC003.pdf)
+4.  [UC-004 Poder ver el contenido de manera offline](Use%20Cases/Text/UC004.pdf)
+5.  [UC-005 Escoger idiomas preferentes](Use%20Cases/Text/UC005.pdf)
+6.  [UC-006 Dashboard Personalizado](Use%20Cases/Text/UC006.pdf)
+7.  [UC-007 Comentar publicaciones](Use%20Cases/Text/UC007.pdf)
+8.  [UC Diagram Curador](Use%20Cases/Diagram/Curador.pdf)
+9.  [UC Diagram Estudiante](Use%20Cases/Diagram/Estudiante.pdf)
+10. [UC Diagram Profesor](Use%20Cases/Diagram/Profesor.pdf)
 
 ### Presentation / Presentación
 1. [Presentación Etapa de Análisis](docs/analysis/presentation.pdf)
