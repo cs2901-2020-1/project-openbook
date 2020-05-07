@@ -9,7 +9,7 @@
 
 
 ## Contenido
-### [Glosario](docs/glossary.md)
+### [Glosario](https://github.com/cs2901-2020-1/project-openbook/tree/master/docss/glossary.md)
 ### Lista de Requerimientos 
 #### Requerimientos Funcionales Must-Have(8)
 1. FR-01 [#9](https://github.com/cs2901-2020-1/open-book/issues/9)
