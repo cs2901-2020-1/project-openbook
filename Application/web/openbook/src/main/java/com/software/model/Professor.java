@@ -17,6 +17,12 @@ public class Professor extends User{
         this.titleId = titleId;
     }
 
+    @Override
+    public String getTipo(){
+        return "profesor";
+    }
+
+
     public String getTitleId() {
         return titleId;
     }

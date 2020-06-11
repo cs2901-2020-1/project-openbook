@@ -39,6 +39,9 @@ public class User {
         this.surname = surname;
         this.status = "Active";
     }
+    public String getTipo() {
+        return null;
+    }
 
 
     public String getEmail() {

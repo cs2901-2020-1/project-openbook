@@ -20,6 +20,12 @@ public class Student extends User {
         this.grade = grade;
     }
 
+    @Override
+    public String getTipo(){
+        return "student";
+    }
+
+
     public String getSchool() {
         return school;
     }
