@@ -1,5 +1,7 @@
 package com.software.openbook;
 
+import com.software.model.Professor;
+import com.software.model.Student;
 import com.software.model.User;
 import com.software.service.AuthService;
 import org.slf4j.Logger;
@@ -30,10 +32,17 @@ public class OpenbookApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user = new User("daniel@utec.edu.pe","daniel123","123456");
-
+        User user = new User("daniel@utec.edu.pe","daniel123","123456", "Daniel", "Rojas");
+        Student student = new Student("mit.mosquera@lamerced.edu.pe", "mmosq", "12345", "Mitchael",
+                "Mosquera", "La Merced", 7);
         authService.addUser(user);
+        authService.addUser(student);
 
+        Professor profe = new Professor("yamilet@utec.edu.pe", "yami", "654321", "Yamilet",
+                "Serrano", "Phd. Matematicas");
+
+        authService.addUser(profe);
+        
         log.info("Starting OpenBook ...");
     }
 }
