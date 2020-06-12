@@ -1,15 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>OpenBook</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="register/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="register/css/util.css">
+    <link rel="stylesheet" type="text/css" href="register/css/main.css">
+    <!--===============================================================================================-->
 </head>
 <body>
-<form action="/do_login" method="post">
-    <input type="text" placeholder="Ingresa Email">
-    <input type="password" placeholder="Ingresa tu contraseña">
-    <button type="submit"></button>
-</form>
+
+
+<div class="container-contact100" style="background-color: #009ada; ">
+
+    <div class="wrap-contact100">
+        <div class="contact100-form-title" style="background-image: url(register/images/bg-01.jpg);">
+				<span class="contact100-form-title-1">
+					OpenBook
+				</span>
+
+            <span class="contact100-form-title-2">
+					Registrate ahora
+				</span>
+            <br>
+
+
+            <div  class ="container-fluid">
+                <div class= "row justify-content-center">
+                    <div  class="col-4 ">
+                        <button type="button" style="background-color: #009ada; border-color:#009ada; " class="btn btn-primary btn-lg" onclick="student_registration()" id="student_button">I'm student</button>
+                    </div>
+                    <div  class="col-4 align-self-center" >
+                        <button style="background-color: #009ada; border-color:#009ada; " type="button" class="btn btn-primary btn-lg" onclick="profesor_registration()" id="profesor_button">I'm professor</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="form">
+
+        </div>
+    </div>
+</div>
+
+
+<!--===============================================================================================-->
+<script src="register/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="register/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="register/vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="register/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="register/vendor/daterangepicker/moment.min.js"></script>
+<script src="register/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="register/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="register/js/map-custom.js"></script>
+<!--===============================================================================================-->
+<script src="register/js/main.js"></script>
+
+
 
 </body>
 </html>
