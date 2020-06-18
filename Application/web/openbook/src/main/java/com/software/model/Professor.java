@@ -1,12 +1,19 @@
 package com.software.model;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity(name = "Professor")
 @DiscriminatorValue("Professor")
 public class Professor extends User{
     protected String titleId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "profe_publication",
+            joinColumns =
+                    { @JoinColumn(name = "professor_id", referencedColumnName = "email") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "publication_id", referencedColumnName = "id") })
+    private Publication publication;
 
     public Professor() {
 
