@@ -3,7 +3,7 @@ package com.software.openbook;
 import com.software.model.*;
 import com.software.service.AuthService;
 import com.software.service.CategoryService;
-import com.software.service.PublicationService;
+//import com.software.service.PublicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class OpenbookApplication implements CommandLineRunner {
     @Autowired
     private CategoryService catService;
     @Autowired
-    private PublicationService publiService;
+  //  private PublicationService publiService;
 
     private static final Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
 
@@ -38,7 +38,7 @@ public class OpenbookApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+/*
         User user = new User("daniel@utec.edu.pe","daniel123","123456", "Daniel", "Rojas");
         Student student = new Student("mit.mosquera@lamerced.edu.pe", "mmosq", "12345", "Mitchael",
                 "Mosquera", "La Merced", 7);
@@ -104,6 +104,6 @@ public class OpenbookApplication implements CommandLineRunner {
             }
         } else {
             System.out.println("No professor");
-        }
+        }*/
     }
 }
