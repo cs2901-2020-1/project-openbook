@@ -1,6 +1,6 @@
 package com.software.repository;
 
-import com.software.model.Professor;
+/*import com.software.model.Professor;
 import com.software.model.Professor_;
 import com.software.model.Publication;
 import com.software.model.Publication_;
@@ -41,4 +41,4 @@ public class PublicationSpecification implements Specification<Publication> {
         }
         return null;
     }
-}
+}*/

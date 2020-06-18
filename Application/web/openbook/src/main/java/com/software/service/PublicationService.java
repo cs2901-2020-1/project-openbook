@@ -1,5 +1,5 @@
 package com.software.service;
-
+/*
 import com.software.model.Publication;
 import com.software.repository.PublicationRepository;
 import com.software.repository.PublicationSpecification;
@@ -26,3 +26,4 @@ public class PublicationService {
         return publicationRepository.findAll(spec);
     }
 }
+*/

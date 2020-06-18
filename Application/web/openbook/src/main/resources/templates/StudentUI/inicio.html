@@ -13,7 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8" />
@@ -21,7 +21,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Dashboard Dark Edition by Creative Tim
+    OpenBook
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -48,29 +48,29 @@
         <ul class="nav">
           <li class="nav-item active ">
             <a class="nav-link" href="/inicio">
-              <i class="material-icons">dashboard</i>
+              <i class="material-icons">home</i>
               <p>Pagina Principal</p>
             </a>
           </li>
           <li class="nav-item  ">
-            <a class="nav-link" href="./user.html">
+            <a class="nav-link" href="/user">
               <i class="material-icons">person</i>
               <p>User Profile</p>
             </a>
           </li>
 
           <li class="nav-item ">
-            <a class="nav-link" href="./upgrade.html">
-              <i class="material-icons">unarchive</i>
+            <a class="nav-link" href="/mochila">
+              <i class="material-icons">backpack</i>
               <p>Mochila</p>
             </a>
           </li>
 
 
           <li class="nav-item ">
-            <a class="nav-link" href="./notifications.html">
+            <a class="nav-link" href="/notifications">
               <i class="material-icons">notifications</i>
-              <p>Notifications</p>
+              <p>Notificaciones</p>
             </a>
           </li>
 
@@ -125,13 +125,22 @@
                   <a class="dropdown-item" href="javascript:void(0)">Another One</a>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)">
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
                   <p class="d-lg-none d-md-block">
                     Account
                   </p>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <div >
+                    <form th:action="@{/destroy}" method="post">
+                      <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Cerrar Sesion" />
+                    </form>
+                  </div>
+
+                </div>
+
               </li>
             </ul>
           </div>
