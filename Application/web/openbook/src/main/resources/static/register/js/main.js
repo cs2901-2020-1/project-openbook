@@ -98,7 +98,13 @@ function student_registration(){
                 </div>\
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Grado :</span>\
-                    <input class="input100" type="text" name="grade" placeholder="Ingrese su el grado que está llevando">\
+                    <select class="form-control" id="exampleFormControlSelect1">\
+                      <option>1</option>\
+                      <option>2</option>\
+                      <option>3</option>\
+                      <option>4</option>\
+                      <option>5</option>\
+                    </select>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
@@ -116,7 +122,7 @@ function student_registration(){
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Password:</span>\
-                    <input class="input100" type="text" name="password" placeholder="Ingrese una contraseña">\
+                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña">\
                     <span class="focus-input100"></span>\
                 </div>\
 \
@@ -153,7 +159,13 @@ function profesor_registration(){
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Grado Academico :</span>\
-                    <input class="input100" type="text" name="titleId" placeholder="Ingrese su grado Academicoo">\
+                    <select class="form-control" id="exampleFormControlSelect1">\
+                      <option>1</option>\
+                      <option>2</option>\
+                      <option>3</option>\
+                      <option>4</option>\
+                      <option>5</option>\
+                    </select>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
@@ -171,7 +183,7 @@ function profesor_registration(){
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Password:</span>\
-                    <input class="input100" type="text" name="password" placeholder="Ingrese una contraseña">\
+                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña">\
                     <span class="focus-input100"></span>\
                 </div>\
 \
