@@ -66,7 +66,7 @@ public class AuthController {
     public String do_register_profesor(@ModelAttribute Professor professor){
         // TO DO
         if(authService.registerUser(professor))
-            return "index";
+            return "redirect:/login";
         return "error";
     }
 
@@ -74,7 +74,7 @@ public class AuthController {
     public String do_register_curador(@ModelAttribute User user){
         // TO DO
         if(authService.registerUser(user))
-            return "index";
+            return "redirect:/login";
         return "error";
     }
 

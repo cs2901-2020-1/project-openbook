@@ -24,6 +24,10 @@ public class UIController {
     @GetMapping("/user")
     public String userProfile(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null)
+            return "redirect:/error";
+
         User user = authService.getUser(email).get();
 
         String tipo = user.getTipo();
@@ -55,6 +59,9 @@ public class UIController {
     public String inicio(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
 
+        if (email==null)
+            return "redirect:/error";
+
         User user = authService.getUser(email).get();
 
         String tipo = user.getTipo();
@@ -76,6 +83,9 @@ public class UIController {
     public String mochila(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
 
+        if (email==null)
+            return "redirect:/error";
+
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
@@ -93,6 +103,9 @@ public class UIController {
     @GetMapping("/notifications")
     public String notificaciones(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null)
+            return "redirect:/error";
 
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
@@ -113,25 +126,50 @@ public class UIController {
     public String publicarContenido(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
 
+        if (email==null)
+            return "redirect:/error";
+
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
         switch (tipo){
             case "profesor":
-                return "ProfesorUI/publicacion";
+                return "ProfesorUI/publicacionContenido";
             default:
                 return "redirect:/error";
         }
 
     }
 
-    @PostMapping("/destroy")
-    public String destroySession(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return "redirect:/";
+
+
+    @GetMapping("/publications")
+    public String getMyPublications(Model model , HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        switch (tipo){
+            case "profesor":
+                return "ProfesorUI/publicaciones";
+            default:
+                return "redirect:/error";
+        }
+
     }
 
 
+    @PostMapping("/destroy")
+    public String destroySession(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "redirect:/login";
+    }
+
+    @GetMapping("/error")
+    public String error(Model model){
+        return "error";
+    }
 
 
 }
