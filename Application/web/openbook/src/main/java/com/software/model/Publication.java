@@ -1,10 +1,13 @@
 package com.software.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Publication")
-public class Publication {
+public class Publication extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,10 +26,12 @@ public class Publication {
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
-    @OneToOne(mappedBy = "publication")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
 
-    //@OneToOne(cascade = CascadeType.ALL)
+    //private Curator curator; /missing
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;

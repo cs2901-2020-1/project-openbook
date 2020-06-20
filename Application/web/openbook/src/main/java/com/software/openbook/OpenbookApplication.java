@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @ComponentScan({"com.software"})
 @EntityScan("com.software.model")
 @EnableJpaRepositories("com.software.repository")
+@EnableJpaAuditing
 public class OpenbookApplication implements CommandLineRunner {
 
     @Autowired
@@ -75,7 +77,6 @@ public class OpenbookApplication implements CommandLineRunner {
         Optional<User> optionalUser = authService.getUser(emailProfessor);
 
         if (optionalUser.isPresent()) {
-            User professor = optionalUser.get();
 
             Optional<Category> optionalCategory = catService.getCategory(2);
 
@@ -83,7 +84,7 @@ public class OpenbookApplication implements CommandLineRunner {
                 return;
 
             Publication post1 = new Publication("PDF", "Manual 1234", 0,
-                    "\\server\\folder\\test.pdf", (Professor) professor, optionalCategory.get());
+                    "\\server\\folder\\test.pdf", new Professor(), optionalCategory.get());
 
             optionalCategory = catService.getCategory(3);
 
@@ -91,14 +92,14 @@ public class OpenbookApplication implements CommandLineRunner {
                 return;
 
             Publication post2 = new Publication("PDF", "Manual test 12345", 0,
-                    "\\server\\folder\\test.pdf", (Professor) professor, optionalCategory.get());
+                    "\\server\\folder\\test.pdf", new Professor(), optionalCategory.get());
 
-            publiService.addPublication(post1);
-            publiService.addPublication(post2);
+            //publiService.addPublication(post1, emailProfessor);
+            publiService.addPublication(post2, emailProfessor);
 
-            List<Publication> publications = publiService.getPublicationFromProfessor(emailProfessor);
+            List<Publication> publications = publiService.getPublicationsFromProfessor(emailProfessor);
 
-            System.out.println("Publications from " + emailProfessor);
+            System.out.println("Retrieve publications from " + emailProfessor);
             for(Publication publication:publications) {
                 System.out.println(publication.getId()+"  "+publication.getName()+" "+publication.getCategory().getDescription());
             }
