@@ -2,10 +2,14 @@
 =========================================================
 * Material Dashboard Dark Edition - v2.1.0
 =========================================================
+
 * Product Page: https://www.creative-tim.com/product/material-dashboard-dark
 * Copyright 2019 Creative Tim (http://www.creative-tim.com)
+
 * Coded by www.creative-tim.com
+
 =========================================================
+
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
@@ -34,19 +38,60 @@
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="/" class="simple-text logo-normal">
-            Open Book
+        <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            Creative Tim
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item active ">
-                    <a class="nav-link" href="/">
-                        <i class="material-icons">dashboard</i>
+                <li class="nav-item  ">
+                    <a class="nav-link" href="/inicio">
+                        <i class="material-icons">home</i>
                         <p>Pagina Principal</p>
                     </a>
                 </li>
+                <li class="nav-item  ">
+                    <a class="nav-link" href="/user">
+                        <i class="material-icons">person</i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/mochila">
+                        <i class="material-icons">backpack</i>
+                        <p>Mochila</p>
+                    </a>
+                </li>
+
+                <li class="nav-item active ">
+                    <a class="nav-link" href="/publicarContenido">
+                        <i class="material-icons">content_paste</i>
+                        <p>Publicar Contenido</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/publications">
+                        <i class="material-icons">publication</i>
+                        <p>Mis Publicaciones</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/notifications">
+                        <i class="material-icons">notifications</i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+                <!-- <li class="nav-item active-pro ">
+                      <a class="nav-link" href="./upgrade.html">
+                          <i class="material-icons">unarchive</i>
+                          <p>Upgrade to PRO</p>
+                      </a>
+                  </li> -->
             </ul>
         </div>
     </div>
@@ -55,7 +100,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -98,7 +143,7 @@
                                 <a class="dropdown-item" href="javascript:void(0)">Another One</a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item dropdown">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">person</i>
                                 <p class="d-lg-none d-md-block">
@@ -107,178 +152,20 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <div >
-                                    <form th:action="@{/login}" method="post">
-                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Iniciar Sesion" />
-                                    </form>
-                                </div>
-                                <div >
-                                    <form th:action="@{/register}" method="post">
-                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Registrarse" />
+                                    <form th:action="@{/destroy}" method="post">
+                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Cerrar Sesion" />
                                     </form>
                                 </div>
 
                             </div>
+
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- End Navbar -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-success">
-                                <h4><a href="/">Libro 1</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-warning">
-                                <h4><a href="/">Libro 2</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-danger">
-                                <h4><a href="/">Libro 3</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-success">
-                                <h4><a href="/">Libro 4</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons text-warning">warning</i>
-                                    Not Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-warning">
-                                <h4><a href="/">Libro 5</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-danger">
-                                <h4><a href="/">Libro 6</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-success">
-                                <h4><a href="/">Libro 7</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-warning">
-                                <h4><a href="/">Libro 8</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-danger">
-                                <h4><a href="/">Libro 9</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Lorem Ipsum</h4>
-                                <p class="card-category">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <footer class="footer">
             <div class="container-fluid">
                 <nav class="float-left">
@@ -318,7 +205,73 @@
         </script>
     </div>
 </div>
-
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+            <li class="button-container">
+                <a href="https://www.creative-tim.com/product/material-dashboard-dark" target="_blank" class="btn btn-primary btn-block">Free Download</a>
+            </li>
+            <!-- <li class="header-title">Want more components?</li>
+                <li class="button-container">
+                    <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
+                      Get the pro version
+                    </a>
+                </li> -->
+            <li class="button-container">
+                <a href="https://demos.creative-tim.com/material-dashboard-dark/docs/2.0/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
+                    View Documentation
+                </a>
+            </li>
+            <li class="button-container github-star">
+                <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard/tree/dark-edition" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
+            </li>
+            <li class="header-title">Thank you for 95 shares!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
+    </div>
+</div>
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.min.js"></script>
 <script src="../assets/js/core/popper.min.js"></script>
@@ -497,13 +450,6 @@
 
             });
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        md.initDashboardPageCharts();
-
     });
 </script>
 </body>

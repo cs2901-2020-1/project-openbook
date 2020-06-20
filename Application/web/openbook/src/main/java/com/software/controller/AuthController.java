@@ -28,25 +28,6 @@ public class AuthController {
     }
 
 
-    @GetMapping("/student")
-    public String student(Model model, HttpSession session){
-
-        String email = (String) session.getAttribute("EMAIL");
-
-        User user = authService.getUser(email).get();
-
-        model.addAttribute("sessionUser",user);
-        return "studentUI/user";
-    }
-
-    @GetMapping("/profesor")
-    public String profesor(Model model){
-        return "profesor";
-    }
-    @GetMapping("/curador")
-    public String curador(Model model){
-        return "curador";
-    }
 
     @PostMapping(value = "/do_login")
     public String do_login(@ModelAttribute User user, HttpServletRequest request){
@@ -59,17 +40,8 @@ public class AuthController {
 
         request.getSession().setAttribute("EMAIL", user.getEmail());
 
+        return "redirect:/inicio";
 
-        switch (tipo){
-            case "profesor":
-                return "redirect:/profesor";
-            case "student":
-                return "redirect:/student";
-            case "curador":
-                return "redirect:/curador";
-            default:
-                return "redirect:/error";
-        }
         //verify the tipo atribute of user
     }
 
@@ -94,16 +66,16 @@ public class AuthController {
     public String do_register_profesor(@ModelAttribute Professor professor){
         // TO DO
         if(authService.registerUser(professor))
-            return "User Register";
-        return "This email is used by other user";
+            return "redirect:/login";
+        return "error";
     }
 
     @PostMapping(value = "/do_register_curador")
     public String do_register_curador(@ModelAttribute User user){
         // TO DO
         if(authService.registerUser(user))
-            return "User Register";
-        return "This email is used by other user";
+            return "redirect:/login";
+        return "error";
     }
 
 
@@ -119,7 +91,7 @@ public class AuthController {
         }
         model.addAttribute("sessionMessages", messages);
 
-        return "UI/user";
+        return "index";
     }
 
     @PostMapping("/persistMessage")
@@ -135,10 +107,6 @@ public class AuthController {
         return "redirect:/";
     }
 
-    @PostMapping("/destroy")
-    public String destroySession(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return "redirect:/";
-    }
+
 
 }
