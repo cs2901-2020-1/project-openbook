@@ -27,11 +27,18 @@ public class Publication {
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
+
+
+    //private Curator curator; /missing
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.software.service;
 
 import com.software.model.*;
 import com.software.repository.MochilaRepository;
+//import com.software.repository.PublicationRepository;
 import com.software.repository.PublicationRepository;
 import com.software.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,15 @@ import java.util.Optional;
 @Service
 public class UIService {
 
-    @Autowired
-    private PublicationRepository publicationRepository;
 
     @Autowired
     private MochilaRepository mochilaRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PublicationRepository publicationRepository;
 
     public List<Publication> getPublicationsByProfessor(Professor professor){
         //TO DO

@@ -1,11 +1,15 @@
-package com.software.model;
+/*package com.software.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "Comment")
-public class Comment {
+public class Comment extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +25,64 @@ public class Comment {
     @OneToMany(mappedBy="parentComment")
     private Set<Comment> subComments;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "publication_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Publication publication;
+
     @ManyToOne
     private Comment parentComment;
+
+    @OneToOne
+    private User commentAuthor;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText_comment() {
+        return text_comment;
+    }
+
+    public void setText_comment(String text_comment) {
+        this.text_comment = text_comment;
+    }
+
+    public float getValoration() {
+        return valoration;
+    }
+
+    public void setValoration(float valoration) {
+        this.valoration = valoration;
+    }
+
+    public Set<Comment> getSubComments() {
+        return subComments;
+    }
+
+    public void setSubComments(Set<Comment> subComments) {
+        this.subComments = subComments;
+    }
+
+    public Publication getPublication() {
+        return publication;
+    }
+
+    public void setPublication(Publication publication) {
+        this.publication = publication;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
+    }
 }
+*/

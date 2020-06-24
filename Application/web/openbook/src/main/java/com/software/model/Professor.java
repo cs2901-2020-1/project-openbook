@@ -1,19 +1,16 @@
 package com.software.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "Professor")
 @DiscriminatorValue("Professor")
 public class Professor extends User{
     protected String titleId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "profe_publication",
-            joinColumns =
-                    { @JoinColumn(name = "professor_id", referencedColumnName = "email") },
-            inverseJoinColumns =
-                    { @JoinColumn(name = "publication_id", referencedColumnName = "id") })
-    private Publication publication;
+    @OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
+    private Set<Publication> publications = new HashSet<>();
 
     public Professor() {
 
@@ -29,6 +26,13 @@ public class Professor extends User{
         return "profesor";
     }
 
+    public Set<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
+    }
 
     public String getTitleId() {
         return titleId;
@@ -37,4 +41,5 @@ public class Professor extends User{
     public void setTitleId(String titleId) {
         this.titleId = titleId;
     }
+
 }
