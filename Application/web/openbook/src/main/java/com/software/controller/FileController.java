@@ -1,6 +1,15 @@
 package com.software.controller;
 
 
+import com.software.model.Professor;
+import com.software.model.Publication;
+import com.software.model.User;
+import com.software.model.pub;
+import com.software.openbook.OpenbookApplication;
+import com.software.service.AuthService;
+import com.software.service.UIService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -8,14 +17,13 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -27,14 +35,21 @@ import java.util.Objects;
 @RestController
 public class FileController {
 
+    public String FILE_PATH = "src/main/resources/files/";
+
     @Autowired
-    private FileController fileController;
+    private AuthService authService;
+
+    @Autowired
+    private UIService uiService;
+
+
 
 
     @GetMapping(value = "/getPDF", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> download(String param) throws IOException {
 
-        Path path = Paths.get("src/main/resources/static/test.pdf");
+        Path path = Paths.get(FILE_PATH +"recibo.pdf");
         ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 
         return ResponseEntity.ok()
@@ -59,10 +74,49 @@ public class FileController {
                 .body(resource);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity uploadToLocalFileSystem(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/uploadPublication")
+    public String uploadToLocalFileSystem(@ModelAttribute pub pub, HttpSession session, Model model) {
+
+        Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+
+        MultipartFile file = pub.getFile();
+
+        String title = pub.getTitle();
+        String description = pub.getDescription();
+        int rank = 0;
+
+        log.info(pub.getTitle());
+        log.info(pub.getDescription());
+        log.info(pub.getCategory());
+
+
+        Publication publication = new Publication();
+
+        publication.setTitle(title);
+        publication.setDescription(description);
+        publication.setRanking(rank);
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null)
+            return "redirect:/error";
+
+        Professor p = (Professor) authService.getUser(email).get();
+
+        publication.setProfessor( p);
+        log.info(p.getEmail());
+
+
+        // Guardar el archivo
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        Path path = Paths.get("src/main/resources/static/" + fileName);
+
+        String resourcePath = FILE_PATH + fileName;
+
+        publication.setResource_path(resourcePath);
+
+        uiService.postPublication(publication);
+
+        Path path = Paths.get(FILE_PATH + fileName);
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
@@ -72,7 +126,7 @@ public class FileController {
                 .path("/files/download/")
                 .path(fileName)
                 .toUriString();
-        return ResponseEntity.ok(fileDownloadUri);
+        return "redirect:/publicarContenido";
     }
 
 }

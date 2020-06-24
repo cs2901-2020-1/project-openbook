@@ -1,5 +1,8 @@
 package com.software.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,11 +14,12 @@ public class Publication {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "type",length = 30)
-    private String type;
+    @Column(name = "title",length = 50)
+    private String title;
 
-    @Column(name = "name",length = 50)
-    private String name;
+    @Column(name = "description",length = 500)
+    private String description;
+
 
     @Column(name = "ranking", length = 10, precision=4)
     private float ranking;
@@ -23,27 +27,25 @@ public class Publication {
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
-    @OneToOne(mappedBy = "publication")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
 
-    public Publication() {
 
-    }
-
-    public Publication(String type, String name, float ranking, String resource_path,
-                       Professor professor, Category category) {
-        this.type = type;
-        this.name = name;
+    public Publication(String title, String description, float ranking, String resource_path, Professor professor) {
+        this.title = title;
+        this.description = description;
         this.ranking = ranking;
         this.resource_path = resource_path;
         this.professor = professor;
-        this.category = category;
     }
+
+    public Publication() {
+    }
+
 
     public Long getId() {
         return id;
@@ -53,20 +55,20 @@ public class Publication {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getTitle() {
+        return title;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getRanking() {
@@ -91,13 +93,5 @@ public class Publication {
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 }
