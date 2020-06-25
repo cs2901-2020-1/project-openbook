@@ -36,7 +36,7 @@ public class PublicationService {
 
         Publication publicationResult = publicationRepository.save(publication);
 
-        publicationRepository.save(publication);
+        //publicationRepository.save(publication);
         publications.add(publicationResult);
         professor_1.setPublications(publications);
 
@@ -52,9 +52,16 @@ public class PublicationService {
     }
 
     public List<Publication> getPublicationsFromCategory(int idCategory) {
-        List<Publication> dummy = null;
 
+        PublicationSpecification spec = new PublicationSpecification(
+                new SearchCriteria("category", ":", idCategory));
 
-        return dummy;
+        return publicationRepository.findAll(spec);
+    }
+
+    //ToDo Get publications from tags
+
+    public Optional<Publication> getPublication(long publicationId) {
+        return publicationRepository.findById(publicationId);
     }
 }

@@ -4,6 +4,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Publication")
@@ -35,6 +37,9 @@ public class Publication extends AuditModel {
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
+
+    @OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
     public Publication() {
 
@@ -104,5 +109,13 @@ public class Publication extends AuditModel {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

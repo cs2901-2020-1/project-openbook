@@ -5,15 +5,15 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 
-public class PublicationSpecification implements Specification<Publication> {
+public class CommentSpecification implements Specification<Comment> {
     private SearchCriteria criteria;
 
-    public PublicationSpecification(SearchCriteria criteria) {
+    public CommentSpecification(SearchCriteria criteria) {
         this.criteria = criteria;
     }
 
     @Override
-    public Predicate toPredicate(Root<Publication> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<Comment> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return criteriaBuilder.greaterThanOrEqualTo(
@@ -27,16 +27,17 @@ public class PublicationSpecification implements Specification<Publication> {
             if (root.get(criteria.getKey()).getJavaType() == String.class) {
                 return criteriaBuilder.like(
                         root.<String>get(criteria.getKey()), "%" + criteria.getValue() + "%");
-            } else if( root.get(criteria.getKey()).getJavaType() == Professor.class) {
 
-                Join<Publication, Professor> profJoin = root.join(Publication_.professor);
+            } else if( root.get(criteria.getKey()).getJavaType() == Publication.class) {
 
-                return criteriaBuilder.equal(profJoin.get(Professor_.email), criteria.getValue());
-            } else if( root.get(criteria.getKey()).getJavaType() == Category.class ) {
+                Join<Comment, Publication> commentPubJoin = root.join(Comment_.publication);
 
-                Join<Publication, Category> categoryJoin = root.join(Publication_.category);
+                return criteriaBuilder.equal(commentPubJoin.get(Publication_.id), criteria.getValue());
+            } else if( root.get(criteria.getKey()).getJavaType() == Comment.class) {
 
-                return criteriaBuilder.equal(categoryJoin.get(Category_.id), criteria.getValue());
+                Join<Comment, Comment> parentCommentJoin = root.join(Comment_.parentComment);
+
+                return criteriaBuilder.equal(parentCommentJoin.get(Comment_.id), criteria.getValue());
             } else {
                 return criteriaBuilder.equal(root.get(criteria.getKey()), criteria.getValue());
             }
