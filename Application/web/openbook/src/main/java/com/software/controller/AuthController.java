@@ -1,13 +1,16 @@
 package com.software.controller;
 
 import com.software.model.Professor;
+import com.software.model.Publication;
 import com.software.model.Student;
 import com.software.model.User;
 import com.software.service.AuthService;
+import com.software.service.UIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +23,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UIService uiService;
 
     @RequestMapping("/login")
     public String login(Model model){
@@ -63,10 +69,14 @@ public class AuthController {
     }
 
     @PostMapping(value = "/do_register_profesor")
-    public String do_register_profesor(@ModelAttribute Professor professor){
+    public String do_register_profesor(@ModelAttribute Professor professor, RedirectAttributes redirectAttributes){
         // TO DO
-        if(authService.registerUser(professor))
+        if(authService.registerUser(professor)) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "Registrado Correctamente")
+                    .addFlashAttribute("clase", "success");
             return "redirect:/login";
+        }
         return "error";
     }
 
@@ -91,6 +101,9 @@ public class AuthController {
         }
         model.addAttribute("sessionMessages", messages);
 
+        List<Publication> publications = uiService.getAllPublications();
+
+        model.addAttribute("publications", publications);
         return "index";
     }
 
