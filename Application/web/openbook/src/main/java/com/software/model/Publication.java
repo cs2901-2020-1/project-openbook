@@ -9,18 +9,18 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Publication")
-public class Publication extends AuditModel {
+public class Publication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "type",length = 30)
-    private String type;
+    @Column(name = "title",length = 50)
+    private String title;
 
-    @Column(name = "name",length = 50)
-    private String name;
+    @Column(name = "description",length = 500)
+    private String description;
 
     @Column(name = "ranking", length = 10, precision=4)
     private float ranking;
@@ -33,6 +33,7 @@ public class Publication extends AuditModel {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
 
+
     //private Curator curator; /missing
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -41,19 +42,17 @@ public class Publication extends AuditModel {
     @OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();
 
-    public Publication() {
-
-    }
-
-    public Publication(String type, String name, float ranking, String resource_path,
-                       Professor professor, Category category) {
-        this.type = type;
-        this.name = name;
+    public Publication(String title, String description, float ranking, String resource_path, Professor professor) {
+        this.title = title;
+        this.description = description;
         this.ranking = ranking;
         this.resource_path = resource_path;
         this.professor = professor;
-        this.category = category;
     }
+
+    public Publication() {
+    }
+
 
     public Long getId() {
         return id;
@@ -63,20 +62,20 @@ public class Publication extends AuditModel {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getTitle() {
+        return title;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getRanking() {

@@ -147,6 +147,32 @@
             </div>
         </nav>
         <!-- End Navbar -->
+
+        <div class="content" >
+            <div class="container-fluid">
+                <div class="row" >
+                    <div class="col-xl-4 col-lg-12" th:each="publication: ${publications}">
+                        <div class="card card-chart">
+                            <div class="card-header card-header-success">
+                                <h4><a href="/" th:text="${publication.getTitle()}">Libro 1</a></h4>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Lorem Ipsum</h4>
+                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="material-icons">local_offer</i> Verify
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
         <div class="content">
             <div class="container-fluid">
                 <div class="row">

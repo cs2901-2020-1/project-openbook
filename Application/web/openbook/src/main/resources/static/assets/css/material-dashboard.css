@@ -20753,7 +20753,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .dark-edition .form-control {
-  color: #fff;
+  color: black;
 }
 
 .dark-edition .form-control::-moz-placeholder {
@@ -20774,7 +20774,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .dark-edition .form-group label {
-  color: #a9afbbd1;
+  color: black;
 }
 
 .dark-edition [class^='bmd-label'],

@@ -1,6 +1,8 @@
 package com.software.repository;
 
 import com.software.model.*;
+import com.software.model.Professor;
+import com.software.model.Publication;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;

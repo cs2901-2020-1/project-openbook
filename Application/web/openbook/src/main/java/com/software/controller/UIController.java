@@ -1,25 +1,32 @@
 package com.software.controller;
 
 
-import com.software.model.Curator;
-import com.software.model.Professor;
-import com.software.model.Student;
-import com.software.model.User;
+import com.software.model.*;
+import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.UIService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UIController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UIService uiService;
 
     @GetMapping("/user")
     public String userProfile(Model model, HttpSession session){
@@ -66,6 +73,11 @@ public class UIController {
 
         String tipo = user.getTipo();
 
+        List<Publication> publications = uiService.getAllPublications();
+
+        model.addAttribute("publications", publications);
+
+
         switch (tipo){
             case "profesor":
                 return "ProfesorUI/inicio";
@@ -86,8 +98,14 @@ public class UIController {
         if (email==null)
             return "redirect:/error";
 
+
+
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
+
+        List<Publication> publications=  uiService.getUserMochila(user);
+
+        model.addAttribute("publications", publications);
 
         switch (tipo){
             case "profesor":
@@ -121,6 +139,16 @@ public class UIController {
 
     }
 
+    @GetMapping("/publication")
+    @ResponseBody
+    public String getPublication(@RequestParam(required = false) Long id){
+
+        Publication publication  =uiService.getPublicationById(id).get();
+
+
+        return publication.getTitle();
+    }
+
 
     @GetMapping("/publicarContenido")
     public String publicarContenido(Model model, HttpSession session){
@@ -143,19 +171,28 @@ public class UIController {
 
 
 
+
+
     @GetMapping("/publications")
     public String getMyPublications(Model model , HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
-
+        Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
-        switch (tipo){
-            case "profesor":
-                return "ProfesorUI/publicaciones";
-            default:
-                return "redirect:/error";
+
+        if ("profesor".equals(tipo)) {
+            List<Publication> publications = uiService.getPublicationsByProfessor((Professor) user);
+
+            for (Publication p: publications
+                 ) {
+                log.info(p.getTitle());
+
+            }
+            model.addAttribute("publications", publications);
+            return "ProfesorUI/publicaciones";
         }
+        return "redirect:/error";
 
     }
 
@@ -172,4 +209,17 @@ public class UIController {
     }
 
 
+    @PostMapping("/saveInBackPack")
+    public String saveInBackpack(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        uiService.saveInMochila(publication, user);
+        return "redirect:/inicio";
+    }
 }
