@@ -170,6 +170,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">
+                        <div th:id="'publication_alert'" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                             th:text="${mensaje}"
+                             class="alert">
+                        </div>
                         <div class="card">
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">Hacer Publicación</h4>
@@ -253,36 +257,14 @@
         <footer class="footer">
             <div class="container-fluid">
                 <nav class="float-left">
-                    <ul>
-                        <li>
-                            <a href="https://www.creative-tim.com">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://creative-tim.com/presentation">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                                Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.creative-tim.com/license">
-                                Licenses
-                            </a>
-                        </li>
-                    </ul>
+
                 </nav>
-                <div class="copyright float-right" id="date">
-                    , made with <i class="material-icons">favorite</i> by
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-                </div>
             </div>
         </footer>
         <script>
+              setTimeout(function() {
+              $('#publication_alert').fadeOut('fast');
+            }, 5000);
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
