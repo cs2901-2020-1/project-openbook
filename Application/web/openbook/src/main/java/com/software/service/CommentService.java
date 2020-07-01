@@ -46,11 +46,20 @@ public class CommentService {
         Optional<Comment> parentCommentOpt = commentRepository.findById(commentId);
         if (!parentCommentOpt.isPresent()) {
             //throw new ResourceNotFoundException("Professor " + professor_id + "does not exists.");
-            System.out.println("Publication " + commentId + " does not exists.");
+            System.out.println("Parent comment  " + commentId + " does not exists.");
         }
         Comment parentComment = parentCommentOpt.get();
 
+        Optional<Publication> publicationOpt = publicationRepository.findById(
+                parentComment.getPublication().getId());
+        if (!publicationOpt.isPresent()) {
+            //throw new ResourceNotFoundException("Professor " + professor_id + "does not exists.");
+            System.out.println("Publication " + parentComment.getPublication().getId() + " does not exists.");
+        }
+        Publication publication = publicationOpt.get();
+
         comment.setParentComment(parentComment);
+        comment.setPublication(publication);
 
         Comment commentResult = commentRepository.save(comment);
 

@@ -25,7 +25,8 @@ public class Comment extends AuditModel{
     @OneToMany(mappedBy="parentComment")
     private Set<Comment> subComments;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "publication_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -36,6 +37,17 @@ public class Comment extends AuditModel{
 
     @OneToOne
     private User commentAuthor;
+
+    public Comment(String text_comment, float valoration, Publication publication, User commentAuthor) {
+        this.text_comment = text_comment;
+        this.valoration = valoration;
+        this.publication = publication;
+        this.commentAuthor = commentAuthor;
+    }
+
+    public Comment() {
+
+    }
 
     public Long getId() {
         return id;
@@ -83,5 +95,15 @@ public class Comment extends AuditModel{
 
     public void setParentComment(Comment parentComment) {
         this.parentComment = parentComment;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + this.id +
+                ", text_comment=" + this.text_comment +
+                ", valoration='" + this.valoration + '\'' +
+                ", publication=" + this.publication +
+                '}';
     }
 }

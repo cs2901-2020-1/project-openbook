@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Publication")
-public class Publication {
+public class Publication extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,11 +28,11 @@ public class Publication {
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToOne(fetch = FetchType.LAZY) //Don't retrieve the object
+    @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
-
 
     //private Curator curator; /missing
     @ManyToOne
@@ -42,12 +42,25 @@ public class Publication {
     @OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();
 
-    public Publication(String title, String description, float ranking, String resource_path, Professor professor) {
+    //Tags
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "publications_tags",
+            joinColumns = { @JoinColumn(name = "publication_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+    private Set<Tag> manyTags = new HashSet<>();
+
+    public Publication(String title, String description, float ranking, String resource_path, Professor professor,
+                       Category category) {
         this.title = title;
         this.description = description;
         this.ranking = ranking;
         this.resource_path = resource_path;
         this.professor = professor;
+        this.category = category;
     }
 
     public Publication() {
@@ -116,5 +129,22 @@ public class Publication {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<Tag> getManyTags() {
+        return manyTags;
+    }
+
+    public void setManyTags(Set<Tag> manyTags) {
+        this.manyTags = manyTags;
+    }
+
+    @Override
+    public String toString() {
+        return "Publication{" +
+                "id=" + this.id +
+                ", title=" + this.title +
+                ", description='" + this.description + '\'' +
+                '}';
     }
 }

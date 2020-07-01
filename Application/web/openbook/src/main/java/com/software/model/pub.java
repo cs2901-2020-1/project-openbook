@@ -4,7 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class pub {
 
-
     public MultipartFile file;
     public String title;
     public String description;

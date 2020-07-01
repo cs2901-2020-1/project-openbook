@@ -59,7 +59,13 @@ public class PublicationService {
         return publicationRepository.findAll(spec);
     }
 
-    //ToDo Get publications from tags
+    public List<Publication> getPublicationsfromTagName(String tagName) {
+        //return publicationRepository.findByManyTags_Name(name);
+        PublicationSpecification spec = new PublicationSpecification(
+                new SearchCriteria("manyTags", ":", tagName));
+
+        return publicationRepository.findAll(spec);
+    }
 
     public Optional<Publication> getPublication(long publicationId) {
         return publicationRepository.findById(publicationId);
