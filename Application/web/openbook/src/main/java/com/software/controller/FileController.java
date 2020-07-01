@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpSession;
@@ -76,7 +77,7 @@ public class FileController {
     }
 
     @PostMapping("/uploadPublication")
-    public String uploadToLocalFileSystem(@ModelAttribute pub pub, HttpSession session, Model model) {
+    public String uploadToLocalFileSystem(@ModelAttribute pub pub, HttpSession session, Model model,  RedirectAttributes redirectAttributes) {
 
         Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
 
@@ -127,6 +128,11 @@ public class FileController {
                 .path("/files/download/")
                 .path(fileName)
                 .toUriString();
+
+        redirectAttributes
+                .addFlashAttribute("mensaje", "¡Publicación Exitosa! El contenido acaba de publicarse")
+                .addFlashAttribute("clase", "success");
+
         return "redirect:/publicarContenido";
     }
 
