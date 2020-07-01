@@ -60,11 +60,16 @@ public class AuthController {
 
 
     @PostMapping(value = "/do_register_student")
-    public String do_register_student(@ModelAttribute Student student){
+    public String do_register_student(@ModelAttribute Student student,  RedirectAttributes redirectAttributes){
         // TO DO
 
-        if(authService.registerUser(student))
-            return "index";
+        if(authService.registerUser(student)){
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "¡Registro Exitoso¡ Ya puedes acceder a nuestra plataforma")
+                    .addFlashAttribute("clase", "success");
+            return "redirect:/login";
+        }
+
         return "error";
     }
 
@@ -73,7 +78,7 @@ public class AuthController {
         // TO DO
         if(authService.registerUser(professor)) {
             redirectAttributes
-                    .addFlashAttribute("mensaje", "Registrado Correctamente")
+                    .addFlashAttribute("mensaje", "<strong>Registro Exitoso</strong> Ya puedes acceder a nuestra plataforma")
                     .addFlashAttribute("clase", "success");
             return "redirect:/login";
         }
@@ -81,10 +86,14 @@ public class AuthController {
     }
 
     @PostMapping(value = "/do_register_curador")
-    public String do_register_curador(@ModelAttribute User user){
+    public String do_register_curador(@ModelAttribute User user, RedirectAttributes redirectAttributes){
         // TO DO
-        if(authService.registerUser(user))
+        if(authService.registerUser(user)){
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "<strong>Registro Exitoso</strong> Ya puedes acceder a nuestra plataforma")
+                    .addFlashAttribute("clase", "success");
             return "redirect:/login";
+        }
         return "error";
     }
 
