@@ -1,4 +1,4 @@
-/*package com.software.model;
+package com.software.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
@@ -42,4 +42,3 @@ public abstract class AuditModel implements Serializable {
         this.updatedAt = updatedAt;
     }
 }
-*/

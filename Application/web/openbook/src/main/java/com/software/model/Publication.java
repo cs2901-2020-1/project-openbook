@@ -4,10 +4,12 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Publication")
-public class Publication {
+public class Publication extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,34 +22,45 @@ public class Publication {
     @Column(name = "description",length = 500)
     private String description;
 
-
     @Column(name = "ranking", length = 10, precision=4)
     private float ranking;
 
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToOne(fetch = FetchType.LAZY) //Don't retrieve the object
+    @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
-
 
     //private Curator curator; /missing
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
+    @OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
+    //Tags
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "publications_tags",
+            joinColumns = { @JoinColumn(name = "publication_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+    private Set<Tag> manyTags = new HashSet<>();
 
-
-
-    public Publication(String title, String description, float ranking, String resource_path, Professor professor) {
+    public Publication(String title, String description, float ranking, String resource_path, Professor professor,
+                       Category category) {
         this.title = title;
         this.description = description;
         this.ranking = ranking;
         this.resource_path = resource_path;
         this.professor = professor;
+        this.category = category;
     }
 
     public Publication() {
@@ -100,5 +113,38 @@ public class Publication {
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Tag> getManyTags() {
+        return manyTags;
+    }
+
+    public void setManyTags(Set<Tag> manyTags) {
+        this.manyTags = manyTags;
+    }
+
+    @Override
+    public String toString() {
+        return "Publication{" +
+                "id=" + this.id +
+                ", title=" + this.title +
+                ", description='" + this.description + '\'' +
+                '}';
     }
 }

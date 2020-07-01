@@ -1,10 +1,10 @@
-/*package com.software.service;
+package com.software.service;
 import com.software.model.Professor;
 
 import com.software.model.Publication;
 import com.software.model.User;
 import com.software.repository.PublicationRepository;
-//import com.software.repository.PublicationSpecification;
+import com.software.repository.PublicationSpecification;
 import com.software.repository.SearchCriteria;
 import com.software.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class PublicationService {
 
         Publication publicationResult = publicationRepository.save(publication);
 
-        publicationRepository.save(publication);
+        //publicationRepository.save(publication);
         publications.add(publicationResult);
         professor_1.setPublications(publications);
 
@@ -52,9 +52,22 @@ public class PublicationService {
     }
 
     public List<Publication> getPublicationsFromCategory(int idCategory) {
-        List<Publication> dummy = null;
 
+        PublicationSpecification spec = new PublicationSpecification(
+                new SearchCriteria("category", ":", idCategory));
 
-        return dummy;
+        return publicationRepository.findAll(spec);
     }
-}*/
+
+    public List<Publication> getPublicationsfromTagName(String tagName) {
+        //return publicationRepository.findByManyTags_Name(name);
+        PublicationSpecification spec = new PublicationSpecification(
+                new SearchCriteria("manyTags", ":", tagName));
+
+        return publicationRepository.findAll(spec);
+    }
+
+    public Optional<Publication> getPublication(long publicationId) {
+        return publicationRepository.findById(publicationId);
+    }
+}

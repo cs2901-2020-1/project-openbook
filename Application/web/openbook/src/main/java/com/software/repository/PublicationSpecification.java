@@ -1,12 +1,12 @@
-/*package com.software.repository;
+package com.software.repository;
 
+import com.software.model.*;
 import com.software.model.Professor;
-//import com.software.model.Professor_;
 import com.software.model.Publication;
-//import com.software.model.Publication_;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.util.Set;
 
 public class PublicationSpecification implements Specification<Publication> {
     private SearchCriteria criteria;
@@ -32,9 +32,21 @@ public class PublicationSpecification implements Specification<Publication> {
                         root.<String>get(criteria.getKey()), "%" + criteria.getValue() + "%");
             } else if( root.get(criteria.getKey()).getJavaType() == Professor.class) {
 
-                Join<Publication, Professor> phoneJoin = root.join(Publication_.professor);
+                Join<Publication, Professor> profJoin = root.join(Publication_.professor);
 
-                return criteriaBuilder.equal(phoneJoin.get(Professor_.email), criteria.getValue());
+                return criteriaBuilder.equal(profJoin.get(Professor_.email), criteria.getValue());
+            } else if( root.get(criteria.getKey()).getJavaType() == Category.class ) {
+
+                Join<Publication, Category> categoryJoin = root.join(Publication_.category);
+
+                return criteriaBuilder.equal(categoryJoin.get(Category_.id), criteria.getValue());
+
+            } else if( root.get(criteria.getKey()).getJavaType() == Set.class ) {
+
+                SetJoin<Publication, Tag> tagSetJoin = root.join(Publication_.manyTags);
+
+                return criteriaBuilder.equal(tagSetJoin.get(Tag_.name), criteria.getValue());
+
             } else {
                 return criteriaBuilder.equal(root.get(criteria.getKey()), criteria.getValue());
             }
@@ -42,4 +54,3 @@ public class PublicationSpecification implements Specification<Publication> {
         return null;
     }
 }
-*/

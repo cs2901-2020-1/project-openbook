@@ -18,10 +18,8 @@ public class Category {
     @Column(name = "description",length = 100)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publication_owner", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private  Publication publication;
+    @OneToMany(mappedBy = "category")
+    private List<Publication> publication;
 
     public Category() {
 
@@ -29,11 +27,6 @@ public class Category {
 
     public Category(String description) {
         this.description = description;
-    }
-
-    public Category(String description, Publication publication) {
-        this.description = description;
-        this.publication = publication;
     }
 
     public int getId() {
@@ -52,11 +45,4 @@ public class Category {
         this.description = description;
     }
 
-    public Publication getPublication() {
-        return publication;
-    }
-
-    public void setPublication(Publication publication) {
-        this.publication = publication;
-    }
 }
