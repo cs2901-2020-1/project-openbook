@@ -52,7 +52,7 @@
                         <p>Pagina Principal</p>
                     </a>
                 </li>
-                <li class="nav-item  ">
+                <li class="nav-item  active">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
                         <p>User Profile</p>
@@ -65,7 +65,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item active ">
+                <li class="nav-item  ">
                     <a class="nav-link" href="/publicarContenido">
                         <i class="material-icons">content_paste</i>
                         <p>Publicar Contenido</p>
@@ -100,7 +100,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-
+                    <a class="navbar-brand" href="javascript:void(0)" th:text="${sessionUser.getUsername()}" ></a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -165,70 +165,84 @@
             </div>
         </nav>
         <!-- End Navbar -->
-
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">
-                        <div th:id="'publication_alert'" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                             th:text="${mensaje}"
-                             class="alert">
-                        </div>
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title">Hacer Publicación</h4>
-                                <p class="card-category">Publica algo</p>
+                                <h4 class="card-title" th:text="${sessionUser.getName()} +' '+${sessionUser.getSurname()}">Hola Profesor</h4>
+                                <p class="card-category">Estos son los datos de su cuenta</p>
                             </div>
-                            <div class="card-body">
-                                <form action="/uploadPublication" method="post" enctype="multipart/form-data">
+                            <div class="card-body" >
+                                <form action="/updateProfesor" method="post">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Email :</span>
+                                                <span th:text="${sessionUser.getEmail()}"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label >Titulo</label>
-                                                <input name="title" type="text" class="form-control">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Username :</span>
+                                                <input name="username" th:value="${sessionUser.getUsername()}"></input>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Nombres :</span>
+                                                <input name="name" th:value="${sessionUser.getName()}"></input>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Apellidos :</span>
+                                                <input name="surname" th:value="${sessionUser.getSurname()}"></input>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Titulo :</span>
+                                                <input name="titleId" th:value="${sessionUser.getTitleId()}"></input>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Descripción</label>
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Escribe una descripción para tu publicación</label>
-                                                    <textarea name="description" class="form-control" rows="5"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-
-                                            <div class="form-group">
-                                                <label >Categoría</label>
-                                                <input name="category" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Sube un contenido</label>
-                                            </div>
-
-                                            <input type="file" name="file" id="fileToUpload">
-
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary pull-right">Publicar</button>
+                                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
                                     <div class="clearfix"></div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <a href="#pablo">
+                                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-category" th:text="${sessionUser.getTitleId()}">CEO / Co-Founder</h6>
+                                <h4 class="card-title" th:text="${sessionUser.getName()} +' '+${sessionUser.getSurname()} ">Alec Thompson</h4>
+                                <p class="card-description" th:text="${sessionUser.getDescription()}">
+                                </p>
+                                <a href="#pablo" class="btn btn-primary btn-round">Editar</a>
                             </div>
                         </div>
                     </div>
@@ -236,21 +250,6 @@
             </div>
         </div>
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="float-left">
-
-                </nav>
-            </div>
-        </footer>
-        <script>
-              setTimeout(function() {
-              $('#publication_alert').fadeOut('fast');
-            }, 5000);
-            const x = new Date().getFullYear();
-            let date = document.getElementById('date');
-            date.innerHTML = '&copy; ' + x + date.innerHTML;
-        </script>
     </div>
 </div>
 
@@ -274,6 +273,8 @@
 <script src="../assets/demo/demo.js"></script>
 <script>
     $(document).ready(function() {
+
+
         $().ready(function() {
             $sidebar = $('.sidebar');
 
@@ -433,6 +434,9 @@
             });
         });
     });
+
+
+
 </script>
 </body>
 

@@ -78,12 +78,28 @@ public class AuthController {
         // TO DO
         if(authService.registerUser(professor)) {
             redirectAttributes
-                    .addFlashAttribute("mensaje", "<strong>Registro Exitoso</strong> Ya puedes acceder a nuestra plataforma")
+                    .addFlashAttribute("mensaje", "Registro Exitoso: Ya puedes acceder a nuestra plataforma")
                     .addFlashAttribute("clase", "success");
             return "redirect:/login";
         }
         return "error";
     }
+
+    @PostMapping(value = "/updateProfesor")
+    public String updateProfesor(@ModelAttribute Professor professor, RedirectAttributes redirectAttributes,  HttpSession session){
+        // TO DO
+        String email = (String) session.getAttribute("EMAIL");
+        professor.setEmail(email);
+
+        if(authService.updateUser(professor)) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "Actualización Exitosa: Sus datos se actualizaron correctamente")
+                    .addFlashAttribute("clase", "success");
+            return "redirect:/user";
+        }
+        return "error";
+    }
+
 
     @PostMapping(value = "/do_register_curador")
     public String do_register_curador(@ModelAttribute User user, RedirectAttributes redirectAttributes){
