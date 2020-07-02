@@ -42,7 +42,7 @@
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          Open Book
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -80,13 +80,13 @@
           </li>
 
 
-          <li class="nav-item ">
+          <!--<li class="nav-item ">
             <a class="nav-link" href="/notifications">
               <i class="material-icons">notifications</i>
               <p>Notifications</p>
             </a>
           </li>
-          <!-- <li class="nav-item active-pro ">
+          <li class="nav-item active-pro ">
                 <a class="nav-link" href="./upgrade.html">
                     <i class="material-icons">unarchive</i>
                     <p>Upgrade to PRO</p>
@@ -100,7 +100,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:void(0)" th:text="${sessionUser.getUsername()}" ></a>
+            <h2 class="navbar-brand">Perfil</h2>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
             <span class="sr-only">Toggle navigation</span>
@@ -168,18 +168,14 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-8">
-              <div th:id="'update_alert'" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                   th:text="${mensaje}"
-                   class="alert">
-              </div>
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title" th:text="${sessionUser.getName()} +' '+${sessionUser.getSurname()}">Hola Profesor</h4>
+                  <h4 class="card-title">Hola <span th:text="${sessionUser.getName()}"></span> <span th:text="${sessionUser.getSurname()}"></span></h4>
                   <p class="card-category">Estos son los datos de su cuenta</p>
                 </div>
-                <div class="card-body" >
-                  <form action="/editUser" method="get">
+                <div class="card-body">
+                  <form>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="wrap-input100">
@@ -190,51 +186,13 @@
 
                     </div>
 
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Username :</span>
-                          <span th:text="${sessionUser.getUsername()}"></span>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Nombres :</span>
-                          <span th:text="${sessionUser.getName()}"></span>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Apellidos :</span>
-                          <span th:text="${sessionUser.getSurname()}"></span>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Titulo :</span>
-                          <span th:text="${sessionUser.getTitleId()}"></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary pull-right">Editar Perfil</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <!--<div class="col-md-4">
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
@@ -242,60 +200,27 @@
                   </a>
                 </div>
                 <div class="card-body">
-                  <h6 class="card-category" th:text="${sessionUser.getTitleId()}">CEO / Co-Founder</h6>
-                  <h4 class="card-title" th:text="${sessionUser.getName()} +' '+${sessionUser.getSurname()} ">Alec Thompson</h4>
-                  <p class="card-description" th:text="${sessionUser.getDescription()}">
+                  <h6 class="card-category">CEO / Co-Founder</h6>
+                  <h4 class="card-title">Alec Thompson</h4>
+                  <p class="card-description">
+                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
                   </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Editar</a>
+                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
                 </div>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
       <footer class="footer">
-        <div class="container-fluid">
-          <nav class="float-left">
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="https://creative-tim.com/presentation">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">
-                  Licenses
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <div class="copyright float-right" id="date">
-            , made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-          </div>
-        </div>
       </footer>
       <script>
-        setTimeout(function() {
-          $('#update_alert').fadeOut('fast');
-        }, 5000);
         const x = new Date().getFullYear();
         let date = document.getElementById('date');
         date.innerHTML = '&copy; ' + x + date.innerHTML;
       </script>
     </div>
   </div>
-
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -316,8 +241,6 @@
   <script src="../assets/demo/demo.js"></script>
   <script>
     $(document).ready(function() {
-
-
       $().ready(function() {
         $sidebar = $('.sidebar');
 
@@ -477,9 +400,6 @@
         });
       });
     });
-
-
-
   </script>
 </body>
 

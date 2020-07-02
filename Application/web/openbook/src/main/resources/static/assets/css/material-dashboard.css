@@ -20554,7 +20554,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .dark-edition .card .card-body .card-category+.card-title {
-  color: black;
+  color: #fff;
 }
 
 .dark-edition .card .card-body .card-category,

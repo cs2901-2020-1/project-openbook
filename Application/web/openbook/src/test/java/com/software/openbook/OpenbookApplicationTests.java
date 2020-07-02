@@ -31,7 +31,7 @@ class OpenbookApplicationTests {
     void contextLoads() {
     }
 
-    @Test
+    /*@Test
     public void students_registration() {
         String email1 = "osman.vilchez@utec.edu.pe";
         String email2 = "victor.ascunia@lamerced.edu.pe";
@@ -152,5 +152,5 @@ class OpenbookApplicationTests {
         assertEquals("Coments number for publication " + publicationId + " incorrect",
                 cantComments, commentsdb.size());
 
-    }
+    }*/
 }
