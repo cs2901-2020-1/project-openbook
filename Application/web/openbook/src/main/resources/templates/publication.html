@@ -126,29 +126,20 @@
         <!-- End Navbar -->
         <div class="content" >
             <div class="container-fluid">
-                <div class="row" >
-                    <div class="col-xl-4 col-lg-12" th:each="publication: ${publications}">
-                        <div class="card card-chart">
-                            <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Baldor.jpg" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                            <div class="card-header card-header-success">
-                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <form action="/saveInBackPack" method="post">
-                                        <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                        <button type="submit"><i class="material-icons">backpack</i></button>
-                                    </form>
-                                </div>
-                            </div>
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 th:text="${publication.getTitle()}"></h4>
+                        </div>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://guao.org/sites/default/files/biblioteca/%C3%81lgebra%20de%20Baldor.pdf" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                            <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <footer class="footer">

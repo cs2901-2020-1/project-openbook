@@ -141,13 +141,13 @@ public class UIController {
     }
 
     @GetMapping("/publication")
-    @ResponseBody
-    public String getPublication(@RequestParam(required = false) Long id){
+    public String getPublication(@RequestParam(required = false) Long id, Model model){
 
-        Publication publication  =uiService.getPublicationById(id).get();
+        Publication publication  = uiService.getPublicationById(id).get();
 
+        model.addAttribute("publication", publication);
 
-        return publication.getTitle();
+        return "publication";
     }
 
 
