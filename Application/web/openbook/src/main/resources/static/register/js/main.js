@@ -63,7 +63,6 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
-    
 
 })(jQuery);
 
@@ -92,31 +91,20 @@ function student_registration(){
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
-                    <span class="label-input100">Escuela :</span>\
-                    <input class="input100" type="text" name="school" placeholder="Ingrese su escuela">\
-                    <span class="focus-input100"></span>\
-                </div>\
-                <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
-                    <span class="label-input100">Grado :</span>\
-                    <input class="input100" type="text" name="grade" placeholder="Ingrese su el grado que está llevando">\
+                    <span class="label-input100">Fecha de nacimiento :</span>\
+                    <input class="input100" type="date" name="date" placeholder="Ingresa tu fecha de nacimiento">\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate = "Ingresa un email valido: ex@abc.xyz">\
                     <span class="label-input100">Email:</span>\
-                    <input maxlength="30" class="input100" type="text" name="email" placeholder="Ingrese su correo electrónico">\
-                    <span class="focus-input100"></span>\
-                </div>\
-\
-                <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
-                    <span class="label-input100">Usuario:</span>\
-                    <input class="input100" type="text" name="username" placeholder="Ingrese un nombre de Usuario">\
+                    <input maxlength="30" class="input100" type="email" name="email" placeholder="Ingrese su correo electrónico">\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Password:</span>\
-                    <input class="input100" type="text" name="password" placeholder="Ingrese una contraseña">\
+                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña">\
                     <span class="focus-input100"></span>\
                 </div>\
 \
@@ -151,27 +139,15 @@ function profesor_registration(){
                     <span class="focus-input100"></span>\
                 </div>\
 \
-                <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
-                    <span class="label-input100">Grado Academico :</span>\
-                    <input class="input100" type="text" name="titleId" placeholder="Ingrese su grado Academicoo">\
-                    <span class="focus-input100"></span>\
-                </div>\
-\
                 <div class="wrap-input100 validate-input" data-validate = "Ingresa un email valido: ex@abc.xyz">\
                     <span class="label-input100">Email:</span>\
-                    <input maxlength="30" class="input100" type="text" name="email" placeholder="Ingrese su correo electrónico">\
-                    <span class="focus-input100"></span>\
-                </div>\
-\
-                <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
-                    <span class="label-input100">Usuario:</span>\
-                    <input class="input100" type="text" name="username" placeholder="Ingrese un nombre de Usuario">\
+                    <input maxlength="30" class="input100" type="email" name="email" placeholder="Ingrese su correo electrónico">\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Password:</span>\
-                    <input class="input100" type="text" name="password" placeholder="Ingrese una contraseña">\
+                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña">\
                     <span class="focus-input100"></span>\
                 </div>\
 \

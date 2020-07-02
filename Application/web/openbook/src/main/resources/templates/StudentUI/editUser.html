@@ -52,46 +52,28 @@
                         <p>Pagina Principal</p>
                     </a>
                 </li>
-                <li class="nav-item  ">
+                <li class="nav-item active ">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li class="nav-item active">
+
+                <li class="nav-item ">
                     <a class="nav-link" href="/mochila">
                         <i class="material-icons">backpack</i>
                         <p>Mochila</p>
                     </a>
                 </li>
 
-                <li class="nav-item ">
-                    <a class="nav-link" href="/publicarContenido">
-                        <i class="material-icons">content_paste</i>
-                        <p>Publicar Contenido</p>
-                    </a>
-                </li>
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="/publications">
-                        <i class="material-icons">publication</i>
-                        <p>Mis Publicaciones</p>
-                    </a>
-                </li>
-
-
-                <!--<li class="nav-item ">
                     <a class="nav-link" href="/notifications">
                         <i class="material-icons">notifications</i>
-                        <p>Notifications</p>
+                        <p>Notificaciones</p>
                     </a>
                 </li>
-                <li class="nav-item active-pro ">
-                      <a class="nav-link" href="./upgrade.html">
-                          <i class="material-icons">unarchive</i>
-                          <p>Upgrade to PRO</p>
-                      </a>
-                  </li> -->
+
             </ul>
         </div>
     </div>
@@ -100,7 +82,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <h2 class="navbar-brand">Mochila</h2>
+                    <a class="navbar-brand" href="javascript:void(0)" th:text="${sessionUser.getUsername()}" ></a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -165,39 +147,202 @@
             </div>
         </nav>
         <!-- End Navbar -->
-
-        <div class="content" >
+        <div class="content">
             <div class="container-fluid">
-                <div class="row" >
-                    <div class="col-xl-4 col-lg-12" th:each="publication: ${publications}">
-                        <div class="card card-chart">
-                            <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Baldor.jpg" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                            <div class="card-header card-header-success">
-                                <h4><a href="/" th:text="${publication.getTitle()}">Libro 1</a></h4>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">Hola Estudiante</h4>
+                                <p class="card-category">Estos son los datos de su cuenta</p>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Email :</span>
+                                                <span th:text="${sessionUser.getEmail()}"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Username :</span>
+                                                <span th:text="${sessionUser.getUsername()}"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Nombres :</span>
+                                                <span th:text="${sessionUser.getName()}"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Apellidos :</span>
+                                                <span th:text="${sessionUser.getSurname()}"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Escuela :</span>
+                                                <span th:text="${sessionUser.getSchool()}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Grado :</span>
+                                                <span th:text="${sessionUser.getGrade()}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <a href="#pablo">
+                                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-category">CEO / Co-Founder</h6>
+                                <h4 class="card-title">Alec Thompson</h4>
+                                <p class="card-description">
+                                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                                </p>
+                                <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
         <footer class="footer">
+            <div class="container-fluid">
+                <nav class="float-left">
+                    <ul>
+                        <li>
+                            <a href="https://www.creative-tim.com">
+                                Creative Tim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://creative-tim.com/presentation">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://blog.creative-tim.com">
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.creative-tim.com/license">
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright float-right" id="date">
+                    , made with <i class="material-icons">favorite</i> by
+                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                </div>
+            </div>
         </footer>
         <script>
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+            <li class="button-container">
+                <a href="https://www.creative-tim.com/product/material-dashboard-dark" target="_blank" class="btn btn-primary btn-block">Free Download</a>
+            </li>
+            <!-- <li class="header-title">Want more components?</li>
+                <li class="button-container">
+                    <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
+                      Get the pro version
+                    </a>
+                </li> -->
+            <li class="button-container">
+                <a href="https://demos.creative-tim.com/material-dashboard-dark/docs/2.0/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
+                    View Documentation
+                </a>
+            </li>
+            <li class="button-container github-star">
+                <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard/tree/dark-edition" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
+            </li>
+            <li class="header-title">Thank you for 95 shares!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 <!--   Core JS Files   -->
