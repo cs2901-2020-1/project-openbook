@@ -41,8 +41,8 @@
 
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-            Creative Tim
+        <div class="logo"><a href="/inicio" class="simple-text logo-normal">
+            Open Book
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
@@ -179,31 +179,23 @@
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Nombres :</span>
-                                                <input type="text" name="name" th:value="${sessionUser.getName()}"></input>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">Nombres:</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="name" th:placeholder="${sessionUser.getName()}" aria-label="Name" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Apellidos :</span>
-                                                <input type="text" name="surname" th:value="${sessionUser.getSurname()}"></input>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">Apellidos:</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="surname" th:placeholder="${sessionUser.getSurname()}" aria-label="Name" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Password :</span>
-                                                <input type="password" name="password"></input>
-                                            </div>
-                                        </div>
-
                                     </div>
 
                                     <button type="submit" class="btn btn-primary pull-right">Guardar</button>
