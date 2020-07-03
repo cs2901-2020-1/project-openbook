@@ -1,5 +1,7 @@
 package com.software.service;
 
+import com.software.model.Professor;
+import com.software.model.Student;
 import com.software.model.User;
 import com.software.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,43 @@ public class AuthService {
         addUser(user);
         return true;
 
+    }
+
+    public boolean updateUser(User user) {
+
+        Optional<User> optionalUser  = userRepository.findById(user.getEmail());
+
+        if(optionalUser.isPresent()){
+            String tipo = optionalUser.get().getTipo();
+
+            switch (tipo){
+                case "profesor":
+                    Professor updatedProfesor = (Professor) user;
+                    Professor professor = new Professor();
+                    professor.setEmail(updatedProfesor.getEmail());
+                    professor.setName(updatedProfesor.getName());
+                    professor.setUsername(updatedProfesor.getUsername());
+                    professor.setSurname(updatedProfesor.getSurname());
+                    professor.setTitleId(updatedProfesor.getTitleId());
+                    professor.setPassword(updatedProfesor.getPassword());
+                    userRepository.save(professor);
+                    return true;
+
+                case "student":
+                    Student updatedStudent = (Student) user;
+                    Student student = new Student();
+                    student.setEmail(updatedStudent.getEmail());
+                    student.setName(updatedStudent.getName());
+                    student.setUsername(updatedStudent.getUsername());
+                    student.setSurname(updatedStudent.getSurname());
+                    student.setPassword(updatedStudent.getPassword());
+                    userRepository.save(student);
+                    return true;
+
+            }
+
+        }
+        return false;
     }
 
     public void deleteUser(User user){

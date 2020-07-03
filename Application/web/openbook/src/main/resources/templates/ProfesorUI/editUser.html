@@ -171,36 +171,17 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title" th:text="${sessionUser.getName()} +' '+${sessionUser.getSurname()}">Hola Profesor</h4>
+                                <h4 class="card-title" th:text="'Hola ' + ${sessionUser.getName()} +' '+${sessionUser.getSurname()}"></h4>
                                 <p class="card-category">Estos son los datos de su cuenta</p>
                             </div>
                             <div class="card-body" >
                                 <form action="/updateProfesor" method="post">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Email :</span>
-                                                <span th:text="${sessionUser.getEmail()}"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Username :</span>
-                                                <input name="username" th:value="${sessionUser.getUsername()}"></input>
-                                            </div>
-                                        </div>
-
-                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="wrap-input100">
                                                 <span class="label-input100">Nombres :</span>
-                                                <input name="name" th:value="${sessionUser.getName()}"></input>
+                                                <input type="text" name="name" th:value="${sessionUser.getName()}"></input>
                                             </div>
                                         </div>
 
@@ -209,7 +190,7 @@
                                         <div class="col-md-4">
                                             <div class="wrap-input100">
                                                 <span class="label-input100">Apellidos :</span>
-                                                <input name="surname" th:value="${sessionUser.getSurname()}"></input>
+                                                <input type="text" name="surname" th:value="${sessionUser.getSurname()}"></input>
                                             </div>
                                         </div>
 
@@ -218,10 +199,11 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="wrap-input100">
-                                                <span class="label-input100">Titulo :</span>
-                                                <input name="titleId" th:value="${sessionUser.getTitleId()}"></input>
+                                                <span class="label-input100">Password :</span>
+                                                <input type="password" name="password"></input>
                                             </div>
                                         </div>
+
                                     </div>
 
                                     <button type="submit" class="btn btn-primary pull-right">Guardar</button>
@@ -238,8 +220,7 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <h6 class="card-category" th:text="${sessionUser.getTitleId()}">CEO / Co-Founder</h6>
-                                <h4 class="card-title" th:text="${sessionUser.getName()} +' '+${sessionUser.getSurname()} ">Alec Thompson</h4>
+                                <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}">CEO / Co-Founder</h6>
                                 <p class="card-description" th:text="${sessionUser.getDescription()}">
                                 </p>
                                 <a href="#pablo" class="btn btn-primary btn-round">Editar</a>
