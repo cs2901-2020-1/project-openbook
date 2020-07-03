@@ -92,6 +92,37 @@ public class UIController {
     }
 
 
+    @GetMapping("/editUser")
+    public String editUser(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        String tipo = user.getTipo();
+
+        switch (tipo){
+            case "profesor":
+                Professor professor = (Professor) user;
+                model.addAttribute("sessionUser",professor);
+                return "ProfesorUI/editUser";
+            case "student":
+                Student student = (Student) user;
+                model.addAttribute("sessionUser",student);
+                return "StudentUI/editUser";
+            case "curador":
+
+                Curator curator = (Curator) user;
+                model.addAttribute("sessionUser",curator);
+                return "CuradorUI/editUser";
+            default:
+                return "redirect:/error";
+        }
+
+    }
+
     @GetMapping("/mochila")
     public String mochila(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
@@ -141,7 +172,7 @@ public class UIController {
     }
 
     @GetMapping("/publication")
-    public String getPublication(@RequestParam(required = false) Long id, Model model){
+    public String getPublication(Model model, @RequestParam(required = false) Long id){
 
         Publication publication  = uiService.getPublicationById(id).get();
 

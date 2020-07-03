@@ -41,7 +41,7 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a href="/inicio" class="simple-text logo-normal">
           Open Book
         </a></div>
       <div class="sidebar-wrapper">
@@ -168,14 +168,14 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Hola <span th:text="${sessionUser.getName()}"></span> <span th:text="${sessionUser.getSurname()}"></span></h4>
                   <p class="card-category">Estos son los datos de su cuenta</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="/editUser" method="get">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="wrap-input100">
@@ -186,13 +186,13 @@
 
                     </div>
 
-                    <!--<button type="submit" class="btn btn-primary pull-right">Update Profile</button>-->
+                    <button type="submit" class="btn btn-primary pull-right">Editar Perfil</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
               </div>
             </div>
-            <!--<div class="col-md-4">
+            <div class="col-md-4">
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
@@ -200,15 +200,13 @@
                   </a>
                 </div>
                 <div class="card-body">
-                  <h6 class="card-category">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                  <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}">CEO / Co-Founder</h6>
+                  <p class="card-description" th:text="${sessionUser.getDescription()}">
                   </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
+                  <a href="#pablo" class="btn btn-primary btn-round">Editar</a>
                 </div>
               </div>
-            </div>-->
+            </div>
           </div>
         </div>
       </div>

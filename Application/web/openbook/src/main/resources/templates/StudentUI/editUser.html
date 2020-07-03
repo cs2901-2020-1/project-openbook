@@ -153,16 +153,26 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title">Hola Estudiante</h4>
+                                <h4 class="card-title" th:text="'Hola ' + ${sessionUser.getName()} +' '+${sessionUser.getSurname()}"></h4>
                                 <p class="card-category">Estos son los datos de su cuenta</p>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form action="/updateProfesor" method="post">
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="wrap-input100">
-                                                <span class="label-input100">Email :</span>
-                                                <span th:text="${sessionUser.getEmail()}"></span>
+                                                <span class="label-input100">Nombres:</span>
+                                                <input type="text" name="name" th:value="${sessionUser.getName()}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="wrap-input100">
+                                                <span class="label-input100">Apellidos:</span>
+                                                <input type="text" name="surname" th:value="${sessionUser.getSurname()}">
                                             </div>
                                         </div>
 
@@ -171,49 +181,12 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="wrap-input100">
-                                                <span class="label-input100">Username :</span>
-                                                <span th:text="${sessionUser.getUsername()}"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Nombres :</span>
-                                                <span th:text="${sessionUser.getName()}"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Apellidos :</span>
-                                                <span th:text="${sessionUser.getSurname()}"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Escuela :</span>
-                                                <span th:text="${sessionUser.getSchool()}"></span>
+                                                <span class="label-input100">Contraseña:</span>
+                                                <input type="password" name="password">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Grado :</span>
-                                                <span th:text="${sessionUser.getGrade()}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
