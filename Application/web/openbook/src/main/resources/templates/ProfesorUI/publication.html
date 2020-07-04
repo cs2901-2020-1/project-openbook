@@ -2,14 +2,10 @@
 =========================================================
 * Material Dashboard Dark Edition - v2.1.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-dark
 * Copyright 2019 Creative Tim (http://www.creative-tim.com)
-
 * Coded by www.creative-tim.com
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
@@ -38,15 +34,14 @@
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <div class="logo"><a href="/" class="simple-text logo-normal">
             OPEN BOOK
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item ">
+                <li class="nav-item  active">
                     <a class="nav-link" href="/inicio">
                         <i class="material-icons">home</i>
                         <p>Pagina Principal</p>
@@ -58,22 +53,39 @@
                         <p>User Profile</p>
                     </a>
                 </li>
-
-                <li class="nav-item active ">
+                <li class="nav-item ">
                     <a class="nav-link" href="/mochila">
                         <i class="material-icons">backpack</i>
                         <p>Mochila</p>
                     </a>
                 </li>
 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/publicarContenido">
+                        <i class="material-icons">content_paste</i>
+                        <p>Publicar Contenido</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/publications">
+                        <i class="material-icons">publication</i>
+                        <p>Mis Publicaciones</p>
+                    </a>
+                </li>
 
                 <li class="nav-item ">
                     <a class="nav-link" href="/notifications">
                         <i class="material-icons">notifications</i>
-                        <p>Notificaciones</p>
+                        <p>Notifications</p>
                     </a>
                 </li>
-
+                <!-- <li class="nav-item active-pro ">
+                      <a class="nav-link" href="./upgrade.html">
+                          <i class="material-icons">unarchive</i>
+                          <p>Upgrade to PRO</p>
+                      </a>
+                  </li> -->
             </ul>
         </div>
     </div>
@@ -125,7 +137,7 @@
                                 <a class="dropdown-item" href="javascript:void(0)">Another One</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">person</i>
                                 <p class="d-lg-none d-md-block">
@@ -140,37 +152,54 @@
                                 </div>
 
                             </div>
-
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- End Navbar -->
-
         <div class="content" >
             <div class="container-fluid">
-                <div class="row" >
-                    <div class="col-xl-4 col-lg-12" th:each="publication: ${publications}">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-success">
-                                <h4><a href="/" th:text="${publication.getTitle()}">Libro 1</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
+                <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-8">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 th:text="${publication.getTitle()}"></h4>
+                        </div>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="/getPDF" th:src="'/getPDF?id='+${publication.getId()}" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <a href="#pablo">
+                                <img class="img" src="../assets/img/faces/marc.jpg" />
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-category" th:text="${publication.getProfessor().getTitleId()}">CEO / Co-Founder</h6>
+                            <h4 class="card-title" th:text="${publication.getProfessor().getName()} +' '+${publication.getProfessor().getSurname()} ">Alec Thompson</h4>
+                            <p class="card-description" th:text="${publication.getProfessor().getDescription()}">
+                            </p>
 
+                        </div>
+                    
+                    </div>
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 th:text="${publication.getTitle()}"></h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
+
 
         <script>
             const x = new Date().getFullYear();

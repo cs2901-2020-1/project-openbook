@@ -59,7 +59,7 @@ public class AuthService {
                     professor.setUsername(updatedProfesor.getUsername());
                     professor.setSurname(updatedProfesor.getSurname());
                     professor.setTitleId(updatedProfesor.getTitleId());
-                    professor.setPassword(updatedProfesor.getPassword());
+                    professor.setPassword(optionalUser.get().getPassword());
                     userRepository.save(professor);
                     return true;
 
@@ -70,7 +70,7 @@ public class AuthService {
                     student.setName(updatedStudent.getName());
                     student.setUsername(updatedStudent.getUsername());
                     student.setSurname(updatedStudent.getSurname());
-                    student.setPassword(updatedStudent.getPassword());
+                    student.setPassword(optionalUser.get().getPassword());
                     userRepository.save(student);
                     return true;
 

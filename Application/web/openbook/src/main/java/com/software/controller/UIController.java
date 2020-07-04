@@ -174,12 +174,28 @@ public class UIController {
     }
 
     @GetMapping("/publication")
-    public String getPublication(Model model, @RequestParam(required = false) Long id){
+    public String getPublication(Model model, @RequestParam(required = false) Long id,  HttpSession session){
+
+        String email = (String) session.getAttribute("EMAIL");
 
         Publication publication  =uiService.getPublicationById(id).get();
+        if (email==null) {
+            model.addAttribute("publication", publication);
+            return "publication";
+        }
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
 
-        model.addAttribute("publication", publication);
-        return "publication";
+        switch (tipo){
+            case "profesor":
+
+                model.addAttribute("publication", publication);
+                return "ProfesorUI/publication";
+            default:
+                return "redirect:/error";
+        }
+
+
     }
 
 
