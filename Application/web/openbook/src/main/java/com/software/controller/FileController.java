@@ -49,15 +49,38 @@ public class FileController {
 
 
     @GetMapping(value = "/getPDF", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<Resource> download(String param) throws IOException {
+    public ResponseEntity<Resource> download(String param, @RequestParam(required = true) Long id) throws IOException {
 
-        Path path = Paths.get(FILE_PATH +"recibo.pdf");
+        Publication publication  =uiService.getPublicationById(id).get();
+
+        String pdf_path = publication.getResource_path();
+
+        Path path = Paths.get(pdf_path);
         ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
+
+
+    @GetMapping(value = "/getImage", produces = MediaType.IMAGE_JPEG_VALUE )
+    public ResponseEntity<Resource> download_image(String param, @RequestParam(required = true) Long id) throws IOException {
+
+        Publication publication  =uiService.getPublicationById(id).get();
+
+        String image_path = publication.getImage_path();
+
+        Path path = Paths.get(image_path);
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
+    }
+
+
+
 
     @GetMapping("/download")
     public ResponseEntity<Resource> downloadFileFromLocal() {
@@ -82,6 +105,8 @@ public class FileController {
         Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
 
         MultipartFile file = pub.getFile();
+
+        MultipartFile image_file = pub.getImage_file();
 
         String title = pub.getTitle();
         String description = pub.getDescription();
@@ -110,13 +135,13 @@ public class FileController {
 
 
         // Guardar el archivo
+        // pdf
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         String resourcePath = FILE_PATH + fileName;
 
         publication.setResource_path(resourcePath);
 
-        uiService.postPublication(publication);
 
         Path path = Paths.get(FILE_PATH + fileName);
         try {
@@ -124,10 +149,26 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/files/download/")
-                .path(fileName)
-                .toUriString();
+
+        // Guardar el archivo
+        // imagen
+
+        fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
+
+        resourcePath = FILE_PATH + fileName;
+
+        publication.setImage_path(resourcePath);
+
+        uiService.postPublication(publication);
+
+        path = Paths.get(FILE_PATH + fileName);
+        try {
+            Files.copy(image_file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         redirectAttributes
                 .addFlashAttribute("mensaje", "¡Publicación Exitosa! El contenido acaba de publicarse")

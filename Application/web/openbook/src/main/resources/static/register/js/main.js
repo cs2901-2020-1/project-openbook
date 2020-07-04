@@ -1,4 +1,3 @@
-
 (function ($) {
     "use strict";
 
@@ -12,7 +11,7 @@
             else {
                 $(this).removeClass('has-val');
             }
-        })    
+        })
     })
 
     /*==================================================================
@@ -35,7 +34,7 @@
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
-           hideValidate(this);
+            hideValidate(this);
         });
     });
 
@@ -71,7 +70,7 @@ function student_registration(){
 
     $("#student_button").css("background-color","white");
     $("#student_button").css("color","black");
-    
+
 
     $("#profesor_button").css("background-color","#009ada");
     $("#profesor_button").css("color","white");
@@ -121,7 +120,7 @@ function profesor_registration(){
 
     $("#student_button").css("background-color","#009ada");
     $("#student_button").css("color","white");
-    
+
     $("#profesor_button").css("background-color","white");
 
     $("#profesor_button").css("color","black");

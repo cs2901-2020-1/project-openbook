@@ -91,6 +91,39 @@ public class UIController {
         }
     }
 
+    @GetMapping("/editUser")
+    public String editUser(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        String tipo = user.getTipo();
+
+        switch (tipo){
+            case "profesor":
+                Professor professor = (Professor) user;
+                model.addAttribute("sessionUser",professor);
+                return "ProfesorUI/editUser";
+            case "student":
+                Student student = (Student) user;
+                model.addAttribute("sessionUser",student);
+                return "StudentUI/editUser";
+            case "curador":
+
+                Curator curator = (Curator) user;
+                model.addAttribute("sessionUser",curator);
+                return "CuradorUI/editUser";
+            default:
+                return "redirect:/error";
+        }
+
+    }
+
+
+
 
     @GetMapping("/mochila")
     public String mochila(Model model, HttpSession session){
@@ -141,13 +174,28 @@ public class UIController {
     }
 
     @GetMapping("/publication")
-    public String getPublication(@RequestParam(required = false) Long id, Model model){
+    public String getPublication(Model model, @RequestParam(required = false) Long id,  HttpSession session){
 
-        Publication publication  = uiService.getPublicationById(id).get();
+        String email = (String) session.getAttribute("EMAIL");
 
-        model.addAttribute("publication", publication);
+        Publication publication  =uiService.getPublicationById(id).get();
+        if (email==null) {
+            model.addAttribute("publication", publication);
+            return "publication";
+        }
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
 
-        return "publication";
+        switch (tipo){
+            case "profesor":
+
+                model.addAttribute("publication", publication);
+                return "ProfesorUI/publication";
+            default:
+                return "redirect:/error";
+        }
+
+
     }
 
 

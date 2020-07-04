@@ -5,15 +5,28 @@ import org.springframework.web.multipart.MultipartFile;
 public class pub {
 
     public MultipartFile file;
+    public MultipartFile image_file;
     public String title;
     public String description;
     public String category;
 
-    public pub(MultipartFile file, String title, String description, String category) {
+
+    public pub(MultipartFile file, MultipartFile image_file, String title, String description, String category) {
         this.file = file;
+        this.image_file = image_file;
         this.title = title;
         this.description = description;
         this.category = category;
+    }
+
+
+
+    public MultipartFile getImage_file() {
+        return image_file;
+    }
+
+    public void setImage_file(MultipartFile image_file) {
+        this.image_file = image_file;
     }
 
 
