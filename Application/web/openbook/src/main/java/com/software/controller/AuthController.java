@@ -100,7 +100,6 @@ public class AuthController {
         return "error";
     }
 
-
     @PostMapping(value = "/do_register_curador")
     public String do_register_curador(@ModelAttribute User user, RedirectAttributes redirectAttributes){
         // TO DO

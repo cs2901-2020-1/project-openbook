@@ -80,8 +80,6 @@ public class AuthService {
         return false;
     }
 
-
-
     public void deleteUser(User user){
         userRepository.deleteById(user.getEmail());
     }

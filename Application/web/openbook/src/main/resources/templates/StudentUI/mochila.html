@@ -41,8 +41,8 @@
 
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-            OPEN BOOK
+        <div class="logo"><a href="/inicio" class="simple-text logo-normal">
+            Open Book
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
@@ -55,7 +55,7 @@
                 <li class="nav-item  ">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
-                        <p>User Profile</p>
+                        <p>Perfil</p>
                     </a>
                 </li>
 
@@ -67,12 +67,12 @@
                 </li>
 
 
-                <li class="nav-item ">
+                <!--<li class="nav-item ">
                     <a class="nav-link" href="/notifications">
                         <i class="material-icons">notifications</i>
                         <p>Notificaciones</p>
                     </a>
-                </li>
+                </li>-->
 
             </ul>
         </div>
@@ -82,7 +82,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+                    <h2 class="navbar-brand">Mochila</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -153,6 +153,7 @@
                 <div class="row" >
                     <div class="col-xl-4 col-lg-12" th:each="publication: ${publications}">
                         <div class="card card-chart">
+                            <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Baldor.jpg" alt="Card image cap" style="object-fit: cover; height: 300px;">
                             <div class="card-header card-header-success">
                                 <h4><a href="/" th:text="${publication.getTitle()}">Libro 1</a></h4>
                             </div>
@@ -171,7 +172,8 @@
 
             </div>
         </div>
-
+        <footer class="footer">
+        </footer>
         <script>
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
@@ -179,7 +181,6 @@
         </script>
     </div>
 </div>
-
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.min.js"></script>
 <script src="../assets/js/core/popper.min.js"></script>

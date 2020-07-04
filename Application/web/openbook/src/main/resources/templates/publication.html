@@ -55,7 +55,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+                    <a class="navbar-brand" href="javascript:void(0)">Publicacion</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -131,12 +131,12 @@
                         <div class="card-header card-header-primary">
                             <h4 th:text="${publication.getTitle()}"></h4>
                         </div>
-                        <div class="card-body">
-                            <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                            <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                        <div class="embed-responsive embed-responsive-1by1" >
+                            <iframe class="embed-responsive-item" src="https://guao.org/sites/default/files/biblioteca/%C3%81lgebra%20de%20Baldor.pdf"></iframe>
                         </div>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://guao.org/sites/default/files/biblioteca/%C3%81lgebra%20de%20Baldor.pdf" allowfullscreen></iframe>
+                        <div class="card-body" style="margin-left: 50px;">
+                            <h3 class="card-title" th:text="'By -  ' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} "  style="color: #0b0b0b"></h3>
+                            <p class="card-text" th:text="${publication.getDescription()}" style="color: #0b0b0b"></p>
                         </div>
                     </div>
                 </div>

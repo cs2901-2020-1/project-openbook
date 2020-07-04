@@ -41,7 +41,7 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a href="/inicio" class="simple-text logo-normal">
           Open Book
         </a></div>
       <div class="sidebar-wrapper">
@@ -55,7 +55,7 @@
           <li class="nav-item active ">
             <a class="nav-link" href="/user">
               <i class="material-icons">person</i>
-              <p>User Profile</p>
+              <p>Perfil</p>
             </a>
           </li>
 
@@ -67,12 +67,12 @@
           </li>
 
 
-          <li class="nav-item ">
+          <!--<li class="nav-item ">
             <a class="nav-link" href="/notifications">
               <i class="material-icons">notifications</i>
               <p>Notificaciones</p>
             </a>
-          </li>
+          </li>-->
 
         </ul>
       </div>
@@ -82,7 +82,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:void(0)" th:text="${sessionUser.getUsername()}" ></a>
+            <h2 class="navbar-brand">Perfil</h2>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
             <span class="sr-only">Toggle navigation</span>
@@ -150,10 +150,10 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Hola Estudiante</h4>
+                  <h4 class="card-title">Hola <span th:text="${sessionUser.getName()}"></span> <span th:text="${sessionUser.getSurname()}"></span></h4>
                   <p class="card-category">Estos son los datos de su cuenta</p>
                 </div>
                 <div class="card-body">
@@ -167,53 +167,7 @@
                       </div>
 
                     </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Username :</span>
-                          <span th:text="${sessionUser.getUsername()}"></span>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Nombres :</span>
-                          <span th:text="${sessionUser.getName()}"></span>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Apellidos :</span>
-                          <span th:text="${sessionUser.getSurname()}"></span>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Escuela :</span>
-                          <span th:text="${sessionUser.getSchool()}"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="wrap-input100">
-                          <span class="label-input100">Grado :</span>
-                          <span th:text="${sessionUser.getGrade()}"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                    <!--<button type="submit" class="btn btn-primary pull-right">Update Profile</button>-->
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -222,7 +176,8 @@
           </div>
         </div>
       </div>
-
+      <footer class="footer">
+      </footer>
       <script>
         const x = new Date().getFullYear();
         let date = document.getElementById('date');
@@ -230,7 +185,6 @@
       </script>
     </div>
   </div>
-
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
