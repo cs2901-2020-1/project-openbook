@@ -1,6 +1,9 @@
 package com.software.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -26,6 +29,9 @@ public class User {
 
     @Column(name = "status", length = 15)
     private String status;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Likes> like = new HashSet<>();
 
     public User(){
 
@@ -90,5 +96,13 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Set<Likes> getLike() {
+        return like;
+    }
+
+    public void setLike(Set<Likes> like) {
+        this.like = like;
     }
 }
