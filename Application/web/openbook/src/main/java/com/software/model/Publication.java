@@ -30,6 +30,14 @@ public class Publication extends AuditModel {
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
+
+
+    @Column(name = "image_path",length = 200)
+    private String image_path;
+
+
+
+
     //@ManyToOne(fetch = FetchType.LAZY) //Don't retrieve the object
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
@@ -83,6 +91,13 @@ public class Publication extends AuditModel {
     public Publication() {
     }
 
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
 
     public Long getId() {
         return id;
