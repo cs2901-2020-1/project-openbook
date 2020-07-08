@@ -4,7 +4,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,13 +30,20 @@ public class Publication extends AuditModel {
     @Column(name = "resource_path",length = 200)
     private String resource_path;
 
+
+
+    @Column(name = "image_path",length = 200)
+    private String image_path;
+
+
+
+
     //@ManyToOne(fetch = FetchType.LAZY) //Don't retrieve the object
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Professor professor;
 
-    //private Curator curator; /missing
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
@@ -53,6 +62,21 @@ public class Publication extends AuditModel {
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private Set<Tag> manyTags = new HashSet<>();
 
+    private Boolean verified;
+
+    @ManyToOne
+    @JoinColumn(name = "curator_id")
+    private Curator curator;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date curationDate = null;
+
+    @OneToMany(mappedBy = "publicationLike")
+    private List<Likes> publicationLike;
+
+    @Column(name = "visits")
+    private long visits = 0;
+
     public Publication(String title, String description, float ranking, String resource_path, Professor professor,
                        Category category) {
         this.title = title;
@@ -61,11 +85,19 @@ public class Publication extends AuditModel {
         this.resource_path = resource_path;
         this.professor = professor;
         this.category = category;
+        this.verified = false;
     }
 
     public Publication() {
     }
 
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
 
     public Long getId() {
         return id;
@@ -137,6 +169,46 @@ public class Publication extends AuditModel {
 
     public void setManyTags(Set<Tag> manyTags) {
         this.manyTags = manyTags;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
+
+    public void setCurator(Curator curator) {
+        this.curator = curator;
+    }
+
+    public void setCurationDate(Date curationDate) {
+        this.curationDate = curationDate;
+    }
+
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public Curator getCurator() {
+        return curator;
+    }
+
+    public Date getCurationDate() {
+        return curationDate;
+    }
+
+    public List<Likes> getPublicationLike() {
+        return publicationLike;
+    }
+
+    public void setPublicationLike(List<Likes> publicationLike) {
+        this.publicationLike = publicationLike;
+    }
+
+    public long getVisits() {
+        return visits;
+    }
+
+    public void setVisits(long visits) {
+        this.visits = visits;
     }
 
     @Override

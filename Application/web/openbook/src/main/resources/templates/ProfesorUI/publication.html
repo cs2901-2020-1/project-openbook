@@ -37,16 +37,55 @@
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo"><a href="/" class="simple-text logo-normal">
-            Open Book
+            OPEN BOOK
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item active ">
-                    <a class="nav-link" href="/">
-                        <i class="material-icons">dashboard</i>
+                <li class="nav-item  active">
+                    <a class="nav-link" href="/inicio">
+                        <i class="material-icons">home</i>
                         <p>Pagina Principal</p>
                     </a>
                 </li>
+                <li class="nav-item  ">
+                    <a class="nav-link" href="/user">
+                        <i class="material-icons">person</i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/mochila">
+                        <i class="material-icons">backpack</i>
+                        <p>Mochila</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/publicarContenido">
+                        <i class="material-icons">content_paste</i>
+                        <p>Publicar Contenido</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/publications">
+                        <i class="material-icons">publication</i>
+                        <p>Mis Publicaciones</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/notifications">
+                        <i class="material-icons">notifications</i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+                <!-- <li class="nav-item active-pro ">
+                      <a class="nav-link" href="./upgrade.html">
+                          <i class="material-icons">unarchive</i>
+                          <p>Upgrade to PRO</p>
+                      </a>
+                  </li> -->
             </ul>
         </div>
     </div>
@@ -55,7 +94,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Pagina Principal</a>
+                    <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -107,13 +146,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <div >
-                                    <form th:action="@{/login}" method="post">
-                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Iniciar Sesion" />
-                                    </form>
-                                </div>
-                                <div >
-                                    <form th:action="@{/register}" method="post">
-                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Registrarse" />
+                                    <form th:action="@{/destroy}" method="post">
+                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Cerrar Sesion" />
                                     </form>
                                 </div>
 
@@ -126,30 +160,47 @@
         <!-- End Navbar -->
         <div class="content" >
             <div class="container-fluid">
-                <div class="row" >
-                    <div class="col-xl-4 col-lg-12" th:each="publication: ${publications}">
-                        <div class="card card-chart">
-                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                            <div class="card-header card-header-success">
-                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
-                                </div>
-                            </div>
+                <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-8">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 th:text="${publication.getTitle()}"></h4>
+                        </div>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="/getPDF" th:src="'/getPDF?id='+${publication.getId()}" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <a href="#pablo">
+                                <img class="img" src="../assets/img/faces/marc.jpg" />
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-category" th:text="${publication.getProfessor().getTitleId()}">CEO / Co-Founder</h6>
+                            <h4 class="card-title" th:text="${publication.getProfessor().getName()} +' '+${publication.getProfessor().getSurname()} ">Alec Thompson</h4>
+                            <p class="card-description" th:text="${publication.getProfessor().getDescription()}">
+                            </p>
 
+                        </div>
+                    
+                    </div>
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 th:text="${publication.getTitle()}"></h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
-        <footer class="footer">
-        </footer>
+
+
         <script>
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
