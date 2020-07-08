@@ -74,13 +74,13 @@
                     </a>
                 </li>
 
-                <li class="nav-item ">
+                <!--<li class="nav-item ">
                     <a class="nav-link" href="/notifications">
                         <i class="material-icons">notifications</i>
                         <p>Notifications</p>
                     </a>
                 </li>
-                <!-- <li class="nav-item active-pro ">
+                 <li class="nav-item active-pro ">
                       <a class="nav-link" href="./upgrade.html">
                           <i class="material-icons">unarchive</i>
                           <p>Upgrade to PRO</p>
@@ -175,7 +175,7 @@
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="#pablo">
-                                <img class="img" src="../assets/img/faces/marc.jpg" />
+                                <img class="img" th:src="'/getImageProfesor?id='+${publication.getProfessor().getEmail()}" />
                             </a>
                         </div>
                         <div class="card-body">

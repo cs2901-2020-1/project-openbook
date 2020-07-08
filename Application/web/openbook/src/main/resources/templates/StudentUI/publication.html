@@ -143,17 +143,40 @@
         <!-- End Navbar -->
         <div class="content" >
             <div class="container-fluid">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 th:text="${publication.getTitle()}"></h4>
+                <div class="row">
+                    <div class="col-xl-8 col-lg-8 col-md-8">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 th:text="${publication.getTitle()}"></h4>
+                            </div>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="/getPDF" th:src="'/getPDF?id='+${publication.getId()}" allowfullscreen></iframe>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                            <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <a href="#pablo">
+                                    <img class="img" th:src="'/getImageProfesor?id='+${publication.getProfessor().getEmail()}" />
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-category" th:text="${publication.getProfessor().getTitleId()}">CEO / Co-Founder</h6>
+                                <h4 class="card-title" th:text="${publication.getProfessor().getName()} +' '+${publication.getProfessor().getSurname()} ">Alec Thompson</h4>
+                                <p class="card-description" th:text="${publication.getProfessor().getDescription()}">
+                                </p>
+
+                            </div>
+
                         </div>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://guao.org/sites/default/files/biblioteca/%C3%81lgebra%20de%20Baldor.pdf" allowfullscreen></iframe>
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 th:text="${publication.getTitle()}"></h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
