@@ -79,6 +79,20 @@ public class FileController {
                 .body(resource);
     }
 
+    @GetMapping(value = "/getImageProfesor", produces = MediaType.IMAGE_JPEG_VALUE )
+    public ResponseEntity<Resource> download_image_professor(String param, @RequestParam(required = true) String id ) throws IOException {
+
+        Professor user  = (Professor) authService.getUser(id).get();
+
+        String image_path = user.getPhotoPath();
+
+        Path path = Paths.get(image_path);
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
+    }
 
 
 
@@ -167,8 +181,6 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
         redirectAttributes
                 .addFlashAttribute("mensaje", "¡Publicación Exitosa! El contenido acaba de publicarse")

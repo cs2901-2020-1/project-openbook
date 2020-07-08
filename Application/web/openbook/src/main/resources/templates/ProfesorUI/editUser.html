@@ -181,9 +181,9 @@
                                         <div class="col-md-4">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">Nombres:</span>
+                                                    <span class="input-group-text" >Nombres:</span>
                                                 </div>
-                                                <input type="text" class="form-control" name="name" th:placeholder="${sessionUser.getName()}" aria-label="Name" aria-describedby="basic-addon1">
+                                                <input type="text" class="form-control" name="name" th:value="${sessionUser.getName()}" aria-label="Name" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
                                     </div>
@@ -191,9 +191,9 @@
                                         <div class="col-md-4">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">Apellidos:</span>
+                                                    <span class="input-group-text" >Apellidos:</span>
                                                 </div>
-                                                <input type="text" class="form-control" name="surname" th:placeholder="${sessionUser.getSurname()}" aria-label="Name" aria-describedby="basic-addon1">
+                                                <input type="text" class="form-control" name="surname" th:value="${sessionUser.getSurname()}" aria-label="Name" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
                                     </div>
