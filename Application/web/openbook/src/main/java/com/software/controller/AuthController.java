@@ -87,6 +87,8 @@ public class AuthController {
     @PostMapping(value = "/do_register_profesor")
     public String do_register_profesor(@ModelAttribute Professor professor, RedirectAttributes redirectAttributes){
         // TO DO
+
+        professor.setPhotoPath("src/main/resources/static/images/picture_default.jpg");
         if(authService.registerUser(professor)) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "Registro Exitoso: Ya puedes acceder a nuestra plataforma")
