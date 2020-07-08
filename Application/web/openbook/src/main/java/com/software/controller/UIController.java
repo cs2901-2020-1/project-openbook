@@ -191,6 +191,10 @@ public class UIController {
 
                 model.addAttribute("publication", publication);
                 return "ProfesorUI/publication";
+            case "student":
+                model.addAttribute("publication", publication);
+                return "StudentUI/publication";
+
             default:
                 return "redirect:/error";
         }
@@ -202,6 +206,7 @@ public class UIController {
     @GetMapping("/publicarContenido")
     public String publicarContenido(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
+
 
         if (email==null)
             return "redirect:/error";

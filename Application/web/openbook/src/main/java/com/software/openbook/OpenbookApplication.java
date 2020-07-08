@@ -19,7 +19,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class OpenbookApplication implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
-
     public static void main(String[] args) {
         SpringApplication.run(OpenbookApplication.class, args);
     }

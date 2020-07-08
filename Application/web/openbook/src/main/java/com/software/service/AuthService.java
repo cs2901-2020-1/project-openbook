@@ -43,6 +43,27 @@ public class AuthService {
 
     }
 
+    public boolean updateProfesorDescription(User user) {
+
+        Optional<User> optionalUser  = userRepository.findById(user.getEmail());
+
+        if(optionalUser.isPresent()){
+
+            Professor currentProfesor = (Professor)optionalUser.get();
+
+            Professor updatedProfesor = (Professor) user;
+            if (!updatedProfesor.getPhotoPath().equals("")){
+                currentProfesor.setPhotoPath(updatedProfesor.getPhotoPath());
+            }
+            currentProfesor.setDescription(updatedProfesor.getDescription());
+            userRepository.save(currentProfesor);
+            return true;
+        }
+        return false;
+
+    }
+
+
     public boolean updateUser(User user) {
 
         Optional<User> optionalUser  = userRepository.findById(user.getEmail());
@@ -52,15 +73,15 @@ public class AuthService {
 
             switch (tipo){
                 case "profesor":
+                    Professor currentProfesor =  (Professor) optionalUser.get();
                     Professor updatedProfesor = (Professor) user;
-                    Professor professor = new Professor();
-                    professor.setEmail(updatedProfesor.getEmail());
-                    professor.setName(updatedProfesor.getName());
-                    professor.setUsername(updatedProfesor.getUsername());
-                    professor.setSurname(updatedProfesor.getSurname());
-                    professor.setTitleId(updatedProfesor.getTitleId());
-                    professor.setPassword(optionalUser.get().getPassword());
-                    userRepository.save(professor);
+                    currentProfesor.setEmail(updatedProfesor.getEmail());
+                    currentProfesor.setName(updatedProfesor.getName());
+                    currentProfesor.setUsername(updatedProfesor.getUsername());
+                    currentProfesor.setSurname(updatedProfesor.getSurname());
+                    currentProfesor.setTitleId(updatedProfesor.getTitleId());
+                    currentProfesor.setPassword(optionalUser.get().getPassword());
+                    userRepository.save(currentProfesor);
                     return true;
 
                 case "student":
