@@ -202,6 +202,25 @@ public class UIController {
 
     }
 
+    @GetMapping("/dashboardui")
+    public String dashboard(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        switch (tipo){
+            case "profesor":
+                return "ProfesorUI/dashboard";
+
+            default:
+                return "redirect:/error";
+        }
+
+    }
 
     @GetMapping("/publicarContenido")
     public String publicarContenido(Model model, HttpSession session){
