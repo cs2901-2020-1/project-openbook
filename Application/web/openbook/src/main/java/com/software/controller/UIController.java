@@ -4,20 +4,19 @@ package com.software.controller;
 import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.CommentService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,6 +27,9 @@ public class UIController {
 
     @Autowired
     private UIService uiService;
+
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/user")
     public String userProfile(Model model, HttpSession session){
@@ -178,26 +180,42 @@ public class UIController {
 
         String email = (String) session.getAttribute("EMAIL");
 
+        List<Comment> comments_to_filter = commentService.getCommentsPublication(id);
+
+        List<Comment> comments = new ArrayList<Comment>();
+
+        for (Comment c: comments_to_filter) {
+            if(c.getParentComment() == null){
+                comments.add(c);
+            }
+        }
+
         Publication publication  =uiService.getPublicationById(id).get();
         if (email==null) {
+            model.addAttribute("comments", comments);
             model.addAttribute("publication", publication);
             return "publication";
         }
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
+
+
+
         switch (tipo){
             case "profesor":
-
+                model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
                 return "ProfesorUI/publication";
             case "student":
+                model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
                 return "StudentUI/publication";
 
             default:
                 return "redirect:/error";
         }
+
 
 
     }
@@ -226,7 +244,6 @@ public class UIController {
 
 
 
-
     @GetMapping("/publications")
     public String getMyPublications(Model model , HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
@@ -247,6 +264,120 @@ public class UIController {
             return "ProfesorUI/publicaciones";
         }
         return "redirect:/error";
+
+    }
+
+
+    @PostMapping("/postComment")
+    public String postComment(@ModelAttribute com com, Model model,  HttpSession session){
+
+        Comment comment = new Comment();
+
+        Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        Long id_pub = com.getId_pub();
+
+        Publication publication  =uiService.getPublicationById(id_pub).get();
+
+        if (email==null) {
+            // alerta de que no está logueado
+            model.addAttribute("publication", publication);
+            return "publication";
+        }
+
+
+        User user_author = authService.getUser(email).get();
+
+
+
+        comment.setText_comment(com.getText_comment());
+        comment.setCommentAuthor(user_author);
+        comment.setPublication(new Publication());
+
+        commentService.addCommentToPublication(id_pub, comment);
+
+
+
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        List<Comment> comments_to_filter = commentService.getCommentsPublication(id_pub);
+
+        List<Comment> comments = new ArrayList<Comment>();
+
+        for (Comment c: comments_to_filter) {
+            if(c.getParentComment() == null){
+                comments.add(c);
+            }
+        }
+
+        switch (tipo){
+            case "profesor":
+                model.addAttribute("comments", comments);
+                model.addAttribute("publication", publication);
+                return "ProfesorUI/publication";
+            case "student":
+                model.addAttribute("comments", comments);
+                model.addAttribute("publication", publication);
+                return "StudentUI/publication";
+
+            default:
+                return "redirect:/error";
+        }
+
+    }
+
+
+    @PostMapping("/replyComment")
+    public String replyComment(@ModelAttribute com com, Model model,  HttpSession session){
+
+        Long id_comment_to = com.getId_comment_to();
+
+        Comment comment = new Comment();
+        comment.setText_comment(com.getText_comment());
+
+        //se necesita el id del comentario y el id del comentario a responder
+
+        String email = (String) session.getAttribute("EMAIL");
+        User user = authService.getUser(email).get();
+        comment.setCommentAuthor(user);
+        commentService.addCommentToComment(id_comment_to, comment);
+
+
+        String tipo = user.getTipo();
+
+        Long id_pub = com.getId_pub();
+
+        Publication publication  =uiService.getPublicationById(id_pub).get();
+
+        List<Comment> comments_to_filter = commentService.getCommentsPublication(id_pub);
+
+        List<Comment> comments = new ArrayList<Comment>();
+
+        for (Comment c: comments_to_filter) {
+            if(c.getParentComment() == null){
+                comments.add(c);
+            }
+        }
+
+
+
+        switch (tipo){
+            case "profesor":
+                model.addAttribute("comments", comments);
+                model.addAttribute("publication", publication);
+                return "ProfesorUI/publication";
+            case "student":
+                model.addAttribute("comments", comments);
+                model.addAttribute("publication", publication);
+                return "StudentUI/publication";
+
+            default:
+                return "redirect:/error";
+        }
+
 
     }
 

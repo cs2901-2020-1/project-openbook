@@ -82,16 +82,27 @@ public class FileController {
     @GetMapping(value = "/getImageProfesor", produces = MediaType.IMAGE_JPEG_VALUE )
     public ResponseEntity<Resource> download_image_professor(String param, @RequestParam(required = true) String id ) throws IOException {
 
-        Professor user  = (Professor) authService.getUser(id).get();
+        User user  =  authService.getUser(id).get();
 
-        String image_path = user.getPhotoPath();
 
-        Path path = Paths.get(image_path);
-        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+        String tipo = user.getTipo();
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
+        switch (tipo){
+            case "profesor":
+                String image_path = ((Professor) user).getPhotoPath();
+                Path path = Paths.get(image_path);
+                ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);
+            default:
+                Path path2 = Paths.get("src/main/resources/static/images/picture_default.jpg");
+                ByteArrayResource resource2 = new ByteArrayResource(Files.readAllBytes(path2));
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource2);
+
+        }
     }
 
 

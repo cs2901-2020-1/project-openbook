@@ -35,6 +35,8 @@ public class Comment extends AuditModel{
     @ManyToOne
     private Comment parentComment;
 
+
+
     @OneToOne
     private User commentAuthor;
 
@@ -46,7 +48,7 @@ public class Comment extends AuditModel{
     }
 
     public Comment() {
-
+        this.parentComment = null;
     }
 
     public Long getId() {
@@ -63,6 +65,14 @@ public class Comment extends AuditModel{
 
     public void setText_comment(String text_comment) {
         this.text_comment = text_comment;
+    }
+
+    public User getCommentAuthor() {
+        return commentAuthor;
+    }
+
+    public void setCommentAuthor(User commentAuthor) {
+        this.commentAuthor = commentAuthor;
     }
 
     public float getValoration() {
