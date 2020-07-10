@@ -383,7 +383,7 @@ public class UIController {
     @PostMapping("/destroy")
     public String destroySession(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "/login";
+        return "redirect:/";
     }
 
     @GetMapping("/error")

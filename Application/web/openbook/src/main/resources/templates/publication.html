@@ -126,18 +126,100 @@
         <!-- End Navbar -->
         <div class="content" >
             <div class="container-fluid">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 th:text="${publication.getTitle()}"></h4>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-8">
+                            <div class="card">
+                                <div class="card-header card-header-primary">
+                                    <h4 th:text="${publication.getTitle()}"></h4>
+                                </div>
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="/getPDF" th:src="'/getPDF?id='+${publication.getId()}" allowfullscreen></iframe>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="card card-profile">
+                                <div class="card-avatar">
+                                    <a href="#pablo">
+                                        <img class="img" th:src="'/getImageProfesor?id='+${publication.getProfessor().getEmail()}" />
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-category" th:text="${publication.getProfessor().getTitleId()}">CEO / Co-Founder</h6>
+                                    <h4 class="card-title" th:text="${publication.getProfessor().getName()} +' '+${publication.getProfessor().getSurname()} ">Alec Thompson</h4>
+                                    <p class="card-description" th:text="${publication.getProfessor().getDescription()}">
+                                    </p>
 
-                        <div class="embed-responsive embed-responsive-1by1" >
-                            <iframe class="embed-responsive-item" src="https://guao.org/sites/default/files/biblioteca/%C3%81lgebra%20de%20Baldor.pdf"></iframe>
+                                </div>
+
+                            </div>
+                            <div class="card">
+                                <div class="card-header card-header-primary">
+                                    <h4 th:text="${publication.getTitle()}"></h4>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" style="margin-left: 50px;">
-                            <h3 class="card-title" th:text="'By -  ' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} "  style="color: #0b0b0b"></h3>
-                            <p class="card-text" th:text="${publication.getDescription()}" style="color: #0b0b0b"></p>
+                        <div class="container mb-5 mt-5">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center mb-5"> Comentarios </h3>
+
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-md-12" th:each="comment : ${comments}">
+                                                <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" th:src="'/getImageProfesor?id='+${comment.getCommentAuthor().getEmail()}"  />
+                                                    <div class="media-body">
+                                                        <div class="row">
+                                                            <div class="col-8 d-flex">
+                                                                <h5 th:text="${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}">Maria Smantha</h5> <span th:text="'- ' +${comment.getCreatedAt()}"></span>
+                                                            </div>
+                                                        </div>
+                                                        <p th:text="${comment.getText_comment()}">
+                                                            It is a long established fact that a reader will be distracted by the readable content of a page.
+                                                        </p>
+                                                        <div th:each="subcomment : ${comment.getSubComments()}">
+                                                            <div class="media mt-4">
+                                                                <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" th:src="'/getImageProfesor?id='+${subcomment.getCommentAuthor().getEmail()}"  /></a>
+                                                                <div class="media-body">
+                                                                    <div class="row">
+                                                                        <div class="col-12 d-flex">
+                                                                            <h5 th:text="${subcomment.getCommentAuthor().getName()}+' '+${subcomment.getCommentAuthor().getSurname()}">Simona Disa</h5> <span th:text="'- '+${subcomment.getCreatedAt()}">- 3 hours ago</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p th:text="${subcomment.getText_comment()}">
+                                                                        letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-meta">
+
+                                                            <div class="in collapse" th:id="'comment'+${comment.getId()}"  aria-expanded="true" style="">
+                                                                <form action="/replyComment" method="post">
+                                                                    <div class="form-group">
+
+                                                                        <textarea name="text_comment" th:placeholder="'responde a '+${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}" class="form-control" rows="3"></textarea>
+                                                                    </div>
+                                                                    <input style="display: none" name="id_pub" th:value="${publication.getId()}">
+                                                                    <input style="display: none" name="id_comment_to" th:value="${comment.getId()}">
+                                                                    <button type="submit" class="btn btn-primary pull-right">Responder</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
