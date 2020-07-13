@@ -169,8 +169,8 @@ public class PublicationService {
         return publicationRepository.findPublicationsFullTextSearchByDescription(searchStr, pageable);
     }
 
-    public Page<Publication> getLastNPublications(int number) {
-        return publicationRepository.findAll(PageRequest.of(0, number,
+    public Page<Publication> getLastNPublications(int page, int number) {
+        return publicationRepository.findAll(PageRequest.of(page, number,
                 Sort.by(Sort.Direction.DESC,"createdAt")));
     }
 

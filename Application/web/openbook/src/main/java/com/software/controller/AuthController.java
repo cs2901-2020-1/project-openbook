@@ -3,10 +3,12 @@ package com.software.controller;
 import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.PublicationService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -37,6 +39,9 @@ public class AuthController {
 
     @Autowired
     private UIService uiService;
+
+    @Autowired
+    private PublicationService publiService;
 
     @RequestMapping("/login")
     public String login(Model model){
@@ -188,8 +193,12 @@ public class AuthController {
         model.addAttribute("sessionMessages", messages);
 
         List<Publication> publications = uiService.getAllPublications();
+        Page<Publication> publicationsCarousel_0 = publiService.getLastNPublications(0,3);
+        Page<Publication> publicationsCarousel_1 = publiService.getLastNPublications(1,3);
 
         model.addAttribute("publications", publications);
+        model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
+        model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
         return "index";
     }
 
