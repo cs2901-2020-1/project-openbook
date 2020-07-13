@@ -175,7 +175,7 @@
                 <div class="card-header card-header-success">
                   <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="min-height: 12rem;">
                   <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                   <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                 </div>

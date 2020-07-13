@@ -188,13 +188,19 @@
                     <div class="card-header card-header-success">
                       <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 10rem;">
                       <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                       <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                     </div>
                     <div class="card-footer">
                       <div class="stats">
                         <i class="material-icons">local_offer</i> Verify
+                      </div>
+                      <div class="stats">
+                        <form action="/saveInBackPack" method="post">
+                          <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
+                          <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -211,13 +217,19 @@
                     <div class="card-header card-header-success">
                       <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 10rem;">
                       <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                       <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                     </div>
                     <div class="card-footer">
                       <div class="stats">
                         <i class="material-icons">local_offer</i> Verify
+                      </div>
+                      <div class="stats">
+                        <form action="/saveInBackPack" method="post">
+                          <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
+                          <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -249,7 +261,7 @@
                 <div class="card-header card-header-success">
                   <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="min-height: 12rem;">
                   <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                   <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                 </div>
@@ -269,6 +281,25 @@
           </div>
 
         </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
 
       <footer class="footer">

@@ -23,10 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class AuthController {
@@ -183,7 +180,7 @@ public class AuthController {
 
 
     @GetMapping("/")
-    public String process(Model model, HttpSession session) {
+    public String process(@RequestParam Map<String, Object> params, Model model, HttpSession session) {
         @SuppressWarnings("unchecked")
         List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
 
@@ -214,7 +211,4 @@ public class AuthController {
         request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
         return "redirect:/";
     }
-
-
-
 }
