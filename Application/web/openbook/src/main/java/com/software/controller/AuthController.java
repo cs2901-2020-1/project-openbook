@@ -31,6 +31,7 @@ public class AuthController {
 
     public String FILE_PATH = "src/main/resources/files/";
 
+    private static final Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
 
     @Autowired
     private AuthService authService;
@@ -57,6 +58,7 @@ public class AuthController {
 
         request.getSession().setAttribute("EMAIL", user.getEmail());
 
+        log.info(tipo);
         return "redirect:/inicio";
 
         //verify the tipo atribute of user

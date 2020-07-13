@@ -22,6 +22,11 @@ public class Curator extends User{
         super(email, username, password, name, surname);
     }
 
+    @Override
+    public String getTipo(){
+        return "curador";
+    }
+
     public Set<Publication> getPublicationsCurated() {
         return publicationsCurated;
     }

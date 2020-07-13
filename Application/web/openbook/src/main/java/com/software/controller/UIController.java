@@ -5,6 +5,7 @@ import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
 import com.software.service.CommentService;
+import com.software.service.PublicationService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,12 @@ public class UIController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private PublicationService publicationService;
+
+
+    private static final Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
 
     @GetMapping("/user")
     public String userProfile(Model model, HttpSession session){
@@ -62,11 +69,63 @@ public class UIController {
 
     }
 
+    @GetMapping("/revisionsToDo")
+    public String revisionToDo(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        log.info(email);
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        String tipo = user.getTipo();
+
+        List<Publication> publications = publicationService.getPublicationsToVerifyByCurator(email);
+
+        model.addAttribute("publications", publications);
+
+        switch (tipo){
+            case "curador":
+                return "CuradorUI/revisionsToDo";
+            default:
+                return "redirect:/error";
+        }
+    }
+
+
+    @GetMapping("/getRevisions")
+    public String getRevisions(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        log.info(email);
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        String tipo = user.getTipo();
+
+        List<Publication> publications = publicationService.getPublicationsVerifiedByCurator(email);
+
+        model.addAttribute("publications", publications);
+
+        switch (tipo){
+            case "curador":
+                return "CuradorUI/revisions";
+            default:
+                return "redirect:/error";
+        }
+    }
 
 
     @GetMapping("/inicio")
     public String inicio(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
+
+        log.info(email);
 
         if (email==null)
             return "redirect:/error";
@@ -86,7 +145,7 @@ public class UIController {
             case "student":
                 return "StudentUI/inicio";
             case "curador":
-                return "redirect:/curador";
+                return "CuradorUI/inicio";
             default:
                 return "redirect:/error";
         }
@@ -265,6 +324,9 @@ public class UIController {
         return "redirect:/error";
 
     }
+
+
+
 
 
     @PostMapping("/postComment")

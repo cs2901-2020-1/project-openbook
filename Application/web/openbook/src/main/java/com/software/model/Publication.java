@@ -24,6 +24,14 @@ public class Publication extends AuditModel {
     @Column(name = "description",length = 500)
     private String description;
 
+
+
+    @Column(name = "estado")
+    private Integer estado;
+
+    // 0 means not verified, 1 means in process, 2 means verified
+
+
     @Column(name = "ranking", length = 10, precision=4)
     private float ranking;
 
@@ -64,6 +72,9 @@ public class Publication extends AuditModel {
 
     private Boolean verified;
 
+
+
+
     @ManyToOne
     @JoinColumn(name = "curator_id")
     private Curator curator;
@@ -86,9 +97,18 @@ public class Publication extends AuditModel {
         this.professor = professor;
         this.category = category;
         this.verified = false;
+        this.estado = 0;
     }
 
     public Publication() {
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public String getImage_path() {
