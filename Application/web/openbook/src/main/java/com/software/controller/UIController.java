@@ -10,6 +10,7 @@ import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -135,8 +136,12 @@ public class UIController {
         String tipo = user.getTipo();
 
         List<Publication> publications = uiService.getAllPublications();
+        Page<Publication> publicationsCarousel_0 = publicationService.getLastNPublications(0,3);
+        Page<Publication> publicationsCarousel_1 = publicationService.getLastNPublications(1,3);
 
         model.addAttribute("publications", publications);
+        model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
+        model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
 
 
         switch (tipo){
