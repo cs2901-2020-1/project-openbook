@@ -3,6 +3,9 @@ import com.software.model.*;
 
 import com.software.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -154,6 +157,21 @@ public class PublicationService {
         Specification<Likes> specification = Specification.where(specUser).and(specPub);
 
         return likeRepository.findAll(specification);
+    }
+
+    public Page<Publication> findPublicationByKeywords(String keywords, Pageable pageable) {
+        String searchStr="";
+        if (!keywords.equals("")) {
+            searchStr = keywords.replaceAll(" ", ":*&");
+            searchStr = searchStr + ":*";
+        }
+
+        return publicationRepository.findPublicationsFullTextSearchByDescription(searchStr, pageable);
+    }
+
+    public Page<Publication> getLastNPublications(int number) {
+        return publicationRepository.findAll(PageRequest.of(0, number,
+                Sort.by(Sort.Direction.DESC,"createdAt")));
     }
 
     public List<Likes> getLikesFromPublication(Long publicationId) {

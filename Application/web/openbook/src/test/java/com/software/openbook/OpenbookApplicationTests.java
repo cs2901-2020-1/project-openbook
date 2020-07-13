@@ -5,6 +5,9 @@ import com.software.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.lang.reflect.Array;
 import java.util.HashSet;
@@ -115,10 +118,10 @@ class OpenbookApplicationTests {
 //
 //        Set<Tag> tagslist = new HashSet<>();
 //        String tagName1 = "curso_2020";
-//        String tagName2 = "matematicas";
+//        String tagName2 = "algebra";
 //        String emailProfessor = "yamilet@utec.edu.pe";
 //        int idCategory = 2;
-//        int n = 100;
+//        int n = 10;
 //
 //        Tag tag1 = new Tag(tagName1);
 //        Tag tag2 = new Tag(tagName2);
@@ -136,8 +139,9 @@ class OpenbookApplicationTests {
 //        Publication posts[] = new Publication[n];
 //
 //        for(int i = 0; i < n; i++) {
-//            posts[i] = new Publication("PDF", "Manual mate parte " + i + " con tags",
-//                    0, "\\server\\folder\\test"+i+".pdf",
+//            int num = i+1;
+//            posts[i] = new Publication("PDF", "Capítulo Algebra " + num + " con tags",
+//                    0, "\\server\\folder\\test"+num+".pdf",
 //                    (Professor) optionalProfessor.get(), optionalCategory.get());
 //
 //            tag1.getPublications().add(posts[i]);
@@ -343,7 +347,32 @@ class OpenbookApplicationTests {
 //            System.out.println(pub.getId()+"  "+ pub.getRanking());
 //        }
 //    }
-
+//
+//    @Test
+//    public void printPublicationsFullTextSearch() {
+//        String searchStr = "Yami alge cap";
+//
+//        System.out.println("Searching: " + searchStr);
+//        Page<Publication> publications = publiService.findPublicationByKeywords(searchStr,
+//                PageRequest.of(0, 4));
+//        System.out.println("Total Pages: " + publications.getTotalPages());
+//        System.out.println("Total Elements: " + publications.getTotalElements());
+//        for (Publication publication:publications) {
+//            System.out.println(publication.getId() + " "+ publication.getDescription());
+//        }
+//    }
+//
+//    @Test
+//    public void printLastNPublications() {
+//        int numberPub = 5;
+//
+//        Page<Publication> publications = publiService.getLastNPublications(numberPub);
+//        System.out.println("Showing last " + numberPub + " publications");
+//        for (Publication publication:publications) {
+//            System.out.println(publication.getId() + " "+ publication.getDescription()
+//                    + " " + publication.getCreatedAt());
+//        }
+//    }
 
     public void test_subcomment(Long commentId) {
         String studentmail = "mit.mosquera@lamerced.edu.pe";
