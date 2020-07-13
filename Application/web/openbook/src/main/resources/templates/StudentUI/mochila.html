@@ -155,7 +155,7 @@
                         <div class="card card-chart">
                             <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
                             <div class="card-header card-header-success">
-                                <h4><a href="/" th:text="${publication.getTitle()}">Libro 1</a></h4>
+                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                             </div>
                             <div class="card-body">
                                 <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -288,7 +287,7 @@ public class UIController {
 
 
     @PostMapping("/postComment")
-    public String postComment(@ModelAttribute com com, Model model,  HttpSession session){
+    public String postComment(@ModelAttribute commentFile commentFile, Model model, HttpSession session){
 
         Comment comment = new Comment();
 
@@ -296,7 +295,7 @@ public class UIController {
 
         String email = (String) session.getAttribute("EMAIL");
 
-        Long id_pub = com.getId_pub();
+        Long id_pub = commentFile.getId_pub();
 
         Publication publication  =uiService.getPublicationById(id_pub).get();
 
@@ -311,7 +310,7 @@ public class UIController {
 
 
 
-        comment.setText_comment(com.getText_comment());
+        comment.setText_comment(commentFile.getText_comment());
         comment.setCommentAuthor(user_author);
         comment.setPublication(new Publication());
 
@@ -350,12 +349,12 @@ public class UIController {
 
 
     @PostMapping("/replyComment")
-    public String replyComment(@ModelAttribute com com, Model model,  HttpSession session){
+    public String replyComment(@ModelAttribute commentFile commentFile, Model model, HttpSession session){
 
-        Long id_comment_to = com.getId_comment_to();
+        Long id_comment_to = commentFile.getId_comment_to();
 
         Comment comment = new Comment();
-        comment.setText_comment(com.getText_comment());
+        comment.setText_comment(commentFile.getText_comment());
 
         //se necesita el id del comentario y el id del comentario a responder
 
@@ -367,7 +366,7 @@ public class UIController {
 
         String tipo = user.getTipo();
 
-        Long id_pub = com.getId_pub();
+        Long id_pub = commentFile.getId_pub();
 
         Publication publication  =uiService.getPublicationById(id_pub).get();
 
@@ -403,7 +402,7 @@ public class UIController {
     @PostMapping("/destroy")
     public String destroySession(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "/login";
+        return "redirect:/";
     }
 
     @GetMapping("/error")

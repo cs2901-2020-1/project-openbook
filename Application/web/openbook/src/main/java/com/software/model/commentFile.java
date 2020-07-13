@@ -1,15 +1,15 @@
 package com.software.model;
 
-public class com {
+public class commentFile {
 
 
-    public com(String text_comment, Long id_pub, Long id_comment_to) {
+    public commentFile(String text_comment, Long id_pub, Long id_comment_to) {
         this.text_comment = text_comment;
         this.id_pub = id_pub;
         this.id_comment_to = id_comment_to;
     }
 
-    public com() {
+    public commentFile() {
     }
 
     private String text_comment;
