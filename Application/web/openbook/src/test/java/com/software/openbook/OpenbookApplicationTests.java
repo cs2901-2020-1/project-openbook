@@ -374,6 +374,30 @@ class OpenbookApplicationTests {
 //                    + " " + publication.getCreatedAt());
 //        }
 //    }
+//    @Test
+//    public void test_getPublicationsCurated() {
+//        String curatorEmail1 = "curator1@utec.edu.pe";
+//
+//        Optional<User> curatorOptional1 = authService.getUser(curatorEmail1);
+//
+//        assertEquals("Curator with " + curatorEmail1 + "not registered", true,
+//                curatorOptional1.isPresent());
+//
+//        List<Publication> pubs = publiService.getPublicationsToVerifyByCurator(curatorEmail1);
+//        System.out.println("Publications pendient for verification");
+//        for(Publication publication: pubs) {
+//            System.out.println(publication.getId() + " " + publication.getDescription());
+//        }
+//        //assertEquals("Wrong number of pendient for verification for " + curatorEmail1, 0, pubs.size());
+//
+//        pubs = publiService.getPublicationsVerifiedByCurator(curatorEmail1);
+//
+//        //assertEquals("Wrong number verified for " + curatorEmail1, 1, pubs.size());
+//        System.out.println("Publications verified");
+//        for(Publication publication: pubs) {
+//            System.out.println(publication.getId() + " " + publication.getDescription());
+//        }
+//    }
 /*
     public void test_subcomment(Long commentId) {
         String studentmail = "mit.mosquera@lamerced.edu.pe";
