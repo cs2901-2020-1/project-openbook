@@ -25,6 +25,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class AuthController {
@@ -195,7 +197,7 @@ public class AuthController {
     }
 
     @GetMapping("/")
-    public String process(Model model, HttpSession session) {
+    public String process(@RequestParam Map<String, Object> params, Model model, HttpSession session) {
         @SuppressWarnings("unchecked")
         List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
 
@@ -204,13 +206,41 @@ public class AuthController {
         }
         model.addAttribute("sessionMessages", messages);
 
-        List<Publication> publications = uiService.getAllPublications();
+        int page;
+        Page<Publication> publications;
+        if(params.get("page") == null) {
+            page = 0;
+            publications = publiService.getLastNPublications(0,20);
+        } else {
+            page = Integer.valueOf(params.get("page").toString())-1;
+            publications = publiService.getLastNPublications(Integer.valueOf(params.get("page").toString())-1,20);
+        }
         Page<Publication> publicationsCarousel_0 = publiService.getLastNPublications(0,3);
         Page<Publication> publicationsCarousel_1 = publiService.getLastNPublications(1,3);
+        int totalPages = publications.getTotalPages();
+        List<Integer> pages;
 
+        if(totalPages == 1) {
+            pages = IntStream.rangeClosed(1, 1).boxed().collect(Collectors.toList());
+        } else if(totalPages == 2) {
+            pages = IntStream.rangeClosed(1, 2).boxed().collect(Collectors.toList());
+        } else {
+            if(page == 0) {
+                pages = IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList());
+            } else if(page == totalPages-1) {
+                pages = IntStream.rangeClosed(totalPages-2, totalPages).boxed().collect(Collectors.toList());
+            } else {
+                pages = IntStream.rangeClosed(page, page+2).boxed().collect(Collectors.toList());
+            }
+        }
         model.addAttribute("publications", publications);
         model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
         model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
+        model.addAttribute("pages", pages);
+        model.addAttribute("current", page+1);
+        model.addAttribute("next", page+2);
+        model.addAttribute("prev", page);
+        model.addAttribute("last", totalPages);
         return "index";
     }
 
