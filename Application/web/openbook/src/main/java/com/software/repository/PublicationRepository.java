@@ -23,6 +23,7 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
             " WHERE pub2.id IN ( SELECT p_search.id FROM " +
             "( SELECT  pu.id, " +
             "        to_tsvector(pu.description) || " +
+            "        to_tsvector(pu.title) || " +
             "        to_tsvector(cat.description) ||" +
             "        to_tsvector(pro.name) ||" +
             "        to_tsvector(pro.surname) as document " +
@@ -38,6 +39,7 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
                     "where pub2.id IN ( SELECT p_search.id FROM " +
                     "( SELECT  pu.id,\n" +
                     "        to_tsvector(pu.description) || " +
+                    "        to_tsvector(pu.title) || " +
                     "        to_tsvector(cat.description) || " +
                     "        to_tsvector(pro.name) ||\n" +
                     "        to_tsvector(pro.surname) as document " +
