@@ -80,19 +80,20 @@ public class AuthService {
                     currentProfesor.setUsername(updatedProfesor.getUsername());
                     currentProfesor.setSurname(updatedProfesor.getSurname());
                     currentProfesor.setTitleId(updatedProfesor.getTitleId());
-                    currentProfesor.setPassword(optionalUser.get().getPassword());
+                    currentProfesor.setPassword(updatedProfesor.getPassword());
                     userRepository.save(currentProfesor);
                     return true;
 
                 case "student":
+                    Student currentStudent = (Student) optionalUser.get();
                     Student updatedStudent = (Student) user;
-                    Student student = new Student();
-                    student.setEmail(updatedStudent.getEmail());
-                    student.setName(updatedStudent.getName());
-                    student.setUsername(updatedStudent.getUsername());
-                    student.setSurname(updatedStudent.getSurname());
-                    student.setPassword(optionalUser.get().getPassword());
-                    userRepository.save(student);
+
+                    currentStudent.setEmail(updatedStudent.getEmail());
+                    currentStudent.setName(updatedStudent.getName());
+                    currentStudent.setUsername(updatedStudent.getUsername());
+                    currentStudent.setSurname(updatedStudent.getSurname());
+                    currentStudent.setPassword(updatedStudent.getPassword());
+                    userRepository.save(currentStudent);
                     return true;
 
             }
