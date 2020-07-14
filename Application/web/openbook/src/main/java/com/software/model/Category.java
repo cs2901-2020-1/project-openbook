@@ -15,8 +15,11 @@ public class Category {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "description",length = 100)
+    @Column(name = "description",length = 10)
     private String description;
+
+    @Column(name = "name",length = 100)
+    private String name;
 
     @OneToMany(mappedBy = "category")
     private List<Publication> publication;
@@ -26,8 +29,17 @@ public class Category {
     }
 
     public Category(String description) {
+
         this.description = description;
+        int id = Integer.parseInt(description);
+        if(id<=4){
+            this.id = id;this.name = "Matemáticas";
+        }
+        else{
+            this.id = id;this.name = "Ciencia y Tecnología";
+        }
     }
+
 
     public int getId() {
         return id;
@@ -44,5 +56,15 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 
 }

@@ -1,10 +1,7 @@
 package com.software.controller;
 
 
-import com.software.model.Professor;
-import com.software.model.Publication;
-import com.software.model.User;
-import com.software.model.pub;
+import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
 import com.software.service.UIService;
@@ -135,6 +132,7 @@ public class FileController {
 
         String title = pub.getTitle();
         String description = pub.getDescription();
+        String category= pub.getCategory();
         int rank = 0;
 
         log.info(pub.getTitle());
@@ -143,11 +141,12 @@ public class FileController {
 
 
         Publication publication = new Publication();
+        Category categoria = new Category(category);
 
         publication.setTitle(title);
         publication.setDescription(description);
         publication.setRanking(rank);
-
+        publication.setCategory(categoria);
         String email = (String) session.getAttribute("EMAIL");
 
         if (email==null)

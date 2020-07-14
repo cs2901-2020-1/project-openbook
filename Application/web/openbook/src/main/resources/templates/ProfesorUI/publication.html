@@ -74,12 +74,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item ">
+          <!--      <li class="nav-item ">
                     <a class="nav-link" href="/dashboardui">
                         <i class="material-icons">dashboard</i>
                         <p>Tablero</p>
                     </a>
-                </li>
+                </li> -->
 
                 <!--<li class="nav-item ">
                     <a class="nav-link" href="/notifications">
@@ -282,7 +282,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 th:text="${publication.getTitle()}"></h4>
+                                <h4 th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getCategory().getName()}"></h4>
                             </div>
                             <div class="card-body">
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>

@@ -79,12 +79,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item ">
+          <!--      <li class="nav-item ">
                     <a class="nav-link" href="/dashboardui">
                         <i class="material-icons">dashboard</i>
                         <p>Tablero</p>
                     </a>
-                </li>
+                </li> -->
 
                 <!--<li class="nav-item ">
                     <a class="nav-link" href="/notifications">
@@ -214,7 +214,21 @@
 
                                             <div class="form-group">
                                                 <label >Categoría</label>
-                                                <input name="category" type="text" class="form-control">
+                                                <br>
+                                                <select class="mdb-select md-form dropdown-default" name="category" id = "category">
+                                                    <option value="" disabled selected>Escoge la competencia</option>
+                                                    <option value="1">Problemas de cantidad</option>
+                                                    <option value="2">Problemas de regularidad</option>
+                                                    <option value="3">Forma, movimiento y localización</option>
+                                                    <option value="4">Gestión de datos e incertidumbre</option>
+                                                    <option value="5">Método científico</option>
+                                                    <option value="6">Seres Vivos</option>
+                                                    <option value="7">Materia y energía</option>
+                                                    <option value="8">Biodiversidad</option>
+                                                    <option value="9">Tierra y universo</option>
+                                                    <option value="10">Soluciones tecnológicas</option>
+                                                </select>
+                                               <!-- <input name="category" type="text" class="form-control">-->
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +307,7 @@
     $(document).ready(function() {
         $().ready(function() {
             $sidebar = $('.sidebar');
-
+            $('.mdb-select').materialSelect();
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 
             $full_page = $('.full-page');
