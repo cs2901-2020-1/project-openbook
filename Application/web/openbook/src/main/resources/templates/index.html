@@ -152,8 +152,19 @@
                                         <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                                     </div>
                                     <div class="card-footer">
-                                        <div class="stats">
-                                            <i class="material-icons">local_offer</i> Verify
+                                        <div class="stats" th:switch="${publicationCarousel.getEstado()}">
+                                            <div th:case="0">
+                                                <i class="material-icons">local_offer</i> Verificado
+                                            </div>
+                                            <div th:case="1">
+
+                                                <i class="material-icons">local_offer</i> Verificación en proceso
+                                            </div>
+                                            <div th:case="2">
+
+                                                <i class="material-icons">local_offer</i> No verificado aún
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
