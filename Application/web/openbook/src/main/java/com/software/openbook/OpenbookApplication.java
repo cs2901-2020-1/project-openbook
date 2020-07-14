@@ -40,5 +40,9 @@ public class OpenbookApplication implements CommandLineRunner {
         Curator curator = new Curator("curator@gmail.com","curator123","123456", "Ernesto","Cuadros");
         authService.addUser(curator);
 
+        Curator curator2 = new Curator("curator2@gmail.com","curator2","123456", "Jose","Fiestas");
+        authService.addUser(curator2);
+
+
     }
 }

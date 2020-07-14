@@ -101,6 +101,7 @@ public class Publication extends AuditModel {
     }
 
     public Publication() {
+        this.estado = 0;
     }
 
     public Integer getEstado() {

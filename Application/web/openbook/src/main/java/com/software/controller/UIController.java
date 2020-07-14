@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,7 +42,7 @@ public class UIController {
     @GetMapping("/user")
     public String userProfile(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
-
+        log.info(email);
         if (email==null)
             return "redirect:/error";
 
@@ -59,7 +60,6 @@ public class UIController {
                 model.addAttribute("sessionUser",student);
                 return "StudentUI/user";
             case "curador":
-
                 Curator curator = (Curator) user;
                 model.addAttribute("sessionUser",curator);
                 return "CuradorUI/user";
@@ -67,8 +67,39 @@ public class UIController {
                 return "redirect:/error";
         }
 
-
     }
+
+    @PostMapping("/saveToVerify")
+    public String saveToVerify(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session, RedirectAttributes redirectAttributes){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        redirectAttributes.addAttribute("id", p_id);
+        publicationService.savePublicationToCurate(p_id, email);
+        return "redirect:/publication";
+    }
+
+    @PostMapping("/doVerify")
+    public String doVerify(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session, RedirectAttributes redirectAttributes){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        redirectAttributes.addAttribute("id", p_id);
+        publicationService.curatePublication(p_id, email);
+        return "redirect:/publication";
+    }
+
+
 
     @GetMapping("/revisionsToDo")
     public String revisionToDo(Model model, HttpSession session){
@@ -263,8 +294,6 @@ public class UIController {
         String tipo = user.getTipo();
 
 
-
-
         switch (tipo){
             case "profesor":
                 model.addAttribute("comments", comments);
@@ -275,6 +304,13 @@ public class UIController {
                 model.addAttribute("publication", publication);
                 return "StudentUI/publication";
 
+            case "curador":
+
+                Curator curator = (Curator) user;
+                model.addAttribute("sessionUser",curator);
+                model.addAttribute("comments", comments);
+                model.addAttribute("publication", publication);
+                return "CuradorUI/publication";
             default:
                 return "redirect:/error";
         }
