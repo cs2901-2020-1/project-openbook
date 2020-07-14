@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UIController {
@@ -68,6 +70,45 @@ public class UIController {
         }
 
 
+    }
+
+
+    @RequestMapping("/searchContent")
+    public String searchContent(@RequestParam Map<String, Object> params, Model model, HttpSession session){
+        @SuppressWarnings("unchecked")
+        List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
+
+        if(messages == null){
+            messages = new ArrayList<>();
+        }
+        model.addAttribute("sessionMessages", messages);
+
+        String keyword = (String) params.get("search");
+
+        Page<Publication> publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(0,20));
+
+        model.addAttribute("publications", publications);
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null) {
+            model.addAttribute("publications", publications);
+            return "search";
+        }
+
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        switch (tipo) {
+            case "profesor":
+                model.addAttribute("publications", publications);
+                return "ProfesorUI/search";
+            case "student":
+                model.addAttribute("publications", publications);
+                return "StudentUI/search";
+            default:
+                return "redirect:/error";
+        }
     }
 
     @GetMapping("/revisionsToDo")
@@ -188,15 +229,12 @@ public class UIController {
     }
 
 
-
-
     @GetMapping("/mochila")
     public String mochila(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
 
         if (email==null)
             return "redirect:/error";
-
 
 
         User user = authService.getUser(email).get();
@@ -253,26 +291,29 @@ public class UIController {
             }
         }
 
-        Publication publication  =uiService.getPublicationById(id).get();
+        List<Likes> likes = publicationService.getLikesFromPublication(id);
+
+        Publication publication  = uiService.getPublicationById(id).get();
         if (email==null) {
             model.addAttribute("comments", comments);
             model.addAttribute("publication", publication);
+            model.addAttribute("likes", likes);
             return "publication";
         }
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
 
-
-
         switch (tipo){
             case "profesor":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("likes", likes);
                 return "ProfesorUI/publication";
             case "student":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("likes", likes);
                 return "StudentUI/publication";
 
             default:
@@ -456,6 +497,11 @@ public class UIController {
     @GetMapping("/error")
     public String error(Model model){
         return "error";
+    }
+
+    @GetMapping("/login_error")
+    public String login_error(Model model){
+        return "login_error";
     }
 
 

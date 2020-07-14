@@ -24,12 +24,12 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
             "( SELECT  pu.id, " +
             "        to_tsvector(pu.description) || " +
             "        to_tsvector(pu.title) || " +
-            "        to_tsvector(cat.description) ||" +
+//            "        to_tsvector(cat.description) ||" +
             "        to_tsvector(pro.name) ||" +
             "        to_tsvector(pro.surname) as document " +
             "from Publication pu " +
-            "inner join Category cat " +
-            "ON cat.id = pu.category_id " +
+//            "inner join Category cat " +
+//            "ON cat.id = pu.category_id " +
             "INNER JOIN Users pro " +
             "ON pro.email = pu.professor_id " +
             "AND pro.user_type = 'Professor' ) p_search " +
@@ -40,12 +40,12 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
                     "( SELECT  pu.id,\n" +
                     "        to_tsvector(pu.description) || " +
                     "        to_tsvector(pu.title) || " +
-                    "        to_tsvector(cat.description) || " +
+//                    "        to_tsvector(cat.description) || " +
                     "        to_tsvector(pro.name) ||\n" +
                     "        to_tsvector(pro.surname) as document " +
                     "from publication pu " +
-                    "inner join category cat " +
-                    "ON cat.id = pu.category_id " +
+//                    "inner join category cat " +
+//                    "ON cat.id = pu.category_id " +
                     "INNER JOIN users pro\n" +
                     "ON pro.email = pu.professor_id " +
                     "AND pro.user_type = 'Professor' ) p_search " +
