@@ -398,7 +398,6 @@ class OpenbookApplicationTests {
 //            System.out.println(publication.getId() + " " + publication.getDescription());
 //        }
 //    }
-/*
     public void test_subcomment(Long commentId) {
         String studentmail = "mit.mosquera@lamerced.edu.pe";
         Optional<User> optionalStudent = authService.getUser(studentmail);
@@ -421,5 +420,4 @@ class OpenbookApplicationTests {
                     +" from comment: " + comment.getParentComment().getText_comment());
         }
     }
-*/
 }

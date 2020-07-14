@@ -19,9 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -381,7 +379,6 @@ public class UIController {
         String email = (String) session.getAttribute("EMAIL");
 
         List<Comment> comments_to_filter = commentService.getCommentsPublication(id);
-
         List<Comment> comments = new ArrayList<Comment>();
 
         for (Comment c: comments_to_filter) {
@@ -391,12 +388,24 @@ public class UIController {
         }
 
         List<Likes> likes = publicationService.getLikesFromPublication(id);
+        String class_heart;
+        String heart;
+
+        if(publicationService.getLikeFromPublicationAndUser(id,email).size() == 0){
+            class_heart = "bi bi-heart";
+            heart = "M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z";
+        } else {
+            class_heart = "bi bi-heart-fill";
+            heart = "M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z";
+        }
 
         Publication publication  = uiService.getPublicationById(id).get();
         if (email==null) {
             model.addAttribute("comments", comments);
             model.addAttribute("publication", publication);
             model.addAttribute("likes", likes);
+            model.addAttribute("class_heart", class_heart);
+            model.addAttribute("heart", heart);
             return "publication";
         }
         User user = authService.getUser(email).get();
@@ -408,11 +417,15 @@ public class UIController {
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
                 model.addAttribute("likes", likes);
+                model.addAttribute("class_heart", class_heart);
+                model.addAttribute("heart", heart);
                 return "ProfesorUI/publication";
             case "student":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
                 model.addAttribute("likes", likes);
+                model.addAttribute("class_heart", class_heart);
+                model.addAttribute("heart", heart);
                 return "StudentUI/publication";
 
             case "curador":
@@ -626,16 +639,18 @@ public class UIController {
         return "redirect:/inicio";
     }
 
-    @PostMapping("/addLike")
+    @PostMapping(value = "/addLike")
     public String addLike(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){
 
         String email = (String) session.getAttribute("EMAIL");
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
-        Publication publication = uiService.getPublicationById(p_id).get();
+        System.out.println(email);
+        System.out.println(p_id);
 
-        publicationService.likePublication(publication.getId(), user.getEmail());
-        return "redirect:/publication";
+        publicationService.likePublication(p_id, email);
+        String redirect = "redirect:/publication?id="+p_id;
+        return redirect;
     }
 }

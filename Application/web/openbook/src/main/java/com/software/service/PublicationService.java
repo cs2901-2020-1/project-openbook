@@ -196,10 +196,19 @@ public class PublicationService {
 
         like = new Likes(user, publication);
 
-        Likes likeResult = likeRepository.save(like);
-        Set<Likes> userLike = user.getLike();
-        userLike.add(likeResult);
-        publication.getPublicationLike().add(likeResult);
+        Likes likeResult = like;
+        List<Likes> likes = getLikeFromPublicationAndUser(publicationId,user_id);
+        if(likes.size() == 0){
+            likeResult = likeRepository.save(like);
+            Set<Likes> userLike = user.getLike();
+            userLike.add(likeResult);
+            publication.getPublicationLike().add(likeResult);
+        } else {
+            likeRepository.delete(likes.get(0));
+            //Set<Likes> userLike = user.getLike();
+            //userLike.remove(likeResult);
+            //publication.getPublicationLike().remove(likeResult);
+        }
 
         return likeResult;
     }

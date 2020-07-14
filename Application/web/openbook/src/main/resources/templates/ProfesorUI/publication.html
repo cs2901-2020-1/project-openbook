@@ -281,11 +281,20 @@
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                             </div>
                         </div>
-                        <div>
-                            <form action="" method="post">
-                                <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="material-icons">favorite</i></button>
-                            </form>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form action="/addLike" method="post">
+                                    <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                        <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" th:class="${class_heart}" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" th:d="${heart}"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-lg btn-block" th:text="${likes.size()}" disabled></button>
+                            </div>
                         </div>
                     </div>
 
