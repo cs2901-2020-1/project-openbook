@@ -198,6 +198,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" >Contraseña:</span>
+                                                </div>
+                                                <input type="password" class="form-control" id="password" name="password" th:value="${sessionUser.getPassword()}" aria-label="Name" aria-describedby="basic-addon1">
+                                                <button type="button" onclick="showPassword()" id="buttonpass"  style="border-color: transparent; background-color: transparent; color: #0b75c9; cursor: pointer">Mostrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <button type="submit" class="btn btn-primary pull-right">Guardar</button>
                                     <div class="clearfix"></div>
                                 </form>
@@ -208,7 +220,7 @@
                         <div class="card card-profile">
                             <div class="card-avatar">
                                 <a href="#pablo">
-                                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                                    <img class="img" th:src="'/getImageProfesor?id='+${sessionUser.getEmail()}"  />
                                 </a>
                             </div>
                             <div class="card-body">
@@ -245,7 +257,26 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/demo/demo.js"></script>
 <script>
+
+    function showPassword(){
+        $('#password').attr("type","text");
+        $('#buttonpass').attr("onclick", "hidePassword()");
+        $('#buttonpass').html("Ocultar");
+    }
+
+
+    function hidePassword(){
+        $('#password').attr("type","password");
+        $('#buttonpass').attr("onclick", "showPassword()")
+        $('#buttonpass').html("Mostrar");
+    }
+
+
     $(document).ready(function() {
+
+        $("#buttonshowpass").click(function(){
+            $("#password").attr("type", "password");
+        });
 
 
         $().ready(function() {
