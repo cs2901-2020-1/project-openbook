@@ -73,8 +73,6 @@ public class PublicationService {
         return publicationResult;
     }
 
-
-
     public Publication savePublicationToCurate(Long publicationId, String curator_id) {
         Optional<User> curatorOpt = userRepository.findById(curator_id);
 
@@ -103,32 +101,32 @@ public class PublicationService {
     }
 
     public List<Publication> getPublicationsVerifiedByCurator(String curatorEmail) {
-
-        //TO DO
-
         // return all publications that has estado = 2
-        PublicationSpecification spec = new PublicationSpecification(
-                new SearchCriteria("professor", ":", curatorEmail));
+        PublicationSpecification specCuratorId = new PublicationSpecification(
+                new SearchCriteria("curator", ":", curatorEmail));
 
-        return publicationRepository.findAll(spec,
+        PublicationSpecification specEstado_2 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 2));
+
+        Specification<Publication> specification = Specification.where(specCuratorId).and(specEstado_2);
+
+        return publicationRepository.findAll(specification,
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
 
     public List<Publication> getPublicationsToVerifyByCurator(String curatorEmail) {
-
-        //TO DO
         // return all publications that has estado = 1
+        PublicationSpecification specCuratorId = new PublicationSpecification(
+                new SearchCriteria("curator", ":", curatorEmail));
 
+        PublicationSpecification specEstado_1 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 1));
 
-        PublicationSpecification spec = new PublicationSpecification(
-                new SearchCriteria("professor", ":", curatorEmail));
+        Specification<Publication> specification = Specification.where(specCuratorId).and(specEstado_1);
 
-        return publicationRepository.findAll(spec,
+        return publicationRepository.findAll(specification,
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
-
-
-
 
     public List<Publication> getPublicationsFromProfessor(String professorEmail) {
 
