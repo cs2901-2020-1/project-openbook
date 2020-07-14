@@ -78,9 +78,9 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
+                    <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <input type="search" name="search" id="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -145,6 +145,91 @@
                                 <iframe class="embed-responsive-item" src="/getPDF" th:src="'/getPDF?id='+${publication.getId()}" allowfullscreen></iframe>
                             </div>
                         </div>
+
+                        <div class="container mb-5 mt-5">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center mb-5"> Comentarios </h3>
+                                        <hr>
+                                        <form action="/postComment" method="post" >
+
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <textarea placeholder="Escribe un comentario..." name="text_comment" class="form-control" rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <input style="display: none" name="id_pub" th:value="${publication.getId()}">
+
+                                            <button type="submit" class="btn btn-primary pull-right">Comentar</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-md-12" th:each="comment : ${comments}">
+                                                <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" th:src="'/getImageProfesor?id='+${comment.getCommentAuthor().getEmail()}"  />
+                                                    <div class="media-body">
+                                                        <div class="row">
+                                                            <div class="col-8 d-flex">
+                                                                <h5 th:text="${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}">Maria Smantha</h5> <span th:text="'- ' +${comment.getCreatedAt()}"></span>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="pull-right reply">
+                                                                <span>
+                                                                <a style="color: #0a6ebd" class="collapsed" role="button" data-toggle="collapse" th:href="'#comment'+${comment.getId()}" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-reply"></i> responder</a>
+                                                            </span>
+                                                                    </a> </div>
+                                                            </div>
+                                                        </div>
+                                                        <p th:text="${comment.getText_comment()}">
+                                                            It is a long established fact that a reader will be distracted by the readable content of a page.
+                                                        </p>
+                                                        <div th:each="subcomment : ${comment.getSubComments()}">
+                                                            <div class="media mt-4">
+                                                                <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" th:src="'/getImageProfesor?id='+${subcomment.getCommentAuthor().getEmail()}"  /></a>
+                                                                <div class="media-body">
+                                                                    <div class="row">
+                                                                        <div class="col-12 d-flex">
+                                                                            <h5 th:text="${subcomment.getCommentAuthor().getName()}+' '+${subcomment.getCommentAuthor().getSurname()}">Simona Disa</h5> <span th:text="'- '+${subcomment.getCreatedAt()}">- 3 hours ago</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p th:text="${subcomment.getText_comment()}">
+                                                                        letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-meta">
+
+                                                            <div class="in collapse" th:id="'comment'+${comment.getId()}"  aria-expanded="true" style="">
+                                                                <form action="/replyComment" method="post">
+                                                                    <div class="form-group">
+
+                                                                        <textarea name="text_comment" th:placeholder="'responde a '+${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}" class="form-control" rows="3"></textarea>
+                                                                    </div>
+                                                                    <input style="display: none" name="id_pub" th:value="${publication.getId()}">
+                                                                    <input style="display: none" name="id_comment_to" th:value="${comment.getId()}">
+                                                                    <button type="submit" class="btn btn-primary pull-right">Responder</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-4">
                         <div class="card card-profile">
@@ -170,96 +255,21 @@
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                             </div>
                         </div>
-                        <div>
-                            <form action="" method="post">
-                                <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="material-icons">favorite</i></button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="container mb-5 mt-5">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h3 class="text-center mb-5"> Comentarios </h3>
-                                    <hr>
-                                    <form action="/postComment" method="post" >
-
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <textarea placeholder="Escribe un comentario..." name="text_comment" class="form-control" rows="5"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <input style="display: none" name="id_pub" th:value="${publication.getId()}">
-
-                                        <button type="submit" class="btn btn-primary pull-right">Comentar</button>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                    <hr>
-
-                                    <div class="row">
-                                        <div class="col-md-12" th:each="comment : ${comments}">
-                                            <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" th:src="'/getImageProfesor?id='+${comment.getCommentAuthor().getEmail()}"  />
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-8 d-flex">
-                                                            <h5 th:text="${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}">Maria Smantha</h5> <span th:text="'- ' +${comment.getCreatedAt()}"></span>
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <div class="pull-right reply">
-                                                                <span>
-                                                                <a style="color: #0a6ebd" class="collapsed" role="button" data-toggle="collapse" th:href="'#comment'+${comment.getId()}" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-reply"></i> responder</a>
-                                                            </span>
-                                                                </a> </div>
-                                                        </div>
-                                                    </div>
-                                                    <p th:text="${comment.getText_comment()}">
-                                                        It is a long established fact that a reader will be distracted by the readable content of a page.
-                                                    </p>
-                                                    <div th:each="subcomment : ${comment.getSubComments()}">
-                                                        <div class="media mt-4">
-                                                            <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" th:src="'/getImageProfesor?id='+${subcomment.getCommentAuthor().getEmail()}"  /></a>
-                                                            <div class="media-body">
-                                                                <div class="row">
-                                                                    <div class="col-12 d-flex">
-                                                                        <h5 th:text="${subcomment.getCommentAuthor().getName()}+' '+${subcomment.getCommentAuthor().getSurname()}">Simona Disa</h5> <span th:text="'- '+${subcomment.getCreatedAt()}">- 3 hours ago</span>
-                                                                    </div>
-                                                                </div>
-                                                                <p th:text="${subcomment.getText_comment()}">
-                                                                    letters, as opposed to using 'Content here, content here', making it look like readable English.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="comment-meta">
-
-                                                        <div class="in collapse" th:id="'comment'+${comment.getId()}"  aria-expanded="true" style="">
-                                                            <form action="/replyComment" method="post">
-                                                                <div class="form-group">
-
-                                                                    <textarea name="text_comment" th:placeholder="'responde a '+${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}" class="form-control" rows="3"></textarea>
-                                                                </div>
-                                                                <input style="display: none" name="id_pub" th:value="${publication.getId()}">
-                                                                <input style="display: none" name="id_comment_to" th:value="${comment.getId()}">
-                                                                <button type="submit" class="btn btn-primary pull-right">Responder</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form action="" method="post">
+                                    <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="material-icons">favorite</i></button>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-lg btn-block" disabled>
+                                    10
+                                </button>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

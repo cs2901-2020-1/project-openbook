@@ -117,11 +117,11 @@ class OpenbookApplicationTests {
 //        catService.addCategory(cat3);
 //
 //        Set<Tag> tagslist = new HashSet<>();
-//        String tagName1 = "curso_2020";
+//        String tagName1 = "new_curso_2020";
 //        String tagName2 = "algebra";
-//        String emailProfessor = "yamilet@utec.edu.pe";
+//        String emailProfessor = "jbellido@utec.edu.pe";
 //        int idCategory = 2;
-//        int n = 10;
+//        int n = 50;
 //
 //        Tag tag1 = new Tag(tagName1);
 //        Tag tag2 = new Tag(tagName2);
@@ -140,7 +140,7 @@ class OpenbookApplicationTests {
 //
 //        for(int i = 0; i < n; i++) {
 //            int num = i+1;
-//            posts[i] = new Publication("PDF", "Capítulo Algebra " + num + " con tags",
+//            posts[i] = new Publication("Title " + num, "Capítulo Algebra " + num + " con tags",
 //                    0, "\\server\\folder\\test"+num+".pdf",
 //                    (Professor) optionalProfessor.get(), optionalCategory.get());
 //
@@ -350,7 +350,7 @@ class OpenbookApplicationTests {
 //
 //    @Test
 //    public void printPublicationsFullTextSearch() {
-//        String searchStr = "Yami alge cap";
+//        String searchStr = "title 5";
 //
 //        System.out.println("Searching: " + searchStr);
 //        Page<Publication> publications = publiService.findPublicationByKeywords(searchStr,
@@ -358,7 +358,8 @@ class OpenbookApplicationTests {
 //        System.out.println("Total Pages: " + publications.getTotalPages());
 //        System.out.println("Total Elements: " + publications.getTotalElements());
 //        for (Publication publication:publications) {
-//            System.out.println(publication.getId() + " "+ publication.getDescription());
+//            System.out.println(publication.getId() + " "+ publication.getDescription()+ " " +
+//                    publication.getTitle());
 //        }
 //    }
 //
@@ -373,7 +374,7 @@ class OpenbookApplicationTests {
 //                    + " " + publication.getCreatedAt());
 //        }
 //    }
-
+/*
     public void test_subcomment(Long commentId) {
         String studentmail = "mit.mosquera@lamerced.edu.pe";
         Optional<User> optionalStudent = authService.getUser(studentmail);
@@ -396,4 +397,5 @@ class OpenbookApplicationTests {
                     +" from comment: " + comment.getParentComment().getText_comment());
         }
     }
+*/
 }

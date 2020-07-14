@@ -64,6 +64,7 @@ public class PublicationService {
 
         Publication publication = publicationOpt.get();
         publication.setCurator(curator);
+        publication.setEstado(2); // verificado
         publication.setVerified(true);
         publication.setCurationDate(new Date());
         
@@ -71,6 +72,63 @@ public class PublicationService {
 
         return publicationResult;
     }
+
+
+
+    public Publication savePublicationToCurate(Long publicationId, String curator_id) {
+        Optional<User> curatorOpt = userRepository.findById(curator_id);
+
+        if (!curatorOpt.isPresent()) {
+            //throw new ResourceNotFoundException("Professor " + professor_id + "does not exists.");
+            System.out.println("Curator " + curator_id + " does not exists.");
+        }
+
+        Curator curator = (Curator) curatorOpt.get();
+
+        Optional<Publication> publicationOpt = this.getPublication(publicationId);
+
+        if (!publicationOpt.isPresent()) {
+            System.out.println("Publicatior " + publicationId + " does not exists.");
+        }
+
+        Publication publication = publicationOpt.get();
+        publication.setCurator(curator);
+        publication.setEstado(1); // in process
+        publication.setVerified(true);
+        publication.setCurationDate(new Date());
+
+        Publication publicationResult = publicationRepository.save(publication);
+
+        return publicationResult;
+    }
+
+    public List<Publication> getPublicationsVerifiedByCurator(String curatorEmail) {
+
+        //TO DO
+
+        // return all publications that has estado = 2
+        PublicationSpecification spec = new PublicationSpecification(
+                new SearchCriteria("professor", ":", curatorEmail));
+
+        return publicationRepository.findAll(spec,
+                Sort.by(Sort.Direction.DESC, "ranking"));
+    }
+
+    public List<Publication> getPublicationsToVerifyByCurator(String curatorEmail) {
+
+        //TO DO
+        // return all publications that has estado = 1
+
+
+        PublicationSpecification spec = new PublicationSpecification(
+                new SearchCriteria("professor", ":", curatorEmail));
+
+        return publicationRepository.findAll(spec,
+                Sort.by(Sort.Direction.DESC, "ranking"));
+    }
+
+
+
 
     public List<Publication> getPublicationsFromProfessor(String professorEmail) {
 

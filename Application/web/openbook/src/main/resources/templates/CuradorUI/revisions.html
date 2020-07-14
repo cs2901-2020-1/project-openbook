@@ -46,46 +46,38 @@
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item  ">
+                <li class="nav-item ">
                     <a class="nav-link" href="/inicio">
                         <i class="material-icons">home</i>
                         <p>Pagina Principal</p>
                     </a>
                 </li>
-                <li class="nav-item  active">
+                <li class="nav-item  ">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
-                        <p>User Profile</p>
+                        <p>Perfil</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/mochila">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/revisionsToDo">
                         <i class="material-icons">backpack</i>
-                        <p>Mochila</p>
+                        <p>Por Revisar</p>
                     </a>
                 </li>
 
-                <li class="nav-item  ">
-                    <a class="nav-link" href="/publicarContenido">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="/getRevisions">
                         <i class="material-icons">content_paste</i>
-                        <p>Publicar Contenido</p>
+                        <p>Mis Revisiones</p>
                     </a>
                 </li>
 
-                <li class="nav-item ">
-                    <a class="nav-link" href="/publications">
-                        <i class="material-icons">publication</i>
-                        <p>Mis Publicaciones</p>
-                    </a>
-                </li>
-
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/notifications">
-                        <i class="material-icons">notifications</i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
+                <!--<li class="nav-item ">
+                  <a class="nav-link" href="/notifications">
+                    <i class="material-icons">notifications</i>
+                    <p>Notifications</p>
+                  </a>
+                </li>-->
                 <!-- <li class="nav-item active-pro ">
                       <a class="nav-link" href="./upgrade.html">
                           <i class="material-icons">unarchive</i>
@@ -100,7 +92,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)" th:text="${sessionUser.getUsername()}" ></a>
+                    <h2 class="navbar-brand">Mochila</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -109,9 +101,9 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form" action="/searchContent" method="post">
+                    <form class="navbar-form">
                         <div class="input-group no-border">
-                            <input type="search" name="search" id="search" class="form-control" placeholder="Search..." aria-label="Search">
+                            <input type="text" value="" class="form-control" placeholder="Search...">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -165,67 +157,52 @@
             </div>
         </nav>
         <!-- End Navbar -->
-        <div class="content">
+
+        <div class="content" >
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title" th:text="'Hola ' + ${sessionUser.getName()} +' '+${sessionUser.getSurname()}"></h4>
-                                <p class="card-category">Estos son los datos de su cuenta</p>
-                            </div>
-                            <div class="card-body" >
-                                <form action="/updateProfesor" method="post">
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Nombres:</span>
-                                                </div>
-                                                <input type="text" class="form-control" name="name" th:value="${sessionUser.getName()}" aria-label="Name" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Apellidos:</span>
-                                                </div>
-                                                <input type="text" class="form-control" name="surname" th:value="${sessionUser.getSurname()}" aria-label="Name" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
-                                    <div class="clearfix"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-profile">
-                            <div class="card-avatar">
-                                <a href="#pablo">
-                                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                                </a>
+                <div class="row" >
+                    <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
+                        <div class="card card-chart">
+                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                            <div class="card-header card-header-success">
+                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                             </div>
                             <div class="card-body">
-                                <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}">CEO / Co-Founder</h6>
-                                <p class="card-description" th:text="${sessionUser.getDescription()}">
-                                </p>
-                                <a href="#pablo" class="btn btn-primary btn-round">Editar</a>
+                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats" th:switch="${publication.getEstado()}">
+                                    <div th:case="0">
+                                        <i class="material-icons">local_offer</i> Verificado
+                                    </div>
+                                    <div th:case="1">
+
+                                        <i class="material-icons">local_offer</i> Verificación en proceso
+                                    </div>
+                                    <div th:case="2">
+
+                                        <i class="material-icons">local_offer</i> No verificado aún
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
+        <footer class="footer">
+        </footer>
+        <script>
+            const x = new Date().getFullYear();
+            let date = document.getElementById('date');
+            date.innerHTML = '&copy; ' + x + date.innerHTML;
+        </script>
     </div>
 </div>
-
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.min.js"></script>
 <script src="../assets/js/core/popper.min.js"></script>
@@ -246,8 +223,6 @@
 <script src="../assets/demo/demo.js"></script>
 <script>
     $(document).ready(function() {
-
-
         $().ready(function() {
             $sidebar = $('.sidebar');
 
@@ -407,9 +382,6 @@
             });
         });
     });
-
-
-
 </script>
 </body>
 

@@ -11,14 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UIController {
@@ -33,12 +36,15 @@ public class UIController {
     private CommentService commentService;
 
     @Autowired
-    private PublicationService publiService;
+    private PublicationService publicationService;
+
+
+    private static final Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
 
     @GetMapping("/user")
     public String userProfile(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
-
+        log.info(email);
         if (email==null)
             return "redirect:/error";
 
@@ -56,7 +62,6 @@ public class UIController {
                 model.addAttribute("sessionUser",student);
                 return "StudentUI/user";
             case "curador":
-
                 Curator curator = (Curator) user;
                 model.addAttribute("sessionUser",curator);
                 return "CuradorUI/user";
@@ -64,14 +69,136 @@ public class UIController {
                 return "redirect:/error";
         }
 
-
     }
 
+    @PostMapping("/saveToVerify")
+    public String saveToVerify(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session, RedirectAttributes redirectAttributes){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        redirectAttributes.addAttribute("id", p_id);
+        publicationService.savePublicationToCurate(p_id, email);
+        return "redirect:/publication";
+    }
+
+    @PostMapping("/doVerify")
+    public String doVerify(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session, RedirectAttributes redirectAttributes){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        redirectAttributes.addAttribute("id", p_id);
+        publicationService.curatePublication(p_id, email);
+        return "redirect:/publication";
+    }
+
+
+
+
+    @RequestMapping("/searchContent")
+    public String searchContent(@RequestParam Map<String, Object> params, Model model, HttpSession session){
+        @SuppressWarnings("unchecked")
+        List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
+
+        if(messages == null){
+            messages = new ArrayList<>();
+        }
+        model.addAttribute("sessionMessages", messages);
+
+        String keyword = (String) params.get("search");
+
+        Page<Publication> publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(0,20));
+
+        model.addAttribute("publications", publications);
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null) {
+            model.addAttribute("publications", publications);
+            return "search";
+        }
+
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        switch (tipo) {
+            case "profesor":
+                model.addAttribute("publications", publications);
+                return "ProfesorUI/search";
+            case "student":
+                model.addAttribute("publications", publications);
+                return "StudentUI/search";
+            default:
+                return "redirect:/error";
+        }
+    }
+
+    @GetMapping("/revisionsToDo")
+    public String revisionToDo(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        log.info(email);
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        String tipo = user.getTipo();
+
+        List<Publication> publications = publicationService.getPublicationsToVerifyByCurator(email);
+
+        model.addAttribute("publications", publications);
+
+        switch (tipo){
+            case "curador":
+                return "CuradorUI/revisionsToDo";
+            default:
+                return "redirect:/error";
+        }
+    }
+
+
+    @GetMapping("/getRevisions")
+    public String getRevisions(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+
+        log.info(email);
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        String tipo = user.getTipo();
+
+        List<Publication> publications = publicationService.getPublicationsVerifiedByCurator(email);
+
+        model.addAttribute("publications", publications);
+
+        switch (tipo){
+            case "curador":
+                return "CuradorUI/revisions";
+            default:
+                return "redirect:/error";
+        }
+    }
 
 
     @GetMapping("/inicio")
     public String inicio(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
+
+        log.info(email);
 
         if (email==null)
             return "redirect:/error";
@@ -81,8 +208,8 @@ public class UIController {
         String tipo = user.getTipo();
 
         List<Publication> publications = uiService.getAllPublications();
-        Page<Publication> publicationsCarousel_0 = publiService.getLastNPublications(0,3);
-        Page<Publication> publicationsCarousel_1 = publiService.getLastNPublications(1,3);
+        Page<Publication> publicationsCarousel_0 = publicationService.getLastNPublications(0,3);
+        Page<Publication> publicationsCarousel_1 = publicationService.getLastNPublications(1,3);
 
         model.addAttribute("publications", publications);
         model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
@@ -95,7 +222,7 @@ public class UIController {
             case "student":
                 return "StudentUI/inicio";
             case "curador":
-                return "redirect:/curador";
+                return "CuradorUI/inicio";
             default:
                 return "redirect:/error";
         }
@@ -133,15 +260,12 @@ public class UIController {
     }
 
 
-
-
     @GetMapping("/mochila")
     public String mochila(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
 
         if (email==null)
             return "redirect:/error";
-
 
 
         User user = authService.getUser(email).get();
@@ -198,28 +322,38 @@ public class UIController {
             }
         }
 
-        Publication publication  =uiService.getPublicationById(id).get();
+        List<Likes> likes = publicationService.getLikesFromPublication(id);
+
+        Publication publication  = uiService.getPublicationById(id).get();
         if (email==null) {
             model.addAttribute("comments", comments);
             model.addAttribute("publication", publication);
+            model.addAttribute("likes", likes);
             return "publication";
         }
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
 
-
-
         switch (tipo){
             case "profesor":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("likes", likes);
                 return "ProfesorUI/publication";
             case "student":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("likes", likes);
                 return "StudentUI/publication";
 
+            case "curador":
+
+                Curator curator = (Curator) user;
+                model.addAttribute("sessionUser",curator);
+                model.addAttribute("comments", comments);
+                model.addAttribute("publication", publication);
+                return "CuradorUI/publication";
             default:
                 return "redirect:/error";
         }
@@ -293,6 +427,9 @@ public class UIController {
         return "redirect:/error";
 
     }
+
+
+
 
 
     @PostMapping("/postComment")
@@ -417,6 +554,11 @@ public class UIController {
     @GetMapping("/error")
     public String error(Model model){
         return "error";
+    }
+
+    @GetMapping("/login_error")
+    public String login_error(Model model){
+        return "login_error";
     }
 
 

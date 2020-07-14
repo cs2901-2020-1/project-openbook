@@ -114,9 +114,9 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
+                    <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <input type="search" name="search" id="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -185,8 +185,19 @@
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                             </div>
                             <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">local_offer</i> Verify
+                                <div class="stats" th:switch="${publication.getEstado()}">
+                                    <div th:case="0">
+                                        <i class="material-icons">local_offer</i> Verificado
+                                    </div>
+                                    <div th:case="1">
+
+                                        <i class="material-icons">local_offer</i> Verificación en proceso
+                                    </div>
+                                    <div th:case="2">
+
+                                        <i class="material-icons">local_offer</i> No verificado aún
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
