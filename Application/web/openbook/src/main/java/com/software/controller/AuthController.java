@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -54,7 +55,7 @@ public class AuthController {
 
         boolean isUser= authService.verifyUser(user);
         if(!isUser) {
-            return "redirect:/error";
+            return "redirect:/login_error";
         }
         String tipo = authService.getUser(user.getEmail()).get().getTipo();
 
@@ -178,11 +179,8 @@ public class AuthController {
         return "error";
     }
 
-
-
-
     @GetMapping("/")
-    public String process(@RequestParam Map<String, Object> params, Model model, HttpSession session) {
+    public String process(Model model, HttpSession session) {
         @SuppressWarnings("unchecked")
         List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
 
@@ -200,6 +198,8 @@ public class AuthController {
         model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
         return "index";
     }
+
+
 
     @PostMapping("/persistMessage")
     public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
