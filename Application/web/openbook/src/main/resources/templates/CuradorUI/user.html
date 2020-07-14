@@ -213,8 +213,7 @@
               </div>
               <div class="card-body" id="description">
                 <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}"></h6>
-                <p class="card-description" th:text="${sessionUser.getDescription()}">
-                </p>
+
                 <button type="button" onclick="editPicture()" class="btn btn-primary btn-round">Editar</button>
               </div>
             </div>
