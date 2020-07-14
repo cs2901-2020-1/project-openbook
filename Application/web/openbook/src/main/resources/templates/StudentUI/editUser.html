@@ -157,38 +157,57 @@
                                 <p class="card-category">Estos son los datos de su cuenta</p>
                             </div>
                             <div class="card-body">
-                                <form action="/updateProfesor" method="post">
+                                <form action="/updateStudent" method="post">
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Nombres:</span>
-                                                <input type="text" name="name" th:value="${sessionUser.getName()}">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" >Nombres:</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="name" th:value="${sessionUser.getName()}" aria-label="Name" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Apellidos:</span>
-                                                <input type="text" name="surname" th:value="${sessionUser.getSurname()}">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" >Apellidos:</span>
+                                                </div>
+                                                <input type="text" class="form-control" name="surname" th:value="${sessionUser.getSurname()}" aria-label="Name" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="wrap-input100">
-                                                <span class="label-input100">Contraseña:</span>
-                                                <input type="password" name="password">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" >Contraseña:</span>
+                                                </div>
+                                                <input type="password" class="form-control" id="password" name="password" th:value="${sessionUser.getPassword()}" aria-label="Name" aria-describedby="basic-addon1">
+                                                <button type="button" onclick="showPassword()" id="buttonpass"  style="border-color: transparent; background-color: transparent; color: #0b75c9; cursor: pointer">Mostrar</button>
                                             </div>
                                         </div>
                                     </div>
+
                                     <button type="submit" class="btn btn-primary pull-right">Guardar</button>
                                     <div class="clearfix"></div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <a href="#pablo">
+                                    <img class="img" th:src="'/getImageProfesor?id='+${sessionUser.getEmail()}"  />
+                                </a>
+                            </div>
+                            <div class="card-body" id="description">
+                                <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}"></h6>
+                                <button type="button" onclick="editPicture()" class="btn btn-primary btn-round">Editar</button>
                             </div>
                         </div>
                     </div>
@@ -222,7 +241,24 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/demo/demo.js"></script>
 <script>
+
+    function showPassword(){
+        $('#password').attr("type","text");
+        $('#buttonpass').attr("onclick", "hidePassword()");
+        $('#buttonpass').html("Ocultar");
+    }
+
+
+    function hidePassword(){
+        $('#password').attr("type","password");
+        $('#buttonpass').attr("onclick", "showPassword()")
+        $('#buttonpass').html("Mostrar");
+    }
+
     $(document).ready(function() {
+
+
+
         $().ready(function() {
             $sidebar = $('.sidebar');
 
