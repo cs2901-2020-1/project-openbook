@@ -1,6 +1,8 @@
 package com.software.openbook;
 
 import com.software.model.*;
+import com.software.repository.IDatePublicationCount;
+import com.software.repository.IPublicationLikeCount;
 import com.software.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +19,25 @@ import java.util.Set;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
-@SpringBootTest
-class OpenbookApplicationTests {
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private CategoryService catService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private PublicationService publiService;
-    @Autowired
-    private CommentService commentService;
-
-    @Test
-    void contextLoads() {
-    }
-
+//@SpringBootTest
+//class OpenbookApplicationTests {
+//    @Autowired
+//    private AuthService authService;
+//    @Autowired
+//    private CategoryService catService;
+//    @Autowired
+//    private TagService tagService;
+//    @Autowired
+//    private PublicationService publiService;
+//    @Autowired
+//    private CommentService commentService;
+//    @Autowired
+//    private CategoryService categoryService;
+//
+//    @Test
+//    void contextLoads() {
+//    }
+//
 //    @Test
 //    public void students_registration() {
 //        String email1 = "osman.vilchez@utec.edu.pe";
@@ -107,21 +111,13 @@ class OpenbookApplicationTests {
 //
 //    @Test
 //    public void savePublications_and_retrieveByTag() {
-//        //Adding categories
-//        Category cat1 = new Category("Algebra");
-//        Category cat2 = new Category("Polinomios");
-//        Category cat3 = new Category("Conteo y Permutaciones");
-//
-//        catService.addCategory(cat1);
-//        catService.addCategory(cat2);
-//        catService.addCategory(cat3);
-//
 //        Set<Tag> tagslist = new HashSet<>();
-//        String tagName1 = "new_curso_2020";
+//        String tagName1 = "curso_2020";
 //        String tagName2 = "algebra";
-//        String emailProfessor = "jbellido@utec.edu.pe";
+//        //String emailProfessor = "jbellido@utec.edu.pe";
+//        String emailProfessor = "yamilet@utec.edu.pe";
 //        int idCategory = 2;
-//        int n = 50;
+//        int n = 200;
 //
 //        Tag tag1 = new Tag(tagName1);
 //        Tag tag2 = new Tag(tagName2);
@@ -224,7 +220,7 @@ class OpenbookApplicationTests {
 //        String studentEmail1 = "victor.ascunia@lamerced.edu.pe";
 //        String studentEmail2 = "osman.vilchez@utec.edu.pe";
 //
-//        long publicationId = 101;
+//        long publicationId = 7;
 //
 //        Optional<User> userOptional1 = authService.getUser(studentEmail1);
 //        Optional<User> userOptional2 = authService.getUser(studentEmail2);
@@ -367,7 +363,7 @@ class OpenbookApplicationTests {
 //    public void printLastNPublications() {
 //        int numberPub = 5;
 //
-//        Page<Publication> publications = publiService.getLastNPublications(numberPub);
+//        Page<Publication> publications = publiService.getLastNPublications(0, numberPub);
 //        System.out.println("Showing last " + numberPub + " publications");
 //        for (Publication publication:publications) {
 //            System.out.println(publication.getId() + " "+ publication.getDescription()
@@ -398,26 +394,64 @@ class OpenbookApplicationTests {
 //            System.out.println(publication.getId() + " " + publication.getDescription());
 //        }
 //    }
-    public void test_subcomment(Long commentId) {
-        String studentmail = "mit.mosquera@lamerced.edu.pe";
-        Optional<User> optionalStudent = authService.getUser(studentmail);
-        if (!optionalStudent.isPresent())
-            return;
-
-        Comment comment1 = new Comment("subcomentario 1", (float) 0.23, new Publication(),
-                optionalStudent.get());
-        Comment comment2 = new Comment("subcomentario 2", (float) 0.3, new Publication(),
-                optionalStudent.get());
-        commentService.addCommentToComment(commentId, comment1);
-        commentService.addCommentToComment(commentId, comment2);
-    }
-
-    public void test_getsubcomment(Long parentcommentId) {
-        List<Comment> comments = commentService.getSubcoments(parentcommentId);
-
-        for(Comment comment: comments) {
-            System.out.println(comment.getId()+" "+comment.getText_comment()+ " " + comment.getCreatedAt()
-                    +" from comment: " + comment.getParentComment().getText_comment());
-        }
-    }
-}
+//
+//    @Test
+//    public void print_all_categories() {
+//        Iterable<Category> categoryIterable = categoryService.getAllCategories();
+//
+//        for(Category category: categoryIterable) {
+//            System.out.println(category.getId() + " " + category.getDescription());
+//        }
+//    }
+//
+//    @Test
+//    public void print_likes_per_publications() {
+//        //For statistics
+//        String emailProfessor = "jbellido@utec.edu.pe";
+//        //String emailProfessor = "yamilet@utec.edu.pe";
+//
+//        List<IPublicationLikeCount> iPublicationLikeCounts;
+//        iPublicationLikeCounts = publiService.publicationLikeCountsByProfessor(emailProfessor);
+//
+//        for(IPublicationLikeCount pub: iPublicationLikeCounts) {
+//            System.out.println(pub.getPublicationId()+" "+pub.getTotalPublication());
+//        }
+//    }
+//
+//    @Test
+//    public void printCountPublicationsByDate() {
+//        //For statistics
+//        String emailProfessor = "jbellido@utec.edu.pe";
+//        //String emailProfessor = "yamilet@utec.edu.pe";
+//
+//        List<IDatePublicationCount> iDatePublicationCounts;
+//        iDatePublicationCounts = publiService.datePublicationsCountsByProfessor(emailProfessor);
+//
+//        for(IDatePublicationCount pub: iDatePublicationCounts) {
+//            System.out.println(pub.getPublicationDate()+" "+pub.getTotalPublication());
+//        }
+//    }
+//
+//    public void test_subcomment(Long commentId) {
+//        String studentmail = "mit.mosquera@lamerced.edu.pe";
+//        Optional<User> optionalStudent = authService.getUser(studentmail);
+//        if (!optionalStudent.isPresent())
+//            return;
+//
+//        Comment comment1 = new Comment("subcomentario 1", (float) 0.23, new Publication(),
+//                optionalStudent.get());
+//        Comment comment2 = new Comment("subcomentario 2", (float) 0.3, new Publication(),
+//                optionalStudent.get());
+//        commentService.addCommentToComment(commentId, comment1);
+//        commentService.addCommentToComment(commentId, comment2);
+//    }
+//
+//    public void test_getsubcomment(Long parentcommentId) {
+//        List<Comment> comments = commentService.getSubcoments(parentcommentId);
+//
+//        for(Comment comment: comments) {
+//            System.out.println(comment.getId()+" "+comment.getText_comment()+ " " + comment.getCreatedAt()
+//                    +" from comment: " + comment.getParentComment().getText_comment());
+//        }
+//    }
+//}

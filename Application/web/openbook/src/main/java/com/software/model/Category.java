@@ -11,7 +11,7 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
@@ -25,7 +25,8 @@ public class Category {
 
     }
 
-    public Category(String description) {
+    public Category(int id, String description) {
+        this.id = id;
         this.description = description;
     }
 
