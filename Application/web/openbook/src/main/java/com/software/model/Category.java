@@ -11,7 +11,7 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
@@ -28,16 +28,9 @@ public class Category {
 
     }
 
-    public Category(String description) {
-
+    public Category(int id, String description) {
+        this.id = id;
         this.description = description;
-        int id = Integer.parseInt(description);
-        if(id<=4){
-            this.id = id;this.name = "Matemáticas";
-        }
-        else{
-            this.id = id;this.name = "Ciencia y Tecnología";
-        }
     }
 
 

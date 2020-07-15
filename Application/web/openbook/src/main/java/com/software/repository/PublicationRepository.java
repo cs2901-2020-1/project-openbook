@@ -51,6 +51,19 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
                     "AND pro.user_type = 'Professor' ) p_search " +
                     "WHERE p_search.document @@ to_tsquery(:query))",
             nativeQuery = true)
-    //List<Publication> findPublicationsFullTextSearchByDescription(@Param("query") String query);
     Page<Publication> findPublicationsFullTextSearchByDescription(@Param("query") String query, Pageable pageable);
+
+    @Query("SELECT lk.publicationLike.id AS publicationId, " +
+            "COUNT(lk.publicationLike.id) AS totalPublication " +
+            "FROM Likes lk\n" +
+            "WHERE lk.publicationLike.id IN ( \n" +
+            "\tSELECT pub.id FROM Publication pub WHERE pub.professor.email = :professor )\n" +
+            "GROUP BY lk.publicationLike.id")
+    List<IPublicationLikeCount> countTotalPublicationByLikeInterface(@Param("professor") String professor_id);
+
+    @Query(value="SELECT date(pub.created_at) AS publicationDate, count(pub.id) AS totalPublication \n" +
+            "FROM publication pub WHERE pub.professor_id = :professor\n" +
+            "GROUP BY date(pub.created_at)",
+            nativeQuery = true)
+    List<IDatePublicationCount> countTotalPublicationByDateInterface(@Param("professor") String professor_id);
 }

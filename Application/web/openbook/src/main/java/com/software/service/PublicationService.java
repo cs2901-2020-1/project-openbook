@@ -254,4 +254,12 @@ public class PublicationService {
 
         return likeRepository.findAll(specUser);
     }
+
+    public List<IPublicationLikeCount> publicationLikeCountsByProfessor(String professor_id) {
+        return publicationRepository.countTotalPublicationByLikeInterface(professor_id);
+    }
+
+    public List<IDatePublicationCount> datePublicationsCountsByProfessor(String professor_id) {
+        return publicationRepository.countTotalPublicationByDateInterface(professor_id);
+    }
 }
