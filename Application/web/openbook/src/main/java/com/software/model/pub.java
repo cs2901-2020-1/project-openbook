@@ -8,15 +8,15 @@ public class pub {
     public MultipartFile image_file;
     public String title;
     public String description;
-    public String category;
+    public int category_id;
 
 
-    public pub(MultipartFile file, MultipartFile image_file, String title, String description, String category) {
+    public pub(MultipartFile file, MultipartFile image_file, String title, String description, int category) {
         this.file = file;
         this.image_file = image_file;
         this.title = title;
         this.description = description;
-        this.category = category;
+        this.category_id = category;
     }
 
 
@@ -54,11 +54,11 @@ public class pub {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory_id(int category) {
+        this.category_id = category;
     }
 }

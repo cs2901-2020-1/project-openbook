@@ -4,6 +4,7 @@ package com.software.controller;
 import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.CategoryService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,8 @@ public class FileController {
     @Autowired
     private UIService uiService;
 
-
+    @Autowired
+    private CategoryService catService;
 
 
     @GetMapping(value = "/getPDF", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -132,29 +134,29 @@ public class FileController {
 
         String title = pub.getTitle();
         String description = pub.getDescription();
-        String category= pub.getCategory();
+        int category_id= pub.getCategory_id();
+
         int rank = 0;
 
         log.info(pub.getTitle());
         log.info(pub.getDescription());
-        log.info(pub.getCategory());
+
 
 
         Publication publication = new Publication();
-        Category categoria = new Category(category);
 
         publication.setTitle(title);
         publication.setDescription(description);
         publication.setRanking(rank);
-        publication.setCategory(categoria);
         String email = (String) session.getAttribute("EMAIL");
 
         if (email==null)
             return "redirect:/error";
 
         Professor p = (Professor) authService.getUser(email).get();
-
+        Category c = (Category) catService.getCategory(category_id).get();
         publication.setProfessor( p);
+        publication.setCategory( c);
         log.info(p.getEmail());
 
 

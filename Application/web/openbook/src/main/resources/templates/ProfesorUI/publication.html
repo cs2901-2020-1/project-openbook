@@ -282,7 +282,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getCategory().getName()}"></h4>
+                                <h4 th:text="${publication.getCategory().getDescription()}"></h4>
                             </div>
                             <div class="card-body">
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
