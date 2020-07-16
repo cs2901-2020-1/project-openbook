@@ -215,10 +215,10 @@
                                             <div class="form-group">
                                                 <label >Curso</label>
                                                 <br>
-                                                <select class="mdb-select md-form dropdown-default" name="category" id = "category">
-                                                    <option value="" disabled selected>Escoge el curso</option>
-                                                    <option value=1>Desarrollo personal, Ciudadanía y Cívica</option>
-                                                    <option value=2>Ciencias Sociales</option>
+                                                <select class="selectpicker" data-style="btn-primary"  title="Escoge el curso" name="category" id = "category"  >
+                                                    <option th:each="categories: ${categories}" th:value="${categories.getId()}">
+                                                        <p th:text="${categories.getDescription()}"> </option>
+                                          <!--      <option value=2>Ciencias Sociales</option>
                                                     <option value=3>Educación para el trabajo</option>
                                                     <option value=4>Educación Física</option>
                                                     <option value=5>Comunicación</option>
@@ -227,7 +227,7 @@
                                                     <option value=8>Inglés como Lengua Extranjera</option>
                                                     <option value=9>Matemática</option>
                                                     <option value=10>Ciencia y Tecnología</option>
-                                                    <option value=11>Educación religiosa</option>
+                                                    <option value=11>Educación religiosa</option>-->
                                                 </select>
                                                <!-- <input name="category" type="text" class="form-control">-->
                                             </div>

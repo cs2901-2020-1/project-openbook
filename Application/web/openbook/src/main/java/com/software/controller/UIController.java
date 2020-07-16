@@ -3,10 +3,7 @@ package com.software.controller;
 
 import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
-import com.software.service.AuthService;
-import com.software.service.CommentService;
-import com.software.service.PublicationService;
-import com.software.service.UIService;
+import com.software.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,9 @@ public class UIController {
 
     @Autowired
     private PublicationService publicationService;
+
+    @Autowired
+    private CategoryService catService;
 
 
     private static final Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
@@ -468,7 +468,11 @@ public class UIController {
     public String publicarContenido(Model model, HttpSession session){
         String email = (String) session.getAttribute("EMAIL");
 
-
+        List<Category> categories = new ArrayList<Category>();
+        Iterable<Category> categoryIterable = catService.getAllCategories();
+        for(Category category: categoryIterable){
+            categories.add(category);
+        }
         if (email==null)
             return "redirect:/error";
 
@@ -477,6 +481,7 @@ public class UIController {
 
         switch (tipo){
             case "profesor":
+                model.addAttribute("categories", categories);
                 return "ProfesorUI/publicacionContenido";
             default:
                 return "redirect:/error";

@@ -154,7 +154,7 @@ public class FileController {
             return "redirect:/error";
 
         Professor p = (Professor) authService.getUser(email).get();
-        Category c = (Category) catService.getCategory(category_id).get();
+        Category c = catService.getCategory(category_id).get();
         publication.setProfessor( p);
         publication.setCategory( c);
         log.info(p.getEmail());
