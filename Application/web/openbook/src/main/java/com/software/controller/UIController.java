@@ -49,13 +49,38 @@ public class UIController {
             return "redirect:/error";
 
         User user = authService.getUser(email).get();
-
+        List <Publication> publications = new ArrayList<Publication>();
         String tipo = user.getTipo();
+        List <Publication> propias = publicationService.getPublicationsFromProfessor(email);
+        for (Publication publicacion:propias){
+            publications.add(publicacion);
+        }
+
+        List <Publication> p_verified = new ArrayList<Publication>();
+        List <Publication> p_process = new ArrayList<Publication>();
+        List <Publication> p_notverified = new ArrayList<Publication>();
+        for (Publication publicacion:publications){
+            if(publicacion.getEstado()==0){
+                p_notverified.add(publicacion);
+            }
+            else {
+                if(publicacion.getEstado()==1){
+                    p_process.add(publicacion);
+                }
+                else{
+                    p_verified.add(publicacion);
+                }
+            }
+        }
 
         switch (tipo){
             case "profesor":
                 Professor professor = (Professor) user;
                 model.addAttribute("sessionUser",professor);
+                model.addAttribute( "publications",publications);
+                model.addAttribute("p_notverified",p_notverified);
+                model.addAttribute("p_process",p_process);
+                model.addAttribute("p_verified",p_verified);
                 return "ProfesorUI/user";
             case "student":
                 Student student = (Student) user;
