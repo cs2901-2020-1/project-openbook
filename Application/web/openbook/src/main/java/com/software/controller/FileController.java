@@ -7,10 +7,12 @@ import com.software.service.AuthService;
 import com.software.service.CategoryService;
 import com.software.service.PublicationService;
 import com.software.service.UIService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +20,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -32,6 +37,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Controller
 public class FileController {
@@ -110,7 +117,7 @@ public class FileController {
 
 
 
-    @GetMapping("/download")
+    @GetMapping(value = "/download", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> downloadFileFromLocal(String param, @RequestParam(required = true) Long id) {
         Publication publication = uiService.getPublicationById(id).get();
         Path path = Paths.get(publication.getResource_path());
@@ -123,8 +130,7 @@ public class FileController {
         }
         assert resource != null;
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(path.getFileName().toString()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
 
@@ -216,5 +222,33 @@ public class FileController {
 
         return "redirect:/publicarContenido";
     }
+
+
+    @GetMapping(value = "/zip-download", produces="application/zip")
+    public void zipDownload( HttpServletResponse response, HttpSession session) throws IOException {
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        User user = authService.getUser(email).get();
+
+        ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream());
+
+        List<Publication> mochilaPublications = (List<Publication>) uiService.getUserMochila(user);
+
+
+        for (Publication publication : mochilaPublications) {
+            FileSystemResource resource = new FileSystemResource(publication.getResource_path());
+            ZipEntry zipEntry = new ZipEntry(resource.getFilename());
+            zipEntry.setSize(resource.contentLength());
+            zipOut.putNextEntry(zipEntry);
+            StreamUtils.copy(resource.getInputStream(), zipOut);
+            zipOut.closeEntry();
+        }
+        zipOut.finish();
+        zipOut.close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "mochila.zip" + "\"");
+    }
+
 
 }
