@@ -213,17 +213,14 @@
                             <div class="card-footer">
                                 <div class="stats" th:switch="${publication.getEstado()}">
                                     <div th:case="0">
-                                        <i class="material-icons">local_offer</i> No verificado aún
+                                        <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
                                     </div>
                                     <div th:case="1">
-
-                                        <i class="material-icons">local_offer</i> Verificación en proceso
+                                        <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
                                     </div>
                                     <div th:case="2">
-
                                         <i class="material-icons">local_offer</i> Verificado
                                     </div>
-
                                 </div>
                             </div>
                         </div>

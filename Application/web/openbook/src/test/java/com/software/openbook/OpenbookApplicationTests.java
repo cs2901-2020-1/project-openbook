@@ -22,19 +22,21 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest
 class OpenbookApplicationTests {
-/*    @Autowired
+    @Autowired
     private AuthService authService;
     @Autowired
     private CategoryService catService;
     @Autowired
     private TagService tagService;
     @Autowired
-    private PublicationService publiService;
+    private UIService uiService;
+    @Autowired
+    private PublicationService publicationService;
     @Autowired
     private CommentService commentService;
     @Autowired
     private CategoryService categoryService;
-
+/*
     @Test
     void contextLoads() {
     }
@@ -464,6 +466,19 @@ class OpenbookApplicationTests {
         for(Comment comment: comments) {
             System.out.println(comment.getId()+" "+comment.getText_comment()+ " " + comment.getCreatedAt()
                     +" from comment: " + comment.getParentComment().getText_comment());
+        }
+    }
+
+    @Test
+    public void test_ranking() {
+        List<Publication> publications = uiService.getAllPublications();
+        for(Publication publication: publications)
+        {
+            long visits = publication.getVisits();
+            List<Likes> likes = publicationService.getLikesFromPublication(publication.getId());
+            float ranking = publication.getRanking();
+            ranking = (float) (visits*0.05+likes.size()*5);
+            publication.setRanking(ranking);
         }
     }
  */

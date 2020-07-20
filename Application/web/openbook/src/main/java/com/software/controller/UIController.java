@@ -275,13 +275,13 @@ public class UIController {
         Page<Publication> publications;
         if(params.get("page") == null) {
             page = 0;
-            publications = publicationService.getLastNPublications(0,20);
+            publications = publicationService.getTopNPublications(0,20);
         } else {
             page = Integer.valueOf(params.get("page").toString())-1;
-            publications = publicationService.getLastNPublications(Integer.valueOf(params.get("page").toString())-1,20);
+            publications = publicationService.getTopNPublications(Integer.valueOf(params.get("page").toString())-1,20);
         }
-        Page<Publication> publicationsCarousel_0 = publicationService.getLastNPublications(0,3);
-        Page<Publication> publicationsCarousel_1 = publicationService.getLastNPublications(1,3);
+        Page<Publication> publicationsCarousel_0 = publicationService.getTopNPublications(0,3);
+        Page<Publication> publicationsCarousel_1 = publicationService.getTopNPublications(1,3);
         int totalPages = publications.getTotalPages();
         List<Integer> pages;
 
@@ -428,6 +428,9 @@ public class UIController {
         long visitstmp = publication.getVisits();
         visitstmp = visitstmp + 1;
         publication.setVisits(visitstmp);
+        float ranking = publication.getRanking();
+        ranking = (float) (ranking + 0.05);
+        publication.setRanking(ranking);
         publicationService.updatePublication(publication);
 
         if (email==null) {

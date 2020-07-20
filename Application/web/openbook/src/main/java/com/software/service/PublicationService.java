@@ -67,6 +67,10 @@ public class PublicationService {
         publication.setEstado(2); // verificado
         publication.setVerified(true);
         publication.setCurationDate(new Date());
+        float ranking = publication.getRanking();
+        ranking = ranking + 10000;
+        publication.setRanking(ranking);
+        updatePublication(publication);
         
         Publication publicationResult = publicationRepository.save(publication);
 
@@ -203,11 +207,16 @@ public class PublicationService {
             Set<Likes> userLike = user.getLike();
             userLike.add(likeResult);
             publication.getPublicationLike().add(likeResult);
+            float ranking = publication.getRanking();
+            ranking = ranking + 5;
+            publication.setRanking(ranking);
+            updatePublication(publication);
         } else {
+            float ranking = publication.getRanking();
+            ranking = ranking - 5;
+            publication.setRanking(ranking);
+            updatePublication(publication);
             likeRepository.delete(likes.get(0));
-            //Set<Likes> userLike = user.getLike();
-            //userLike.remove(likeResult);
-            //publication.getPublicationLike().remove(likeResult);
         }
 
         return likeResult;
@@ -261,5 +270,11 @@ public class PublicationService {
 
     public List<IDatePublicationCount> datePublicationsCountsByProfessor(String professor_id) {
         return publicationRepository.countTotalPublicationByDateInterface(professor_id);
+    }
+
+
+    public Page<Publication> getTopNPublications(int page, int number) {
+        return publicationRepository.findAll(PageRequest.of(page, number,
+                Sort.by(Sort.Direction.DESC,"ranking")));
     }
 }

@@ -331,20 +331,20 @@
                         <th class="text-dark" scope="col"><h4>Verificado por</h4></th>
                         </thead>
                         <tbody>
-                        <tr th:each="publications: ${publications}" >
-                          <td ><p class="text-secondary" th:text="${publications.getTitle()}"></p></td>
-                          <td><p th:text="${publications.getCategory().getDescription()}"></p></td>
-                          <td><p th:text="${publications.getVisits()}"></p></td>
-                          <td><p th:text="${publications.getPublicationLike().size()}"></p></td>
-                          <td>To do-Ranking 123</td>
-                          <td th:switch="${publications.getEstado()}">
+                        <tr th:each="publication: ${publications}" >
+                          <td ><p class="text-secondary" th:text="${publication.getTitle()}"></p></td>
+                          <td><p th:text="${publication.getCategory().getDescription()}"></p></td>
+                          <td><p th:text="${publication.getVisits()}"></p></td>
+                          <td><p th:text="${publication.getPublicationLike().size()}"></p></td>
+                          <td><p th:text="${publication.getRanking()}"></p></td>
+                          <td th:switch="${publication.getEstado()}">
                             <p class="text-secondary" th:case="0">No Verificado</p>
                             <p class="text-warning" th:case="1">En proceso</p>
                             <p class="text-success" th:case="2">Verificado</p>
                           </td>
-                          <td th:switch="${publications.getEstado()}">
+                          <td th:switch="${publication.getEstado()}">
                             <p th:case="0">-----</p>
-                            <p th:case="2" th:text="${publications.getCurator().getName()}+' '+${publications.getCurator().getSurname()}"></p>
+                            <p th:case="2" th:text="${publication.getCurator().getName()}+' '+${publication.getCurator().getSurname()}"></p>
                           </td>
                         </tr>
 

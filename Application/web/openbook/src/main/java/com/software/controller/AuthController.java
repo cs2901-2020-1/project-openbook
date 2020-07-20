@@ -216,13 +216,13 @@ public class AuthController {
         Page<Publication> publications;
         if(params.get("page") == null) {
             page = 0;
-            publications = publiService.getLastNPublications(0,20);
+            publications = publiService.getTopNPublications(0,20);
         } else {
             page = Integer.valueOf(params.get("page").toString())-1;
             publications = publiService.getLastNPublications(Integer.valueOf(params.get("page").toString())-1,20);
         }
-        Page<Publication> publicationsCarousel_0 = publiService.getLastNPublications(0,3);
-        Page<Publication> publicationsCarousel_1 = publiService.getLastNPublications(1,3);
+        Page<Publication> publicationsCarousel_0 = publiService.getTopNPublications(0,3);
+        Page<Publication> publicationsCarousel_1 = publiService.getTopNPublications(1,3);
         int totalPages = publications.getTotalPages();
         List<Integer> pages;
 
