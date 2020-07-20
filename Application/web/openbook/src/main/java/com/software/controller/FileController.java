@@ -111,8 +111,9 @@ public class FileController {
 
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFileFromLocal() {
-        Path path = Paths.get("src/main/resources/static/test.pdf");
+    public ResponseEntity<Resource> downloadFileFromLocal(String param, @RequestParam(required = true) Long id) {
+        Publication publication = uiService.getPublicationById(id).get();
+        Path path = Paths.get(publication.getResource_path());
 
         Resource resource = null;
         try {
