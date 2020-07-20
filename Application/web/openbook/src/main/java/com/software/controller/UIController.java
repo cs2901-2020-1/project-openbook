@@ -681,6 +681,11 @@ public class UIController {
         return "login_error";
     }
 
+    @GetMapping("/register_error")
+    public String register_error(Model model){
+        return "register_error";
+    }
+
 
     @PostMapping("/saveInBackPack")
     public String saveInBackpack(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){

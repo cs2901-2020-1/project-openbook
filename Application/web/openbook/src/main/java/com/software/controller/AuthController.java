@@ -94,7 +94,7 @@ public class AuthController {
             return "redirect:/login";
         }
 
-        return "error";
+        return "redirect:/register_error";
     }
 
     @PostMapping(value = "/do_register_profesor")
@@ -108,7 +108,7 @@ public class AuthController {
                     .addFlashAttribute("clase", "success");
             return "redirect:/login";
         }
-        return "error";
+        return "redirect:/register_error";
     }
 
     @PostMapping(value = "/updateProfesor")
