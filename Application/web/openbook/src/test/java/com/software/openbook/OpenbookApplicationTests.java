@@ -38,7 +38,7 @@ class OpenbookApplicationTests {
     @Test
     void contextLoads() {
     }
-
+/*
     @Test
     public void students_registration() {
         String email1 = "osman.vilchez@utec.edu.pe";
@@ -465,5 +465,5 @@ class OpenbookApplicationTests {
             System.out.println(comment.getId()+" "+comment.getText_comment()+ " " + comment.getCreatedAt()
                     +" from comment: " + comment.getParentComment().getText_comment());
         }
-    }
+    } */
 }
