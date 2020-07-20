@@ -425,6 +425,11 @@ public class UIController {
         }
 
         Publication publication  = uiService.getPublicationById(id).get();
+        long visitstmp = publication.getVisits();
+        visitstmp = visitstmp + 1;
+        publication.setVisits(visitstmp);
+        publicationService.updatePublication(publication);
+
         if (email==null) {
             model.addAttribute("comments", comments);
             model.addAttribute("publication", publication);

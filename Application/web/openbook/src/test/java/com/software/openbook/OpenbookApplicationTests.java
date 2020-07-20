@@ -22,7 +22,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest
 class OpenbookApplicationTests {
-    @Autowired
+/*    @Autowired
     private AuthService authService;
     @Autowired
     private CategoryService catService;
@@ -466,4 +466,5 @@ class OpenbookApplicationTests {
                     +" from comment: " + comment.getParentComment().getText_comment());
         }
     }
+ */
 }

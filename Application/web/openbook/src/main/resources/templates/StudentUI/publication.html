@@ -270,8 +270,39 @@
                                 <button class="btn btn-primary btn-lg btn-block" th:text="${likes.size()}" disabled></button>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                                    Descargar
+                                </button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Estas seguro de que quieres descargar el contenido?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-primary">Si</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <form action="/saveInBackPack" method="post">
+                                    <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="material-icons">backpack</i></button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>

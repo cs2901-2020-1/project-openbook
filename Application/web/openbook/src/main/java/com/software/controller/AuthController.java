@@ -51,6 +51,12 @@ public class AuthController {
     }
 
 
+    @RequestMapping("/dashboard")
+    public String dashboard(Model model){
+        //Return the login page
+        return "StudentUI/dashboard";
+    }
+
 
     @PostMapping(value = "/do_login")
     public String do_login(@ModelAttribute User user, HttpServletRequest request){
