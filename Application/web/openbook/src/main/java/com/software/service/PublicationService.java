@@ -3,10 +3,7 @@ import com.software.model.*;
 
 import com.software.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +64,10 @@ public class PublicationService {
         publication.setEstado(2); // verificado
         publication.setVerified(true);
         publication.setCurationDate(new Date());
+        float ranking = publication.getRanking();
+        ranking = ranking + 10000;
+        publication.setRanking(ranking);
+        updatePublication(publication);
         
         Publication publicationResult = publicationRepository.save(publication);
 
@@ -145,13 +146,13 @@ public class PublicationService {
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
 
-    public List<Publication> getPublicationsFromCategory(int idCategory) {
+    public Page<Publication> getPublicationsFromCategory(int idCategory, int page, int number) {
 
         PublicationSpecification spec = new PublicationSpecification(
                 new SearchCriteria("category", ":", idCategory));
-
-        return publicationRepository.findAll(spec,
-                Sort.by(Sort.Direction.DESC, "ranking"));
+        return publicationRepository.findAll(spec, PageRequest.of(page, number, Sort.by(Sort.Direction.DESC,"ranking")));
+        //List<Publication> publications = publicationRepository.findAll(spec, Sort.by(Sort.Direction.DESC, "ranking"));
+        //return new PageImpl<Publication>(publications, pageable, publications.size());
     }
 
     public List<Publication> getPublicationsfromTagName(String tagName) {
@@ -203,11 +204,16 @@ public class PublicationService {
             Set<Likes> userLike = user.getLike();
             userLike.add(likeResult);
             publication.getPublicationLike().add(likeResult);
+            float ranking = publication.getRanking();
+            ranking = ranking + 5;
+            publication.setRanking(ranking);
+            updatePublication(publication);
         } else {
+            float ranking = publication.getRanking();
+            ranking = ranking - 5;
+            publication.setRanking(ranking);
+            updatePublication(publication);
             likeRepository.delete(likes.get(0));
-            //Set<Likes> userLike = user.getLike();
-            //userLike.remove(likeResult);
-            //publication.getPublicationLike().remove(likeResult);
         }
 
         return likeResult;
@@ -253,5 +259,29 @@ public class PublicationService {
                 new SearchCriteria("user", ":", user_id));
 
         return likeRepository.findAll(specUser);
+    }
+
+    public List<IPublicationLikeCount> publicationLikeCountsByProfessor(String professor_id) {
+        return publicationRepository.countTotalPublicationByLikeInterface(professor_id);
+    }
+
+    public List<IDatePublicationCount> datePublicationsCountsByProfessor(String professor_id) {
+        return publicationRepository.countTotalPublicationByDateInterface(professor_id);
+    }
+
+
+    public Page<Publication> getTopNPublications(int page, int number) {
+        return publicationRepository.findAll(PageRequest.of(page, number,
+                Sort.by(Sort.Direction.DESC,"ranking")));
+    }
+
+    public boolean verify_content(String resourcePath, User user) {
+        List<Publication> publications = getPublicationsFromProfessor(user.getEmail());
+        for(Publication publication: publications){
+            if(resourcePath.equals(publication.getResource_path())){
+                return true;
+            }
+        }
+        return false;
     }
 }

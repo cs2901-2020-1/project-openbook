@@ -31,36 +31,46 @@
 
 
 <div class="container-contact100" style="background-color: #009ada; ">
-
-    <div class="wrap-contact100">
-        <div class="contact100-form-title" style="background-image: url(register/images/bg-01.jpg);">
-				<span class="contact100-form-title-1">
-					OpenBook
-				</span>
-
-            <span class="contact100-form-title-2">
-					Registrate ahora
-				</span>
-            <br>
-
-
-            <div  class ="container-fluid">
-                <div class= "row justify-content-center">
-                    <div  class="col-4 ">
-                        <button type="button" style="background-color: #009ada; border-color:#009ada; " class="btn btn-primary btn-lg" onclick="student_registration()" id="student_button">Soy Estudiante</button>
-                    </div>
-                    <div  class="col-4 align-self-center" >
-                        <button style="background-color: #009ada; border-color:#009ada; " type="button" class="btn btn-primary btn-lg" onclick="profesor_registration()" id="profesor_button">Soy Profesor</button>
-                    </div>
-
-                </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <div class="alert alert-danger" role="alert">
+                El usuario que ingresaste ya esta siendo utilizado.
             </div>
         </div>
-        <div id="form">
+        <div class="col-md-12">
+            <center>
+                <div class="wrap-contact100">
+                    <div class="contact100-form-title" style="background-image: url(register/images/bg-01.jpg);">
+                            <span class="contact100-form-title-1">
+                                OpenBook
+                            </span>
 
-        </div>
-        <div class="button">
-            <center><p><a href ="login" class = "text-dark">Ya estoy registrado</a></p></center>
+                        <span class="contact100-form-title-2">
+                                Registrate ahora
+                            </span>
+                        <br>
+
+
+                        <div  class ="container-fluid">
+                            <div class= "row justify-content-center">
+                                <div  class="col-4 ">
+                                    <button type="button" style="background-color: #009ada; border-color:#009ada; " class="btn btn-primary btn-lg" onclick="student_registration()" id="student_button">Soy Estudiante</button>
+                                </div>
+                                <div  class="col-4 align-self-center" >
+                                    <button style="background-color: #009ada; border-color:#009ada; " type="button" class="btn btn-primary btn-lg" onclick="profesor_registration()" id="profesor_button">Soy Profesor</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="form">
+
+                    </div>
+                    <div class="button">
+                        <center><p><a href ="login" class = "text-dark">Ya estoy registrado</a></p></center>
+                    </div>
+                </div>
+            </center>
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@ package com.software.controller;
 import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.CategoryService;
 import com.software.service.PublicationService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
@@ -44,12 +45,21 @@ public class AuthController {
     @Autowired
     private PublicationService publiService;
 
+    @Autowired
+    private CategoryService catService;
+
     @RequestMapping("/login")
     public String login(Model model){
         //Return the login page
         return "login";
     }
 
+
+    @RequestMapping("/dashboard")
+    public String dashboard(Model model){
+        //Return the login page
+        return "StudentUI/dashboard";
+    }
 
 
     @PostMapping(value = "/do_login")
@@ -88,7 +98,7 @@ public class AuthController {
             return "redirect:/login";
         }
 
-        return "error";
+        return "redirect:/register_error";
     }
 
     @PostMapping(value = "/do_register_profesor")
@@ -102,7 +112,7 @@ public class AuthController {
                     .addFlashAttribute("clase", "success");
             return "redirect:/login";
         }
-        return "error";
+        return "redirect:/register_error";
     }
 
     @PostMapping(value = "/updateProfesor")
@@ -206,17 +216,18 @@ public class AuthController {
         }
         model.addAttribute("sessionMessages", messages);
 
+        Iterable<Category> categoryIterable = catService.getAllCategories();
         int page;
         Page<Publication> publications;
         if(params.get("page") == null) {
             page = 0;
-            publications = publiService.getLastNPublications(0,20);
+            publications = publiService.getTopNPublications(0,20);
         } else {
             page = Integer.valueOf(params.get("page").toString())-1;
             publications = publiService.getLastNPublications(Integer.valueOf(params.get("page").toString())-1,20);
         }
-        Page<Publication> publicationsCarousel_0 = publiService.getLastNPublications(0,3);
-        Page<Publication> publicationsCarousel_1 = publiService.getLastNPublications(1,3);
+        Page<Publication> publicationsCarousel_0 = publiService.getTopNPublications(0,3);
+        Page<Publication> publicationsCarousel_1 = publiService.getTopNPublications(1,3);
         int totalPages = publications.getTotalPages();
         List<Integer> pages;
 
@@ -234,6 +245,7 @@ public class AuthController {
             }
         }
         model.addAttribute("publications", publications);
+        model.addAttribute("categories", categoryIterable);
         model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
         model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
         model.addAttribute("pages", pages);

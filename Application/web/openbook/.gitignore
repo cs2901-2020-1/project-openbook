@@ -12,7 +12,10 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.properties
+java/resources/application.properties
+files/
+.pdf
+.jpg
 
 ### IntelliJ IDEA ###
 .idea

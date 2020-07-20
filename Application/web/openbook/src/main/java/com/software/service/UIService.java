@@ -16,6 +16,8 @@ import java.util.Optional;
 @Service
 public class UIService {
 
+    @Autowired
+    private PublicationService publicationService;
 
     @Autowired
     private MochilaRepository mochilaRepository;
@@ -71,6 +73,11 @@ public class UIService {
 
         mochila.setPublication_id(publication);
         mochila.setUser_id(user);
+
+        float ranking = publication.getRanking();
+        ranking = ranking + 40;
+        publication.setRanking(ranking);
+        publicationService.updatePublication(publication);
 
         mochilaRepository.save(mochila);
 

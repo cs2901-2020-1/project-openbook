@@ -46,7 +46,7 @@
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item  active">
+          <li class="nav-item active ">
             <a class="nav-link" href="/inicio">
               <i class="material-icons">home</i>
               <p>Pagina Principal</p>
@@ -58,6 +58,7 @@
               <p>Perfil</p>
             </a>
           </li>
+
           <li class="nav-item ">
             <a class="nav-link" href="/mochila">
               <i class="material-icons">backpack</i>
@@ -65,39 +66,14 @@
             </a>
           </li>
 
-          <li class="nav-item ">
-            <a class="nav-link" href="/publicarContenido">
-              <i class="material-icons">content_paste</i>
-              <p>Publicar Contenido</p>
-            </a>
-          </li>
-
-          <li class="nav-item ">
-            <a class="nav-link" href="/publications">
-              <i class="material-icons">publication</i>
-              <p>Mis Publicaciones</p>
-            </a>
-          </li>
-
-     <!--     <li class="nav-item ">
-            <a class="nav-link" href="/dashboardui">
-              <i class="material-icons">dashboard</i>
-              <p>Tablero</p>
-            </a>
-          </li> -->
 
           <!--<li class="nav-item ">
             <a class="nav-link" href="/notifications">
               <i class="material-icons">notifications</i>
-              <p>Notifications</p>
+              <p>Notificaciones</p>
             </a>
           </li>-->
-          <!-- <li class="nav-item active-pro ">
-                <a class="nav-link" href="./upgrade.html">
-                    <i class="material-icons">unarchive</i>
-                    <p>Upgrade to PRO</p>
-                </a>
-            </li> -->
+
         </ul>
       </div>
     </div>
@@ -166,116 +142,12 @@
         </div>
       </nav>
       <!-- End Navbar -->
-
-      <div class="content" >
-        <div class="container-fluid">
-          <!--Carousel Wrapper-->
-          <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-            <!--Controls-->
-            <div class="controls-top">
-
-            </div>
-            <!--/.Controls-->
-
-            <!--Slides-->
-            <div class="carousel-inner" role="listbox">
-
-              <!--First slide-->
-              <div class="carousel-item active">
-
-                <div class="col-md-4" style="float:left" th:each="publicationCarousel: ${publicationsCarousel_0}">
-                  <div class="card card-chart">
-                    <img class="card-img-top" th:src="'/getImage?id='+${publicationCarousel.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                    <div class="card-header card-header-success">
-                      <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
-                    </div>
-                    <div class="card-body" style="min-height: 10rem;">
-                      <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                      <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                    </div>
-                    <div class="card-footer">
-                      <div class="stats" th:switch="${publicationCarousel.getEstado()}">
-                        <div th:case="0">
-                          <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
-                        </div>
-                        <div th:case="1">
-                          <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
-                        </div>
-                        <div th:case="2">
-                          <i class="material-icons">local_offer</i> Verificado
-                        </div>
-                      </div>
-                      <div class="stats">
-                        <form action="/saveInBackPack" method="post">
-                          <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
-                          <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--/.First slide-->
-
-              <!--Second slide-->
-              <div class="carousel-item">
-
-                <div class="col-md-4" style="float:left" th:each="publicationCarousel: ${publicationsCarousel_1}">
-                  <div class="card card-chart">
-                    <img class="card-img-top" th:src="'/getImage?id='+${publicationCarousel.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                    <div class="card-header card-header-success">
-                      <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
-                    </div>
-                    <div class="card-body" style="min-height: 10rem;">
-                      <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                      <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                    </div>
-                    <div class="card-footer">
-                      <div class="stats" th:switch="${publicationCarousel.getEstado()}">
-                        <div th:case="0">
-                          <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
-                        </div>
-                        <div th:case="1">
-                          <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
-                        </div>
-                        <div th:case="2">
-                          <i class="material-icons">local_offer</i> Verificado
-                        </div>
-                      </div>
-                      <div class="stats">
-                        <form action="/saveInBackPack" method="post">
-                          <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
-                          <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <!--/.Second slide-->
-
-            </div>
-            <!--/.Slides-->
-            <center>
-              <a class="btn btn-success" href="#multi-item-example" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="btn btn-success" href="#multi-item-example" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </center>
-          </div>
-          <!--/.Carousel Wrapper-->
-        </div>
+      <div class="content">
         <div class="container-fluid">
           <div class="row" >
             <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
               <div class="card card-chart">
-                <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}"  alt="Card image cap" style="object-fit: cover; height: 300px;">
+                <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
                 <div class="card-header card-header-success">
                   <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                 </div>
@@ -283,6 +155,7 @@
                   <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                   <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                 </div>
+
                 <div class="card-footer">
                   <div class="stats" th:switch="${publication.getEstado()}">
                     <div th:case="0">
@@ -295,6 +168,7 @@
                       <i class="material-icons">local_offer</i> Verificado
                     </div>
                   </div>
+                  <div class="stats">
                     <form action="/saveInBackPack" method="post">
                       <input style="display: none" th:value="${publication.getId()}" name="p_id">
                       <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
@@ -309,18 +183,17 @@
         <nav aria-label="Pagination">
           <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
-              <a class="page-link" th:href="@{|/inicio?page=${prev}|}"><<</a>
+              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${prev}|}"><<</a>
             </li>
             <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
-              <a class="page-link" th:href="@{|/inicio?page=${page}|}" th:text="${page}">1</a>
+              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${page}|}" th:text="${page}">1</a>
             </li>
             <li class="page-item" th:classappend="${current == last ? 'disabled': ''}">
-              <a class="page-link" th:href="@{|/inicio?page=${next}|}">>></a>
+              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${next}|}">>></a>
             </li>
           </ul>
         </nav>
       </div>
-
       <footer class="footer">
       </footer>
       <script>
@@ -508,6 +381,13 @@
 
         });
       });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
     });
   </script>
 </body>

@@ -1,12 +1,11 @@
 package com.software.controller;
 
 
-import com.software.model.Professor;
-import com.software.model.Publication;
-import com.software.model.User;
-import com.software.model.pub;
+import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.CategoryService;
+import com.software.service.PublicationService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,11 @@ public class FileController {
     @Autowired
     private UIService uiService;
 
+    @Autowired
+    private CategoryService catService;
 
+    @Autowired
+    private PublicationService publicationService;
 
 
     @GetMapping(value = "/getPDF", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -108,8 +111,9 @@ public class FileController {
 
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFileFromLocal() {
-        Path path = Paths.get("src/main/resources/static/test.pdf");
+    public ResponseEntity<Resource> downloadFileFromLocal(String param, @RequestParam(required = true) Long id) {
+        Publication publication = uiService.getPublicationById(id).get();
+        Path path = Paths.get(publication.getResource_path());
 
         Resource resource = null;
         try {
@@ -135,11 +139,13 @@ public class FileController {
 
         String title = pub.getTitle();
         String description = pub.getDescription();
+        int category_id= pub.getCategory_id();
+
         int rank = 0;
 
         log.info(pub.getTitle());
         log.info(pub.getDescription());
-        log.info(pub.getCategory());
+
 
 
         Publication publication = new Publication();
@@ -147,15 +153,15 @@ public class FileController {
         publication.setTitle(title);
         publication.setDescription(description);
         publication.setRanking(rank);
-
         String email = (String) session.getAttribute("EMAIL");
 
         if (email==null)
             return "redirect:/error";
 
         Professor p = (Professor) authService.getUser(email).get();
-
-        publication.setProfessor( p);
+        Category c = catService.getCategory(category_id).get();
+        publication.setProfessor(p);
+        publication.setCategory(c);
         log.info(p.getEmail());
 
 
@@ -163,12 +169,17 @@ public class FileController {
         // pdf
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
-        String resourcePath = FILE_PATH + fileName;
+        String resourcePath = FILE_PATH + email + "_" + fileName;
 
+        int i = 1;
+        while(publicationService.verify_content(resourcePath,p)){
+            resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
+            i++;
+        }
         publication.setResource_path(resourcePath);
 
 
-        Path path = Paths.get(FILE_PATH + fileName);
+        Path path = Paths.get(resourcePath);
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
@@ -180,13 +191,19 @@ public class FileController {
 
         fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
 
-        resourcePath = FILE_PATH + fileName;
+        resourcePath = FILE_PATH + email + "_" + fileName;
+
+        i = 1;
+        while(publicationService.verify_content(resourcePath,p)){
+            resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
+            i++;
+        }
 
         publication.setImage_path(resourcePath);
 
         uiService.postPublication(publication);
 
-        path = Paths.get(FILE_PATH + fileName);
+        path = Paths.get(resourcePath);
         try {
             Files.copy(image_file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

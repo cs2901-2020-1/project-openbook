@@ -6,6 +6,7 @@ import com.software.model.User;
 import com.software.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -18,8 +19,11 @@ public class AuthService {
     public boolean verifyUser(User user){
         //TO DO
         Optional<User> optionalUser  = userRepository.findById(user.getEmail());
-        return optionalUser.filter(value -> user.getPassword().equals(value.getPassword())).isPresent();
 
+        //for encryption
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        return optionalUser.filter(value -> passwordEncoder.matches(user.getPassword(), value.getPassword())).isPresent();
     }
 
     public Optional<User> doLoginUser(User user){
@@ -31,16 +35,21 @@ public class AuthService {
     }
 
     public void addUser(User user){
+        //for encryption
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
         userRepository.save(user);
 
     }
 
     public boolean registerUser(User user){
-        if (verifyUser(user))
+        Optional<User> optionalUser  = userRepository.findById(user.getEmail());
+        if (optionalUser.isPresent())
             return false;
         addUser(user);
         return true;
-
     }
 
     public boolean updateProfesorDescription(User user) {
@@ -67,12 +76,16 @@ public class AuthService {
     public boolean updateUser(User user) {
 
         Optional<User> optionalUser  = userRepository.findById(user.getEmail());
+        //for encryption
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword;
 
         if(optionalUser.isPresent()){
             String tipo = optionalUser.get().getTipo();
 
             switch (tipo){
                 case "profesor":
+
                     Professor currentProfesor =  (Professor) optionalUser.get();
                     Professor updatedProfesor = (Professor) user;
                     currentProfesor.setEmail(updatedProfesor.getEmail());
@@ -80,7 +93,10 @@ public class AuthService {
                     currentProfesor.setUsername(updatedProfesor.getUsername());
                     currentProfesor.setSurname(updatedProfesor.getSurname());
                     currentProfesor.setTitleId(updatedProfesor.getTitleId());
-                    currentProfesor.setPassword(updatedProfesor.getPassword());
+
+                    encodedPassword = passwordEncoder.encode(updatedProfesor.getPassword());
+                    currentProfesor.setPassword(encodedPassword);
+
                     userRepository.save(currentProfesor);
                     return true;
 
@@ -93,6 +109,10 @@ public class AuthService {
                     currentStudent.setUsername(updatedStudent.getUsername());
                     currentStudent.setSurname(updatedStudent.getSurname());
                     currentStudent.setPassword(updatedStudent.getPassword());
+
+                    encodedPassword = passwordEncoder.encode(updatedStudent.getPassword());
+                    updatedStudent.setPassword(encodedPassword);
+
                     userRepository.save(currentStudent);
                     return true;
 
