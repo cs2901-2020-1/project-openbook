@@ -48,6 +48,8 @@ public class UIController {
         if (email==null)
             return "redirect:/error";
 
+
+        Iterable<Category> categoryIterable = catService.getAllCategories();
         User user = authService.getUser(email).get();
         List <Publication> publications = new ArrayList<Publication>();
         String tipo = user.getTipo();
@@ -81,14 +83,17 @@ public class UIController {
                 model.addAttribute("p_notverified",p_notverified);
                 model.addAttribute("p_process",p_process);
                 model.addAttribute("p_verified",p_verified);
+                model.addAttribute("categories", categoryIterable);
                 return "ProfesorUI/user";
             case "student":
                 Student student = (Student) user;
                 model.addAttribute("sessionUser",student);
+                model.addAttribute("categories", categoryIterable);
                 return "StudentUI/user";
             case "curador":
                 Curator curator = (Curator) user;
                 model.addAttribute("sessionUser",curator);
+                model.addAttribute("categories", categoryIterable);
                 return "CuradorUI/user";
             default:
                 return "redirect:/error";
@@ -127,28 +132,27 @@ public class UIController {
     }
 
 
-
-
-    @RequestMapping("/searchContent")
-    public String searchContent(@RequestParam Map<String, Object> params, Model model, HttpSession session){
+    @RequestMapping("/searchContentCategory")
+    public String searchContentByCategory(@RequestParam(required = false) int id, @RequestParam Map<String, Object> params, Model model, HttpSession session){
         @SuppressWarnings("unchecked")
         List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
 
         if(messages == null){
             messages = new ArrayList<>();
         }
+
         model.addAttribute("sessionMessages", messages);
 
-        String keyword = (String) params.get("search");
+        Iterable<Category> categoryIterable = catService.getAllCategories();
 
         int page;
         Page<Publication> publications;
         if(params.get("page") == null) {
             page = 0;
-            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(0,20));
+            publications = publicationService.getPublicationsFromCategory(id, 0,20);
         } else {
             page = Integer.valueOf(params.get("page").toString())-1;
-            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(page,20));
+            publications = publicationService.getPublicationsFromCategory(id, page,20);
         }
 
         int totalPages = publications.getTotalPages();
@@ -173,11 +177,99 @@ public class UIController {
 
         if (email==null) {
             model.addAttribute("publications", publications);
+            model.addAttribute("categories", categoryIterable);
             model.addAttribute("pages", pages);
             model.addAttribute("current", page+1);
             model.addAttribute("next", page+2);
             model.addAttribute("prev", page);
             model.addAttribute("last", totalPages);
+            model.addAttribute("id", id);
+            return "searchCategory";
+        }
+
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        switch (tipo) {
+            case "profesor":
+                model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
+                model.addAttribute("pages", pages);
+                model.addAttribute("current", page+1);
+                model.addAttribute("next", page+2);
+                model.addAttribute("prev", page);
+                model.addAttribute("last", totalPages);
+                model.addAttribute("id", id);
+                return "ProfesorUI/searchCategory";
+            case "student":
+                model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
+                model.addAttribute("pages", pages);
+                model.addAttribute("current", page+1);
+                model.addAttribute("next", page+2);
+                model.addAttribute("prev", page);
+                model.addAttribute("last", totalPages);
+                model.addAttribute("id", id);
+                return "StudentUI/searchCategory";
+            default:
+                return "redirect:/error";
+        }
+    }
+
+
+    @RequestMapping("/searchContent")
+    public String searchContent(@RequestParam Map<String, Object> params, Model model, HttpSession session){
+        @SuppressWarnings("unchecked")
+        List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
+
+        Iterable<Category> categoryIterable = catService.getAllCategories();
+
+        if(messages == null){
+            messages = new ArrayList<>();
+        }
+        model.addAttribute("sessionMessages", messages);
+
+        String keyword = (String) params.get("search");
+
+        int page;
+        Page<Publication> publications;
+        if(params.get("page") == null) {
+            page = 0;
+            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(0,2));
+        } else {
+            page = Integer.valueOf(params.get("page").toString())-1;
+            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(page,2));
+        }
+
+        int totalPages = publications.getTotalPages();
+        List<Integer> pages;
+
+        if(totalPages == 1) {
+            pages = IntStream.rangeClosed(1, 1).boxed().collect(Collectors.toList());
+        } else if(totalPages == 2) {
+            pages = IntStream.rangeClosed(1, 2).boxed().collect(Collectors.toList());
+        } else {
+            if (page == 0) {
+                pages = IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList());
+            } else if (page == totalPages - 1) {
+                pages = IntStream.rangeClosed(totalPages - 2, totalPages).boxed().collect(Collectors.toList());
+            } else {
+                pages = IntStream.rangeClosed(page, page + 2).boxed().collect(Collectors.toList());
+            }
+        }
+
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        if (email==null) {
+            model.addAttribute("publications", publications);
+            model.addAttribute("categories", categoryIterable);
+            model.addAttribute("pages", pages);
+            model.addAttribute("current", page+1);
+            model.addAttribute("next", page+2);
+            model.addAttribute("prev", page);
+            model.addAttribute("last", totalPages);
+            model.addAttribute("keyword", keyword);
             return "search";
         }
 
@@ -187,19 +279,23 @@ public class UIController {
         switch (tipo) {
             case "profesor":
                 model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
                 model.addAttribute("pages", pages);
                 model.addAttribute("current", page+1);
                 model.addAttribute("next", page+2);
                 model.addAttribute("prev", page);
                 model.addAttribute("last", totalPages);
+                model.addAttribute("keyword", keyword);
                 return "ProfesorUI/search";
             case "student":
                 model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
                 model.addAttribute("pages", pages);
                 model.addAttribute("current", page+1);
                 model.addAttribute("next", page+2);
                 model.addAttribute("prev", page);
                 model.addAttribute("last", totalPages);
+                model.addAttribute("keyword", keyword);
                 return "StudentUI/search";
             default:
                 return "redirect:/error";
@@ -271,6 +367,8 @@ public class UIController {
 
         String tipo = user.getTipo();
 
+        Iterable<Category> categoryIterable = catService.getAllCategories();
+
         int page;
         Page<Publication> publications;
         if(params.get("page") == null) {
@@ -299,6 +397,7 @@ public class UIController {
             }
         }
         model.addAttribute("publications", publications);
+        model.addAttribute("categories", categoryIterable);
         model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
         model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
         model.addAttribute("pages", pages);
@@ -328,21 +427,27 @@ public class UIController {
 
         User user = authService.getUser(email).get();
 
+
+        Iterable<Category> categoryIterable = catService.getAllCategories();
+
         String tipo = user.getTipo();
 
         switch (tipo){
             case "profesor":
                 Professor professor = (Professor) user;
                 model.addAttribute("sessionUser",professor);
+                model.addAttribute("categories", categoryIterable);
                 return "ProfesorUI/editUser";
             case "student":
                 Student student = (Student) user;
                 model.addAttribute("sessionUser",student);
+                model.addAttribute("categories", categoryIterable);
                 return "StudentUI/editUser";
             case "curador":
 
                 Curator curator = (Curator) user;
                 model.addAttribute("sessionUser",curator);
+                model.addAttribute("categories", categoryIterable);
                 return "CuradorUI/editUser";
             default:
                 return "redirect:/error";
@@ -359,6 +464,8 @@ public class UIController {
             return "redirect:/error";
 
 
+        Iterable<Category> categoryIterable = catService.getAllCategories();
+
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
@@ -368,8 +475,10 @@ public class UIController {
 
         switch (tipo){
             case "profesor":
+                model.addAttribute("categories", categoryIterable);
                 return "ProfesorUI/mochila";
             case "student":
+                model.addAttribute("categories", categoryIterable);
                 return "StudentUI/mochila";
             default:
                 return "redirect:/error";
@@ -383,6 +492,8 @@ public class UIController {
 
         if (email==null)
             return "redirect:/error";
+
+        Iterable<Category> categoryIterable = catService.getAllCategories();
 
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
@@ -402,6 +513,8 @@ public class UIController {
     public String getPublication(Model model, @RequestParam(required = false) Long id,  HttpSession session){
 
         String email = (String) session.getAttribute("EMAIL");
+
+        Iterable<Category> categoryIterable = catService.getAllCategories();
 
         List<Comment> comments_to_filter = commentService.getCommentsPublication(id);
         List<Comment> comments = new ArrayList<Comment>();
@@ -436,6 +549,7 @@ public class UIController {
         if (email==null) {
             model.addAttribute("comments", comments);
             model.addAttribute("publication", publication);
+            model.addAttribute("categories", categoryIterable);
             model.addAttribute("likes", likes);
             model.addAttribute("class_heart", class_heart);
             model.addAttribute("heart", heart);
@@ -449,6 +563,7 @@ public class UIController {
             case "profesor":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("categories", categoryIterable);
                 model.addAttribute("likes", likes);
                 model.addAttribute("class_heart", class_heart);
                 model.addAttribute("heart", heart);
@@ -456,6 +571,7 @@ public class UIController {
             case "student":
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("categories", categoryIterable);
                 model.addAttribute("likes", likes);
                 model.addAttribute("class_heart", class_heart);
                 model.addAttribute("heart", heart);
@@ -467,6 +583,7 @@ public class UIController {
                 model.addAttribute("sessionUser",curator);
                 model.addAttribute("comments", comments);
                 model.addAttribute("publication", publication);
+                model.addAttribute("categories", categoryIterable);
                 model.addAttribute("likes", likes);
                 return "CuradorUI/publication";
             default:
@@ -515,6 +632,7 @@ public class UIController {
         switch (tipo){
             case "profesor":
                 model.addAttribute("categories", categories);
+                model.addAttribute("categories", categoryIterable);
                 return "ProfesorUI/publicacionContenido";
             default:
                 return "redirect:/error";
@@ -532,6 +650,7 @@ public class UIController {
         User user = authService.getUser(email).get();
         String tipo = user.getTipo();
 
+        Iterable<Category> categoryIterable = catService.getAllCategories();
 
         if ("profesor".equals(tipo)) {
             List<Publication> publications = uiService.getPublicationsByProfessor((Professor) user);
@@ -542,6 +661,7 @@ public class UIController {
 
             }
             model.addAttribute("publications", publications);
+            model.addAttribute("categories", categoryIterable);
             return "ProfesorUI/publicaciones";
         }
         return "redirect:/error";

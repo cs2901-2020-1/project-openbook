@@ -5,6 +5,7 @@ import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
 import com.software.service.CategoryService;
+import com.software.service.PublicationService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,9 @@ public class FileController {
 
     @Autowired
     private CategoryService catService;
+
+    @Autowired
+    private PublicationService publicationService;
 
 
     @GetMapping(value = "/getPDF", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -155,8 +159,8 @@ public class FileController {
 
         Professor p = (Professor) authService.getUser(email).get();
         Category c = catService.getCategory(category_id).get();
-        publication.setProfessor( p);
-        publication.setCategory( c);
+        publication.setProfessor(p);
+        publication.setCategory(c);
         log.info(p.getEmail());
 
 
@@ -164,12 +168,17 @@ public class FileController {
         // pdf
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
-        String resourcePath = FILE_PATH + fileName;
+        String resourcePath = FILE_PATH + email + "_" + fileName;
 
+        int i = 1;
+        while(publicationService.verify_content(resourcePath,p)){
+            resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
+            i++;
+        }
         publication.setResource_path(resourcePath);
 
 
-        Path path = Paths.get(FILE_PATH + fileName);
+        Path path = Paths.get(resourcePath);
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
@@ -181,13 +190,19 @@ public class FileController {
 
         fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
 
-        resourcePath = FILE_PATH + fileName;
+        resourcePath = FILE_PATH + email + "_" + fileName;
+
+        i = 1;
+        while(publicationService.verify_content(resourcePath,p)){
+            resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
+            i++;
+        }
 
         publication.setImage_path(resourcePath);
 
         uiService.postPublication(publication);
 
-        path = Paths.get(FILE_PATH + fileName);
+        path = Paths.get(resourcePath);
         try {
             Files.copy(image_file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

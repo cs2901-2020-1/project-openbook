@@ -3,6 +3,7 @@ package com.software.controller;
 import com.software.model.*;
 import com.software.openbook.OpenbookApplication;
 import com.software.service.AuthService;
+import com.software.service.CategoryService;
 import com.software.service.PublicationService;
 import com.software.service.UIService;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class AuthController {
 
     @Autowired
     private PublicationService publiService;
+
+    @Autowired
+    private CategoryService catService;
 
     @RequestMapping("/login")
     public String login(Model model){
@@ -212,6 +216,7 @@ public class AuthController {
         }
         model.addAttribute("sessionMessages", messages);
 
+        Iterable<Category> categoryIterable = catService.getAllCategories();
         int page;
         Page<Publication> publications;
         if(params.get("page") == null) {
@@ -240,6 +245,7 @@ public class AuthController {
             }
         }
         model.addAttribute("publications", publications);
+        model.addAttribute("categories", categoryIterable);
         model.addAttribute("publicationsCarousel_0", publicationsCarousel_0);
         model.addAttribute("publicationsCarousel_1", publicationsCarousel_1);
         model.addAttribute("pages", pages);

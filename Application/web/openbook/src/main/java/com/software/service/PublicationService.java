@@ -3,10 +3,7 @@ import com.software.model.*;
 
 import com.software.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -149,13 +146,13 @@ public class PublicationService {
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
 
-    public List<Publication> getPublicationsFromCategory(int idCategory) {
+    public Page<Publication> getPublicationsFromCategory(int idCategory, int page, int number) {
 
         PublicationSpecification spec = new PublicationSpecification(
                 new SearchCriteria("category", ":", idCategory));
-
-        return publicationRepository.findAll(spec,
-                Sort.by(Sort.Direction.DESC, "ranking"));
+        return publicationRepository.findAll(spec, PageRequest.of(page, number, Sort.by(Sort.Direction.DESC,"ranking")));
+        //List<Publication> publications = publicationRepository.findAll(spec, Sort.by(Sort.Direction.DESC, "ranking"));
+        //return new PageImpl<Publication>(publications, pageable, publications.size());
     }
 
     public List<Publication> getPublicationsfromTagName(String tagName) {
@@ -276,5 +273,15 @@ public class PublicationService {
     public Page<Publication> getTopNPublications(int page, int number) {
         return publicationRepository.findAll(PageRequest.of(page, number,
                 Sort.by(Sort.Direction.DESC,"ranking")));
+    }
+
+    public boolean verify_content(String resourcePath, User user) {
+        List<Publication> publications = getPublicationsFromProfessor(user.getEmail());
+        for(Publication publication: publications){
+            if(resourcePath.equals(publication.getResource_path())){
+                return true;
+            }
+        }
+        return false;
     }
 }

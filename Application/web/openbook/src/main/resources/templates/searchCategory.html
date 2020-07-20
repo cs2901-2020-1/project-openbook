@@ -2,14 +2,10 @@
 =========================================================
 * Material Dashboard Dark Edition - v2.1.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-dark
 * Copyright 2019 Creative Tim (http://www.creative-tim.com)
-
 * Coded by www.creative-tim.com
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
@@ -38,42 +34,19 @@
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-            OPEN BOOK
+        <div class="logo"><a href="/" class="simple-text logo-normal">
+            Open Book
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item  ">
-                    <a class="nav-link" href="/inicio">
-                        <i class="material-icons">home</i>
+                <li class="nav-item active ">
+                    <a class="nav-link" href="/">
+                        <i class="material-icons">dashboard</i>
                         <p>Pagina Principal</p>
                     </a>
                 </li>
-                <li class="nav-item active ">
-                    <a class="nav-link" href="/user">
-                        <i class="material-icons">person</i>
-                        <p>User Profile</p>
-                    </a>
-                </li>
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/mochila">
-                        <i class="material-icons">backpack</i>
-                        <p>Mochila</p>
-                    </a>
-                </li>
-
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/notifications">
-                        <i class="material-icons">notifications</i>
-                        <p>Notificaciones</p>
-                    </a>
-                </li>
-
             </ul>
         </div>
     </div>
@@ -82,7 +55,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)" th:text="${sessionUser.getUsername()}" ></a>
+                    <a class="navbar-brand" href="javascript:void(0)">Pagina Principal</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -93,7 +66,7 @@
                 <div class="collapse navbar-collapse justify-content-end">
                     <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="search" name="search" id="search" class="form-control" placeholder="Search..." aria-label="Search">
+                            <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -120,7 +93,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">person</i>
                                 <p class="d-lg-none d-md-block">
@@ -129,86 +102,70 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <div >
-                                    <form th:action="@{/destroy}" method="post">
-                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Cerrar Sesion" />
+                                    <form th:action="@{/login}" method="post">
+                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Iniciar Sesion" />
+                                    </form>
+                                </div>
+                                <div >
+                                    <form th:action="@{/register}" method="post">
+                                        <input class="dropdown-item" href="javascript:void(0)" type="submit" value="Registrarse" />
                                     </form>
                                 </div>
 
                             </div>
-
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- End Navbar -->
-        <div class="content">
+        <div class="content" >
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title" th:text="'Hola ' + ${sessionUser.getName()} +' '+${sessionUser.getSurname()}"></h4>
-                                <p class="card-category">Estos son los datos de su cuenta</p>
+                <div class="row" >
+                    <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
+                        <div class="card card-chart">
+                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                            <div class="card-header card-header-success">
+                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                             </div>
-                            <div class="card-body">
-                                <form action="/updateStudent" method="post">
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Nombres:</span>
-                                                </div>
-                                                <input type="text" class="form-control" name="name" th:value="${sessionUser.getName()}" aria-label="Name" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Apellidos:</span>
-                                                </div>
-                                                <input type="text" class="form-control" name="surname" th:value="${sessionUser.getSurname()}" aria-label="Name" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" >Contraseña:</span>
-                                                </div>
-                                                <input type="password" class="form-control" id="password" name="password" th:value="${sessionUser.getPassword()}" aria-label="Name" aria-describedby="basic-addon1">
-                                                <button type="button" onclick="showPassword()" id="buttonpass"  style="border-color: transparent; background-color: transparent; color: #0b75c9; cursor: pointer">Mostrar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
-                                    <div class="clearfix"></div>
-                                </form>
+                            <div class="card-body" style="min-height: 12rem;">
+                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-profile">
-                            <div class="card-avatar">
-                                <a href="#pablo">
-                                    <img class="img" th:src="'/getImageProfesor?id='+${sessionUser.getEmail()}"  />
-                                </a>
-                            </div>
-                            <div class="card-body" id="description">
-                                <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}"></h6>
-                                <button type="button" onclick="editPicture()" class="btn btn-primary btn-round">Editar</button>
+                            <div class="card-footer">
+                                <div class="stats" th:switch="${publication.getEstado()}">
+                                    <div th:case="0">
+                                        <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
+                                    </div>
+                                    <div th:case="1">
+                                        <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
+                                    </div>
+                                    <div th:case="2">
+                                        <i class="material-icons">local_offer</i> Verificado
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+            <nav aria-label="Pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
+                        <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${prev}|}"><<</a>
+                    </li>
+                    <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
+                        <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${page}|}" th:text="${page}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${current == last ? 'disabled': ''}">
+                        <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${next}|}">>></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
+        <footer class="footer">
+        </footer>
         <script>
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
@@ -236,24 +193,7 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/demo/demo.js"></script>
 <script>
-
-    function showPassword(){
-        $('#password').attr("type","text");
-        $('#buttonpass').attr("onclick", "hidePassword()");
-        $('#buttonpass').html("Ocultar");
-    }
-
-
-    function hidePassword(){
-        $('#password').attr("type","password");
-        $('#buttonpass').attr("onclick", "showPassword()")
-        $('#buttonpass').html("Mostrar");
-    }
-
     $(document).ready(function() {
-
-
-
         $().ready(function() {
             $sidebar = $('.sidebar');
 
@@ -412,6 +352,13 @@
 
             });
         });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        md.initDashboardPageCharts();
+
     });
 </script>
 </body>
