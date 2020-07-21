@@ -95,9 +95,6 @@ public class AuthService {
                     currentProfesor.setSurname(updatedProfesor.getSurname());
                     currentProfesor.setTitleId(updatedProfesor.getTitleId());
 
-                    encodedPassword = passwordEncoder.encode(updatedProfesor.getPassword());
-                    currentProfesor.setPassword(encodedPassword);
-
                     userRepository.save(currentProfesor);
                     return true;
 
@@ -109,10 +106,6 @@ public class AuthService {
                     currentStudent.setName(updatedStudent.getName());
                     currentStudent.setUsername(updatedStudent.getUsername());
                     currentStudent.setSurname(updatedStudent.getSurname());
-                    currentStudent.setPassword(updatedStudent.getPassword());
-
-                    encodedPassword = passwordEncoder.encode(updatedStudent.getPassword());
-                    updatedStudent.setPassword(encodedPassword);
 
                     userRepository.save(currentStudent);
                     return true;
@@ -125,11 +118,6 @@ public class AuthService {
                     currentCurator.setName(updatedCurator.getName());
                     currentCurator.setUsername(updatedCurator.getUsername());
                     currentCurator.setSurname(updatedCurator.getSurname());
-                    currentCurator.setPassword(updatedCurator.getPassword());
-
-                    encodedPassword = passwordEncoder.encode(updatedCurator.getPassword());
-                    currentCurator.setPassword(encodedPassword);
-
                     userRepository.save(currentCurator);
                     return true;
 
