@@ -101,6 +101,7 @@
                         </div>
                     </form>
                     <ul class="navbar-nav">
+
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">dashboard</i>
@@ -113,11 +114,9 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <i class="material-icons">notifications</i>
-                                <p class="d-lg-none d-md-block">
-                                    Stats
-                                </p>
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Mochila"
+                               data-content="En este apartado, usted puede ver las publicaciones que ha guardado en la mochila. Además, al hacer click en descargar, todas las publicaciones, serán descargadas">
+                                <i class="material-icons">help</i>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -231,6 +230,8 @@
 <script>
     $(document).ready(function() {
         $().ready(function() {
+            $('[data-toggle="popover"]').popover()
+
             $sidebar = $('.sidebar');
 
             $sidebar_img_container = $sidebar.find('.sidebar-background');

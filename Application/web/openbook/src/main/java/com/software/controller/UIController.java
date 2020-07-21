@@ -61,17 +61,21 @@ public class UIController {
         List <Publication> p_verified = new ArrayList<Publication>();
         List <Publication> p_process = new ArrayList<Publication>();
         List <Publication> p_notverified = new ArrayList<Publication>();
+        List <Publication> p_rechazado = new ArrayList<Publication>();
         for (Publication publicacion:publications){
-            if(publicacion.getEstado()==0){
-                p_notverified.add(publicacion);
-            }
-            else {
-                if(publicacion.getEstado()==1){
+            switch (publicacion.getEstado()){
+                case 0:
+                    p_notverified.add(publicacion);
+                    break;
+                case 1:
                     p_process.add(publicacion);
-                }
-                else{
+                    break;
+                case 2:
                     p_verified.add(publicacion);
-                }
+                    break;
+                case 3:
+                    p_rechazado.add(publicacion);
+                    break;
             }
         }
 
@@ -83,7 +87,10 @@ public class UIController {
                 model.addAttribute("p_notverified",p_notverified);
                 model.addAttribute("p_process",p_process);
                 model.addAttribute("p_verified",p_verified);
+                model.addAttribute("p_rechazado",p_rechazado);
+
                 model.addAttribute("categories", categoryIterable);
+
                 return "ProfesorUI/user";
             case "student":
                 Student student = (Student) user;

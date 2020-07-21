@@ -40,7 +40,7 @@ class OpenbookApplicationTests {
     @Test
     void contextLoads() {
     }
-
+/*
     @Test
     public void students_registration() {
         String email1 = "osman.vilchez@utec.edu.pe";
@@ -490,7 +490,21 @@ class OpenbookApplicationTests {
             System.out.println(comment.getId()+" "+comment.getText_comment()+ " " + comment.getCreatedAt()
                     +" from comment: " + comment.getParentComment().getText_comment());
         }
-    }
+<<<<<<< HEAD
+    } */
+
+/*@Test
+    public void test_ranking() {
+        List<Publication> publications = uiService.getAllPublications();
+        for(Publication publication: publications)
+        {
+            long visits = publication.getVisits();
+            List<Likes> likes = publicationService.getLikesFromPublication(publication.getId());
+            float ranking = publication.getRanking();
+            ranking = (float) (visits*0.05+likes.size()*5);
+            publication.setRanking(ranking);
+        }
+    }*/
 
 //    @Test
 //    public void test_ranking() {
@@ -505,4 +519,4 @@ class OpenbookApplicationTests {
 //        }
 //    }
 
-}*/
+//}

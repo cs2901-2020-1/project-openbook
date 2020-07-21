@@ -137,11 +137,10 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)">
-                  <i class="material-icons">notifications</i>
-                  <p class="d-lg-none d-md-block">
-                    Stats
-                  </p>
+                <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Inicio"
+                   data-content="¡Bienvenido! En la parte superior, el carrusel muestra las publicaciones de mayor ranking. Las publicaciones inferiores, son las más recientes hechas por la comunidad.
+                   En la parte inferior de cada publición, encontrará los tags que detallan el estado de verificación del contenido">
+                  <i class="material-icons">help</i>
                 </a>
               </li>
               <li class="nav-item dropdown">
@@ -351,6 +350,7 @@
   <script>
     $(document).ready(function() {
       $().ready(function() {
+        $('[data-toggle="popover"]').popover()
         $sidebar = $('.sidebar');
 
         $sidebar_img_container = $sidebar.find('.sidebar-background');
