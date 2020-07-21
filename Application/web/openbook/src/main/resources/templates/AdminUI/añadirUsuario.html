@@ -46,38 +46,25 @@
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item  ">
+                <li class="nav-item ">
                     <a class="nav-link" href="/inicio">
                         <i class="material-icons">home</i>
                         <p>Pagina Principal</p>
                     </a>
                 </li>
-                <li class="nav-item  ">
+                <li class="nav-item">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
                         <p>Perfil</p>
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/mochila">
-                        <i class="material-icons">backpack</i>
-                        <p>Mochila</p>
+                    <a class="nav-link" href="/addUserAdmin">
+                        <i class="material-icons">notifications</i>
+                        <p>Añadir usuario</p>
                     </a>
                 </li>
 
-                <li class="nav-item ">
-                    <a class="nav-link" href="/publicarContenido">
-                        <i class="material-icons">content_paste</i>
-                        <p>Publicar Contenido</p>
-                    </a>
-                </li>
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/publications">
-                        <i class="material-icons">publication</i>
-                        <p>Mis Publicaciones</p>
-                    </a>
-                </li>
           <!--      <li class="nav-item ">
                     <a class="nav-link" href="/dashboardui">
                         <i class="material-icons">dashboard</i>
@@ -105,7 +92,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <h2 class="navbar-brand">Mochila</h2>
+                    <h2 class="navbar-brand">Añadir Usuario</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -136,9 +123,10 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Mochila"
-                               data-content="En este apartado, usted puede ver las publicaciones que ha guardado en la mochila. Además, al hacer click en descargar, todas las publicaciones, serán descargadas">
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Publicación"
+                               data-content="Para subir un archivo, relleno  los campos disponibles. *La imágen no es necesaria para realizar la publicación">
                                 <i class="material-icons">help</i>
+
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -164,77 +152,75 @@
         </nav>
         <!-- End Navbar -->
 
-        <div class="content" >
+        <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
-                        <button type="button"  class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-                            Descargar
-                        </button>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Estas seguro de que quieres descargar el contenido?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
-                                        <a type="button" href="/zip-download" class="btn btn-primary">Si</a>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-md-12">
+                        <div th:id="'publication_alert'" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                             th:text="${mensaje}"
+                             class="alert">
                         </div>
-                    </div>
-                </div>
-                <div class="row" >
-                    <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
-                        <div class="card card-chart">
-                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                            <div class="card-header card-header-success">
-                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">Añadir Usuario</h4>
+                                <p class="card-category">Rellene los datos</p>
                             </div>
-                            <div class="card-body" style="min-height: 12rem;">
-                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats" th:switch="${publication.getEstado()}">
-                                    <div th:case="0">
-                                        <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
-                                    </div>
-                                    <div th:case="1">
-                                        <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
-                                    </div>
-                                    <div th:case="2">
-                                        <i class="material-icons">local_offer</i> Verificado
-                                    </div>
-                                    <div th:case="3">
-                                        <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
-                                    </div>
-                                </div>
-                                <div class="stats">
-                                    <form action="/deleteInBackPack" method="post">
-                                        <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                        <button type="submit" class="btn btn-danger"><i class="material-icons">backpack</i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="card-body">
+                                <form action="/do_register_curator" method="post" enctype="multipart/form-data">
 
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Nombre</label>
+                                                <input name="name" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Apellido</label>
+                                                <input name="surname" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Email</label>
+                                                <input name="email" type="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Password</label>
+                                                <input name="password" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Añadir</button>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <footer class="footer">
+            <div class="container-fluid">
+                <nav class="float-left">
+
+                </nav>
+            </div>
         </footer>
         <script>
+              setTimeout(function() {
+              $('#publication_alert').fadeOut('fast');
+            }, 5000);
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
@@ -247,6 +233,7 @@
 <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="https://unpkg.com/default-passive-events"></script>
 <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!--  Google Maps Plugin    -->
@@ -261,12 +248,10 @@
 <script src="../assets/demo/demo.js"></script>
 <script>
     $(document).ready(function() {
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
         $().ready(function() {
+            $('[data-toggle="popover"]').popover()
             $sidebar = $('.sidebar');
-
+            $('.mdb-select').materialSelect();
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 
             $full_page = $('.full-page');

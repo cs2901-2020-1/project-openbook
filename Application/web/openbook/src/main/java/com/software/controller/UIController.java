@@ -88,7 +88,6 @@ public class UIController {
                 model.addAttribute("p_process",p_process);
                 model.addAttribute("p_verified",p_verified);
                 model.addAttribute("p_rechazado",p_rechazado);
-
                 model.addAttribute("categories", categoryIterable);
 
                 return "ProfesorUI/user";
@@ -102,6 +101,11 @@ public class UIController {
                 model.addAttribute("sessionUser",curator);
                 model.addAttribute("categories", categoryIterable);
                 return "CuradorUI/user";
+            case "admin":
+                Admin admin = (Admin) user;
+                model.addAttribute("sessionUser",admin);
+                model.addAttribute("categories", categoryIterable);
+                return "AdminUI/user";
             default:
                 return "redirect:/error";
         }
@@ -233,6 +237,26 @@ public class UIController {
                 model.addAttribute("last", totalPages);
                 model.addAttribute("id", id);
                 return "StudentUI/searchCategory";
+            case "curador":
+                model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
+                model.addAttribute("pages", pages);
+                model.addAttribute("current", page+1);
+                model.addAttribute("next", page+2);
+                model.addAttribute("prev", page);
+                model.addAttribute("last", totalPages);
+                model.addAttribute("id", id);
+                return "CuradorUI/searchCategory";
+            case "admin":
+                model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
+                model.addAttribute("pages", pages);
+                model.addAttribute("current", page+1);
+                model.addAttribute("next", page+2);
+                model.addAttribute("prev", page);
+                model.addAttribute("last", totalPages);
+                model.addAttribute("id", id);
+                return "AdminUI/searchCategory";
             default:
                 return "redirect:/error";
         }
@@ -257,10 +281,10 @@ public class UIController {
         Page<Publication> publications;
         if(params.get("page") == null) {
             page = 0;
-            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(0,2));
+            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(0,20));
         } else {
             page = Integer.valueOf(params.get("page").toString())-1;
-            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(page,2));
+            publications = publicationService.findPublicationByKeywords(keyword, PageRequest.of(page,20));
         }
 
         int totalPages = publications.getTotalPages();
@@ -319,6 +343,26 @@ public class UIController {
                 model.addAttribute("last", totalPages);
                 model.addAttribute("keyword", keyword);
                 return "StudentUI/search";
+            case "curador":
+                model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
+                model.addAttribute("pages", pages);
+                model.addAttribute("current", page+1);
+                model.addAttribute("next", page+2);
+                model.addAttribute("prev", page);
+                model.addAttribute("last", totalPages);
+                model.addAttribute("keyword", keyword);
+                return "CuradorUI/search";
+            case "admin":
+                model.addAttribute("publications", publications);
+                model.addAttribute("categories", categoryIterable);
+                model.addAttribute("pages", pages);
+                model.addAttribute("current", page+1);
+                model.addAttribute("next", page+2);
+                model.addAttribute("prev", page);
+                model.addAttribute("last", totalPages);
+                model.addAttribute("keyword", keyword);
+                return "AdminUI/search";
             default:
                 return "redirect:/error";
         }
@@ -435,6 +479,8 @@ public class UIController {
                 return "StudentUI/inicio";
             case "curador":
                 return "CuradorUI/inicio";
+            case "admin":
+                return "AdminUI/inicio";
             default:
                 return "redirect:/error";
         }
@@ -842,6 +888,20 @@ public class UIController {
         return "redirect:/inicio";
     }
 
+    @PostMapping("/deleteInBackPack")
+    public String deleteInBackPack(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        uiService.deleteInMochila(publication, user);
+        return "redirect:/mochila";
+    }
+
     @PostMapping(value = "/addLike")
     public String addLike(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){
 
@@ -855,5 +915,41 @@ public class UIController {
         publicationService.likePublication(p_id, email);
         String redirect = "redirect:/publication?id="+p_id;
         return redirect;
+    }
+
+    @RequestMapping("/addUserAdmin")
+    public String addUserAdmin(Model model, HttpSession session){
+        String email = (String) session.getAttribute("EMAIL");
+        log.info(email);
+
+        if (email==null)
+            return "redirect:/error";
+
+        User user = authService.getUser(email).get();
+
+        Iterable<Category> categoryIterable = catService.getAllCategories();
+
+        String tipo = user.getTipo();
+        switch (tipo){
+            case "admin":
+                model.addAttribute("categories", categoryIterable);
+                return "AdminUI/añadirUsuario";
+            default:
+                return "redirect:/error";
+        }
+    }
+
+    @PostMapping(value = "/do_register_curator")
+    public String do_register_profesor(@ModelAttribute Curator curator, RedirectAttributes redirectAttributes){
+        if(authService.registerUser(curator)) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "Registro Exitoso: El curador se ha añadido")
+                    .addFlashAttribute("clase", "success");
+            return "redirect:/addUserAdmin";
+        }
+        redirectAttributes
+                .addFlashAttribute("mensaje", "Error: El usuario ya existe")
+                .addFlashAttribute("clase", "danger");
+        return "redirect:/addUserAdmin";
     }
 }
