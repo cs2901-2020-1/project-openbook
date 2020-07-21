@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -248,6 +249,32 @@ public class FileController {
         zipOut.close();
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "mochila.zip" + "\"");
+    }
+
+    @GetMapping(value = "/zip-publication-download", produces="application/zip")
+    public void zipDownload(@RequestParam Long id, HttpServletResponse response, HttpSession session) throws IOException {
+
+        Publication publication  =uiService.getPublicationById(id).get();
+
+        String resource_path = publication.getResource_path();
+
+
+
+        ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream());
+
+
+
+        FileSystemResource resource = new FileSystemResource(resource_path);
+        ZipEntry zipEntry = new ZipEntry(resource.getFilename());
+        zipEntry.setSize(resource.contentLength());
+        zipOut.putNextEntry(zipEntry);
+        StreamUtils.copy(resource.getInputStream(), zipOut);
+        zipOut.closeEntry();
+
+        zipOut.finish();
+        zipOut.close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "publication.zip" + "\"");
     }
 
 

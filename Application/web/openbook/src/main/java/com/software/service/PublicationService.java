@@ -43,6 +43,34 @@ public class PublicationService {
         return publicationRepository.save(publication);
     }
 
+    public Publication blockPublication(Long publicationId, String curator_id){
+        Optional<User> curatorOpt = userRepository.findById(curator_id);
+
+        if (!curatorOpt.isPresent()) {
+            //throw new ResourceNotFoundException("Professor " + professor_id + "does not exists.");
+            System.out.println("Curator " + curator_id + " does not exists.");
+        }
+
+        Curator curator = (Curator) curatorOpt.get();
+
+        Optional<Publication> publicationOpt = this.getPublication(publicationId);
+
+        if (!publicationOpt.isPresent()) {
+            System.out.println("Publicatior " + publicationId + " does not exists.");
+        }
+
+        Publication publication = publicationOpt.get();
+        publication.setCurator(curator);
+        publication.setEstado(3); // bloqueado
+        publication.setRanking(0);
+
+        updatePublication(publication);
+
+        Publication publicationResult = publicationRepository.save(publication);
+
+        return publicationResult;
+    }
+
     public Publication curatePublication(Long publicationId, String curator_id) {
         Optional<User> curatorOpt = userRepository.findById(curator_id);
 
