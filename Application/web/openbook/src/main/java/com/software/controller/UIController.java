@@ -459,7 +459,6 @@ public class UIController {
                 model.addAttribute("categories", categoryIterable);
                 return "StudentUI/editUser";
             case "curador":
-
                 Curator curator = (Curator) user;
                 model.addAttribute("sessionUser",curator);
                 model.addAttribute("categories", categoryIterable);
