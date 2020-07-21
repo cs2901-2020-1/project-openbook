@@ -46,26 +46,26 @@
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item  ">
+          <li class="nav-item  active">
             <a class="nav-link" href="/inicio">
               <i class="material-icons">home</i>
               <p>Pagina Principal</p>
             </a>
           </li>
-          <li class="nav-item  active">
+          <li class="nav-item  ">
             <a class="nav-link" href="/user">
               <i class="material-icons">person</i>
               <p>Perfil</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ">
             <a class="nav-link" href="/mochila">
               <i class="material-icons">backpack</i>
               <p>Mochila</p>
             </a>
           </li>
 
-          <li class="nav-item  ">
+          <li class="nav-item ">
             <a class="nav-link" href="/publicarContenido">
               <i class="material-icons">content_paste</i>
               <p>Publicar Contenido</p>
@@ -78,20 +78,14 @@
               <p>Mis Publicaciones</p>
             </a>
           </li>
-   <!--       <li class="nav-item ">
-            <a class="nav-link" href="/dashboardui">
-              <i class="material-icons">dashboard</i>
-              <p>Tablero</p>
-            </a>
-          </li> -->
 
           <!--<li class="nav-item ">
             <a class="nav-link" href="/notifications">
               <i class="material-icons">notifications</i>
               <p>Notifications</p>
             </a>
-          </li>
-          <li class="nav-item active-pro ">
+          </li>-->
+          <!-- <li class="nav-item active-pro ">
                 <a class="nav-link" href="./upgrade.html">
                     <i class="material-icons">unarchive</i>
                     <p>Upgrade to PRO</p>
@@ -105,7 +99,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <h2 class="navbar-brand">Perfil</h2>
+            <h2 class="navbar-brand">Pagina Principal</h2>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
             <span class="sr-only">Toggle navigation</span>
@@ -136,12 +130,13 @@
                 </div>
               </li>
               <li class="nav-item">
-                    <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Perfil"
-                       data-content="En este apartado, usted puede personalizar su perfil. Así mismo, usted puede observar algunas estadísticas de sus publicaciones, así como sus estados de verificación">
-                      <i class="material-icons">help</i>
-                    </a>
+                <a class="nav-link" href="javascript:void(0)">
+                  <i class="material-icons">notifications</i>
+                  <p class="d-lg-none d-md-block">
+                    Stats
+                  </p>
+                </a>
               </li>
-
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
@@ -164,232 +159,62 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
+
+      <div class="content" >
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-8">
-              <div th:id="'upload_alert'" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                   th:text="${mensaje}"
-                   class="alert">
-              </div>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Hola <span th:text="${sessionUser.getName()}"></span> <span th:text="${sessionUser.getSurname()}"></span></h4>
-                  <p class="card-category">Estos son los datos de su cuenta</p>
+          <div class="row" >
+            <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
+              <div class="card card-chart">
+                <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}"  alt="Card image cap" style="object-fit: cover; height: 300px;">
+                <div class="card-header card-header-success">
+                  <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                 </div>
-                <div class="card-body">
-                  <form action="/editUser" method="get">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >Email:</span>
-                          </div>
-                          <span th:text="${sessionUser.getEmail()}"></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >Nombres:</span>
-                          </div>
-                          <span th:text="${sessionUser.getName()}"></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" >Apellidos:</span>
-                            <span th:text="${sessionUser.getSurname()}"></span>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary pull-right">Editar Perfil</button>
-                    <div class="clearfix"></div>
-                  </form>
+                <div class="card-body" style="min-height: 12rem;">
+                  <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                  <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" th:src="'/getImageProfesor?id='+${sessionUser.getEmail()}"  />
-                  </a>
-                </div>
-                <div class="card-body" id="description">
-                  <h6 class="card-category" th:text="${sessionUser.getName()} + ' ' + ${sessionUser.getSurname()}"></h6>
-                  <p class="card-description" th:text="${sessionUser.getDescription()}">
-                  </p>
-                  <button type="button" onclick="editPicture()" class="btn btn-primary btn-round">Editar</button>
+                <div class="card-footer">
+                  <div class="stats" th:switch="${publication.getEstado()}">
+                    <div th:case="0">
+                      <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
+                    </div>
+                    <div th:case="1">
+                      <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
+                    </div>
+                    <div th:case="2">
+                      <i class="material-icons">local_offer</i> Verificado
+                    </div>
+                  </div>
+                  <div class="stats">
+                    <form action="/saveInBackPack" method="post">
+                      <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                      <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
-
-          <div class="content">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                  <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">autorenew</i>
-                      </div>
-                      <p class="card-category">En Proceso</p>
-                      <h3 class="card-title"><p th:text="${p_process.size()}"></p>
-                        <small></small>
-                      </h3>
-                    </div>
-            <!--        <div class="card-footer">
-                      <div class="stats">
-                        <i class="material-icons text-warning">warning</i>
-                        <a href="#pablo" class="warning-link">Get More Space...</a>
-                      </div>
-                    </div> -->
-                  </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                  <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">check_circle</i>
-                      </div>
-                      <p class="card-category">Verificados</p>
-                      <h3 class="card-title"><p th:text="${p_verified.size()}"></p></h3>
-                    </div>
-           <!--         <div class="card-footer">
-                      <div class="stats">
-                        <i class="material-icons">date_range</i> Last 24 Hours
-                      </div>
-                    </div>-->
-                  </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                  <div class="card card-stats">
-                    <div class="card-header card-header-danger card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">info_outline</i>
-                      </div>
-                      <p class="card-category">Rechazados</p>
-                      <h3 class="card-title"><p>0</p></h3>
-                    </div>
-            <!--        <div class="card-footer">
-                      <div class="stats">
-                        <i class="material-icons">local_offer</i> Tracked from Github
-                      </div>
-                    </div> -->
-                  </div>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                  <div class="card card-stats">
-                    <div class="card-header card-header-info card-header-icon">
-                      <div class="card-icon">
-                        <i class="material-icons">content_paste</i>
-                      </div>
-                      <p class="card-category">No Verificados</p>
-                      <h3 class="card-title"><p th:text="${p_notverified.size()}"></p></h3>
-                    </div>
-                 <!--   <div class="card-footer">
-                      <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
-                      </div>
-                    </div>-->
-                  </div>
-                </div>
-              </div>
-                  <div class="card">
-                    <div class="card-header card-header-primary">
-                      <h4 class="card-title">Reporte de Publicaciones</h4>
-                      <p class="card-category">Publicaciones propias</p>
-                    </div>
-                    <div class="card-body table-responsive">
-                      <table class="table table-hover">
-                        <thead class="text-warning">
-                        <th class="text-dark" scope="col"><h4>Publicación</h4></th>
-                        <th class="text-dark" scope="col"><h4>Curso</h4></th>
-                        <th class="text-dark" scope="col"><h4>Visitas</h4></th>
-                        <th class="text-dark" scope="col"><h4>Likes</h4></th>
-                        <th class="text-dark" scope="col"><h4>Ranking</h4></th>
-                        <th class="text-dark" scope="col"><h4>Estado</h4></th>
-                        <th class="text-dark" scope="col"><h4>Verificado por</h4></th>
-                        </thead>
-                        <tbody>
-                        <tr th:each="publication: ${publications}" >
-                          <td ><p class="text-secondary" th:text="${publication.getTitle()}"></p></td>
-                          <td><p th:text="${publication.getCategory().getDescription()}"></p></td>
-                          <td><p th:text="${publication.getVisits()}"></p></td>
-                          <td><p th:text="${publication.getPublicationLike().size()}"></p></td>
-                          <td><p th:text="${publication.getRanking()}"></p></td>
-                          <td th:switch="${publication.getEstado()}">
-                            <p class="text-secondary" th:case="0">No Verificado</p>
-                            <p class="text-warning" th:case="1">En proceso</p>
-                            <p class="text-success" th:case="2">Verificado</p>
-                          </td>
-                          <td th:switch="${publication.getEstado()}">
-                            <p th:case="0">-----</p>
-                            <p th:case="2" th:text="${publication.getCurator().getName()}+' '+${publication.getCurator().getSurname()}"></p>
-                          </td>
-                        </tr>
-
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-            </div>
-          </div>
-
-
-
-
 
         </div>
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
+              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${prev}|}"><<</a>
+            </li>
+            <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
+              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${page}|}" th:text="${page}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${current == last ? 'disabled': ''}">
+              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${next}|}">>></a>
+            </li>
+          </ul>
+        </nav>
       </div>
+
       <footer class="footer">
       </footer>
       <script>
-        setTimeout(function() {
-          $('#upload_alert').fadeOut('fast');
-        }, 5000);
-
-        function editPicture(){
-          var e = '<form action="/updateDescription" method="post" enctype="multipart/form-data">\n' +
-                  '\n' +
-
-                  '                                    <div class="row">\n' +
-                  '                                        <div class="col-md-12">\n' +
-                  '                                            <div class="form-group">\n' +
-                  '                                                <label>Escribe una descripción</label>'+
-                  '                                            </div>\n' +
-                  '                                                <textarea type="text" class="form-control" name="description" aria-label="Name" aria-describedby="basic-addon1"></textarea>\n' +
-                  '                                        </div>\n' +
-                  '                                    </div>\n' +
-                  '\n' +
-                  '                                    <div class="row">\n' +
-                  '                                        <div class="col-md-12">\n' +
-                  '                                            <div class="form-group">\n' +
-                  '                                                <label>Sube una foto</label>'+
-                  '                                            </div>\n' +
-                  '                                            <input type="file" name="photoFile" id="fileToUpload">' +
-                  '                                        </div>\n' +
-                  '                                    </div>\n' +
-                  '\n' +
-                  '                                    <button type="submit" class="btn btn-primary pull-center">Guardar</button>\n' +
-                  '                                    <div class="clearfix"></div>\n' +
-                  '                                </form>';
-          $('#description').html(e);
-        }
-
         const x = new Date().getFullYear();
         let date = document.getElementById('date');
         date.innerHTML = '&copy; ' + x + date.innerHTML;
@@ -416,9 +241,6 @@
   <script src="../assets/demo/demo.js"></script>
   <script>
     $(document).ready(function() {
-      $(function () {
-        $('[data-toggle="popover"]').popover()
-      })
       $().ready(function() {
         $sidebar = $('.sidebar');
 
