@@ -3,42 +3,24 @@ package com.software.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity(name = "Student")
-@DiscriminatorValue("Student")
-public class Student extends User {
-    protected String school;
-    protected int grade;
+@Entity(name = "Admin")
+@DiscriminatorValue("Admin")
+public class Admin extends User {
 
-    public Student() {
+
+    public Admin() {
 
     }
 
-    public Student(String email, String username, String password, String name, String surname,
-                   String school, int grade) {
+    public Admin(String email, String username, String password, String name, String surname) {
         super(email, username, password, name, surname);
-        this.school = school;
-        this.grade = grade;
+
     }
 
     @Override
     public String getTipo(){
-        return "student";
+        return "admin";
     }
 
 
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
 }

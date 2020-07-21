@@ -1,5 +1,6 @@
 package com.software.openbook;
 
+import com.software.model.Admin;
 import com.software.model.Category;
 import com.software.model.Curator;
 import com.software.service.AuthService;
@@ -37,12 +38,15 @@ public class OpenbookApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         log.info("Starting OpenBook ...");
-        InitializeCurators();
+        //InitializeCurators();
+        InitializeAdmin();
         InitializeCategories();
     }
 
     public void InitializeAdmin() {
-
+        Admin curator = new Admin("admin@openbook.com","admin","@dmin2020",
+                "Admin","Admin");
+        authService.addUser(curator);
     }
 
     public void InitializeCurators() {
