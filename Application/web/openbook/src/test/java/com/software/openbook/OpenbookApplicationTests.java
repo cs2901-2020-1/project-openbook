@@ -22,7 +22,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest
 class OpenbookApplicationTests {
-    @Autowired
+ /*   @Autowired
     private AuthService authService;
     @Autowired
     private CategoryService catService;
@@ -35,7 +35,7 @@ class OpenbookApplicationTests {
     @Autowired
     private CommentService commentService;
     @Autowired
-    private CategoryService categoryService;
+    private CategoryService categoryService;*/
 /*
     @Test
     void contextLoads() {
@@ -505,7 +505,7 @@ class OpenbookApplicationTests {
         }
     }
 */
-
+/*
     @Test
     public void curator_registration() {
         String curatorEmail1 = "curator1@utec.edu.pe";
@@ -541,5 +541,5 @@ class OpenbookApplicationTests {
 //            ranking = (float) (visits*0.05+likes.size()*5);
 //            publication.setRanking(ranking);
 //        }
-//    }
-
+//    }*/
+}

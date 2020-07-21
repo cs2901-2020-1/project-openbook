@@ -55,7 +55,7 @@
                 <li class="nav-item  active">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
-                        <p>User Profile</p>
+                        <p>Perfil</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -125,11 +125,9 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <i class="material-icons">notifications</i>
-                                <p class="d-lg-none d-md-block">
-                                    Stats
-                                </p>
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Inicio"
+                               data-content="Edita tu perfil con los datos que prefieras">
+                                <i class="material-icons">help</i>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -187,7 +185,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                 <!--   <div class="row">
                                         <div class="col-md-4">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
@@ -197,7 +195,7 @@
                                                 <button type="button" onclick="showPassword()" id="buttonpass"  style="border-color: transparent; background-color: transparent; color: #0b75c9; cursor: pointer">Mostrar</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <button type="submit" class="btn btn-primary pull-right">Guardar</button>
                                     <div class="clearfix"></div>
@@ -270,6 +268,7 @@
 
         $().ready(function() {
             $sidebar = $('.sidebar');
+            $('[data-toggle="popover"]').popover()
 
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 
