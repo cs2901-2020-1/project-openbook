@@ -652,6 +652,8 @@ public class UIController {
                 model.addAttribute("publication", publication);
                 model.addAttribute("categories", categoryIterable);
                 model.addAttribute("likes", likes);
+                model.addAttribute("class_heart", class_heart);
+                model.addAttribute("heart", heart);
                 return "CuradorUI/publication";
             default:
                 return "redirect:/error";
