@@ -131,6 +131,21 @@ public class UIController {
         return "redirect:/publication";
     }
 
+    @PostMapping("/doBlock")
+    public String doBlock(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session, RedirectAttributes redirectAttributes){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        redirectAttributes.addAttribute("id", p_id);
+        publicationService.blockPublication(p_id, email);
+        return "redirect:/publication";
+    }
+
 
     @RequestMapping("/searchContentCategory")
     public String searchContentByCategory(@RequestParam(required = false) int id, @RequestParam Map<String, Object> params, Model model, HttpSession session){

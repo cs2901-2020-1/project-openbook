@@ -29,7 +29,7 @@ public class Publication extends AuditModel {
     @Column(name = "estado")
     private Integer estado;
 
-    // 0 means not verified, 1 means in process, 2 means verified
+    // 0 means not verified, 1 means in process, 2 means verified, 3 blocked
 
 
     @Column(name = "ranking", length = 10, precision=4)
