@@ -136,11 +136,9 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <i class="material-icons">notifications</i>
-                                <p class="d-lg-none d-md-block">
-                                    Stats
-                                </p>
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Mochila"
+                               data-content="En este apartado, usted puede ver las publicaciones que ha guardado en la mochila. Además, al hacer click en descargar, todas las publicaciones, serán descargadas">
+                                <i class="material-icons">help</i>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -257,6 +255,9 @@
 <script src="../assets/demo/demo.js"></script>
 <script>
     $(document).ready(function() {
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
         $().ready(function() {
             $sidebar = $('.sidebar');
 

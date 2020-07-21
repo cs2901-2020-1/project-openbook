@@ -132,11 +132,9 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <i class="material-icons">notifications</i>
-                                <p class="d-lg-none d-md-block">
-                                    Stats
-                                </p>
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Inicio"
+                               data-content="A continuación usted podrá ver más detalles de la publicación. En la parte inferior se encuentran los comentarios sobre la publicación ¡Anímate, regístrate y se parte de nuestra gran comunidad!">
+                                <i class="material-icons">help</i>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -369,6 +367,8 @@
     $(document).ready(function() {
         $().ready(function() {
             $sidebar = $('.sidebar');
+
+            $('[data-toggle="popover"]').popover()
 
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 

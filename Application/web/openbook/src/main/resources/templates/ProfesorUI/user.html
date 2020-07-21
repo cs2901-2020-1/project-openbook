@@ -136,13 +136,12 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)">
-                  <i class="material-icons">notifications</i>
-                  <p class="d-lg-none d-md-block">
-                    Stats
-                  </p>
-                </a>
+                    <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Perfil"
+                       data-content="En este apartado, usted puede personalizar su perfil. Así mismo, usted puede observar algunas estadísticas de sus publicaciones, así como sus estados de verificación">
+                      <i class="material-icons">help</i>
+                    </a>
               </li>
+
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
@@ -283,7 +282,7 @@
                         <i class="material-icons">info_outline</i>
                       </div>
                       <p class="card-category">Rechazados</p>
-                      <h3 class="card-title"><p>0</p></h3>
+                      <h3 class="card-title"><p th:text="${p_rechazado.size()}"></p></h3>
                     </div>
             <!--        <div class="card-footer">
                       <div class="stats">
@@ -335,7 +334,8 @@
                           <td th:switch="${publication.getEstado()}">
                             <p class="text-secondary" th:case="0">No Verificado</p>
                             <p class="text-warning" th:case="1">En proceso</p>
-                            <p class="text-success" th:case="2">Verificado</p>
+                            <p class="text-primary" th:case="2">Verificado</p>
+                            <p class="text-danger" th:case="3">Rechazado</p>
                           </td>
                           <td th:switch="${publication.getEstado()}">
                             <p th:case="0">-----</p>
@@ -417,6 +417,9 @@
   <script src="../assets/demo/demo.js"></script>
   <script>
     $(document).ready(function() {
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+      })
       $().ready(function() {
         $sidebar = $('.sidebar');
 
