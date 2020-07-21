@@ -195,15 +195,19 @@ public class FileController {
 
         // Guardar el archivo
         // imagen
+        if(image_file.isEmpty()){
+            resourcePath = "src/main/resources/static/images/logo.jpg";
 
-        fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
+        } else {
+            fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
 
-        resourcePath = FILE_PATH + email + "_" + fileName;
+            resourcePath = FILE_PATH + email + "_" + fileName;
 
-        i = 1;
-        while(publicationService.verify_content(resourcePath,p)){
-            resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
-            i++;
+            i = 1;
+            while(publicationService.verify_content(resourcePath,p)){
+                resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
+                i++;
+            }
         }
 
         publication.setImage_path(resourcePath);
