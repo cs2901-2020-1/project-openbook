@@ -297,6 +297,14 @@
                                         </form>
                                     </div>
                                 </div>
+                                <div th:if="${sessionUser.getEmail() == publication.getCurator().getEmail()}">
+                                    <div>
+                                        <form action="/doBlock" method="post">
+                                            <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                                            <button type="submit" class="btn btn-danger btn-lg btn-block">Bloquear Contenido</button>
+                                        </form>
+                                    </div>
+                                </div>
                                 <div th:unless="${sessionUser.getEmail() == publication.getCurator().getEmail()}">
                                     <div class="card card-profile">
                                         <div class="card-body">

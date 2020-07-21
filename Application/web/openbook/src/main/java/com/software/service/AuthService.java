@@ -1,5 +1,6 @@
 package com.software.service;
 
+import com.software.model.Curator;
 import com.software.model.Professor;
 import com.software.model.Student;
 import com.software.model.User;
@@ -114,6 +115,22 @@ public class AuthService {
                     updatedStudent.setPassword(encodedPassword);
 
                     userRepository.save(currentStudent);
+                    return true;
+
+                case "curador":
+                    Curator currentCurator = (Curator) optionalUser.get();
+                    Curator updatedCurator = (Curator) user;
+
+                    currentCurator.setEmail(updatedCurator.getEmail());
+                    currentCurator.setName(updatedCurator.getName());
+                    currentCurator.setUsername(updatedCurator.getUsername());
+                    currentCurator.setSurname(updatedCurator.getSurname());
+                    currentCurator.setPassword(updatedCurator.getPassword());
+
+                    encodedPassword = passwordEncoder.encode(updatedCurator.getPassword());
+                    currentCurator.setPassword(encodedPassword);
+
+                    userRepository.save(currentCurator);
                     return true;
 
             }

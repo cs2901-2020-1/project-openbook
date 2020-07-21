@@ -115,6 +115,21 @@ public class AuthController {
         return "redirect:/register_error";
     }
 
+    @PostMapping(value = "/updateCurator")
+    public String updateCurator(@ModelAttribute Curator curator, RedirectAttributes redirectAttributes,  HttpSession session){
+        // TO DO
+        String email = (String) session.getAttribute("EMAIL");
+        curator.setEmail(email);
+
+        if(authService.updateUser(curator)) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "Actualización Exitosa: Sus datos se actualizaron correctamente")
+                    .addFlashAttribute("clase", "success");
+            return "redirect:/user";
+        }
+        return "error";
+    }
+
     @PostMapping(value = "/updateProfesor")
     public String updateProfesor(@ModelAttribute Professor professor, RedirectAttributes redirectAttributes,  HttpSession session){
         // TO DO
