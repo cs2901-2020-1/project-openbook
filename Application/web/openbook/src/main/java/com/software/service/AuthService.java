@@ -45,11 +45,11 @@ public class AuthService {
     }
 
     public boolean registerUser(User user){
-        if (verifyUser(user))
+        Optional<User> optionalUser  = userRepository.findById(user.getEmail());
+        if (optionalUser.isPresent())
             return false;
         addUser(user);
         return true;
-
     }
 
     public boolean updateProfesorDescription(User user) {

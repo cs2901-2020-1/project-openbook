@@ -125,29 +125,23 @@
                         </div>
                     </form>
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <i class="material-icons">dashboard</i>
-                                <p class="d-lg-none d-md-block">
-                                    Stats
-                                </p>
-                            </a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">notifications</i>
-                                <span class="notification">5</span>
+                                <i class="material-icons">dashboard</i>
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another One</a>
+                                <a class="dropdown-item" th:each="category: ${categories}" th:href="@{|/searchContentCategory?id=${category.getId()}|}" th:text="${category.getDescription()}"></a>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Publicación"
+                               data-content="Para subir un archivo, relleno  los campos disponibles. *La imágen no es necesaria para realizar la publicación">
+                                <i class="material-icons">help</i>
+
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -192,7 +186,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label >Titulo</label>
-                                                <input name="title" type="text" class="form-control">
+                                                <input name="title" type="text" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
@@ -211,11 +205,10 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-
                                             <div class="form-group">
-                                                <label >Curso</label>
+                                                <label>Curso</label>
                                                 <br>
-                                                <select class="selectpicker" data-style="btn-primary"  name="category" id = "category"  >
+                                                <select class="custom-select" data-style="btn-primary"  name="category" id = "category" required>
                                                     <option value="" disabled selected>Escoge el curso</option>
                                                     <option th:each="categories: ${categories}" th:value="${categories.getId()}">
                                                         <p th:text="${categories.getDescription()}"> </option>
@@ -224,27 +217,35 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                                <label >Tags</label>
+                                                <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" class="form-control" data-role="tagsinput">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
 
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Sube tu contenido</label>
+                                                <label for="fileToUpload">Sube tu contenido</label>
                                             </div>
-
-                                            <input type="file" name="file" id="fileToUpload">
-
+                                            <input type="file" class="form-control-file" name="file" id="fileToUpload" required>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Sube una foto para previsualizar tu contenido (*No obligatorio)</label>
                                             </div>
-
-                                            <input type="file" name="image_file" id="imageFile">
-
+                                            <input type="file" class="form-control-file" name="image_file" id="imageFile" required>
                                         </div>
                                     </div>
 
@@ -282,6 +283,7 @@
 <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="https://unpkg.com/default-passive-events"></script>
 <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!--  Google Maps Plugin    -->
@@ -297,6 +299,7 @@
 <script>
     $(document).ready(function() {
         $().ready(function() {
+            $('[data-toggle="popover"]').popover()
             $sidebar = $('.sidebar');
             $('.mdb-select').materialSelect();
             $sidebar_img_container = $sidebar.find('.sidebar-background');

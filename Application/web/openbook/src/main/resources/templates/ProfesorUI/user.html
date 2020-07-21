@@ -124,30 +124,24 @@
               </div>
             </form>
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)">
-                  <i class="material-icons">dashboard</i>
-                  <p class="d-lg-none d-md-block">
-                    Stats
-                  </p>
-                </a>
-              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
+                  <i class="material-icons">dashboard</i>
                   <p class="d-lg-none d-md-block">
                     Some Actions
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                  <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                  <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Another One</a>
+                  <a class="dropdown-item" th:each="category: ${categories}" th:href="@{|/searchContentCategory?id=${category.getId()}|}" th:text="${category.getDescription()}"></a>
                 </div>
               </li>
+              <li class="nav-item">
+                    <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Perfil"
+                       data-content="En este apartado, usted puede personalizar su perfil. Así mismo, usted puede observar algunas estadísticas de sus publicaciones, así como sus estados de verificación">
+                      <i class="material-icons">help</i>
+                    </a>
+              </li>
+
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
@@ -331,21 +325,21 @@
                         <th class="text-dark" scope="col"><h4>Verificado por</h4></th>
                         </thead>
                         <tbody>
-                        <tr th:each="publications: ${publications}" >
-                          <td ><p class="text-secondary" th:text="${publications.getTitle()}"></p></td>
-                          <td><p th:text="${publications.getCategory().getDescription()}"></p></td>
-                          <td><p th:text="${publications.getVisits()}"></p></td>
-                          <td><p th:text="${publications.getPublicationLike().size()}"></p></td>
-                          <td>To do-Ranking 123</td>
-                          <td th:switch="${publications.getEstado()}">
+                        <tr th:each="publication: ${publications}" >
+                          <td ><p class="text-secondary" th:text="${publication.getTitle()}"></p></td>
+                          <td><p th:text="${publication.getCategory().getDescription()}"></p></td>
+                          <td><p th:text="${publication.getVisits()}"></p></td>
+                          <td><p th:text="${publication.getPublicationLike().size()}"></p></td>
+                          <td><p th:text="${publication.getRanking()}"></p></td>
+                          <td th:switch="${publication.getEstado()}">
                             <p class="text-secondary" th:case="0">No Verificado</p>
                             <p class="text-warning" th:case="1">En proceso</p>
                             <p class="text-primary" th:case="2">Verificado</p>
                             <p class="text-danger" th:case="3">Rechazado</p>
                           </td>
-                          <td th:switch="${publications.getEstado()}">
+                          <td th:switch="${publication.getEstado()}">
                             <p th:case="0">-----</p>
-                            <p th:case="2" th:text="${publications.getCurator().getName()}+' '+${publications.getCurator().getSurname()}"></p>
+                            <p th:case="2" th:text="${publication.getCurator().getName()}+' '+${publication.getCurator().getSurname()}"></p>
                           </td>
                         </tr>
 
@@ -423,6 +417,9 @@
   <script src="../assets/demo/demo.js"></script>
   <script>
     $(document).ready(function() {
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+      })
       $().ready(function() {
         $sidebar = $('.sidebar');
 

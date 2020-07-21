@@ -3,14 +3,13 @@ import com.software.model.*;
 
 import com.software.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static org.springframework.data.jpa.domain.Specification.not;
 
 @Service
 public class PublicationService {
@@ -46,6 +45,34 @@ public class PublicationService {
         return publicationRepository.save(publication);
     }
 
+    public Publication blockPublication(Long publicationId, String curator_id){
+        Optional<User> curatorOpt = userRepository.findById(curator_id);
+
+        if (!curatorOpt.isPresent()) {
+            //throw new ResourceNotFoundException("Professor " + professor_id + "does not exists.");
+            System.out.println("Curator " + curator_id + " does not exists.");
+        }
+
+        Curator curator = (Curator) curatorOpt.get();
+
+        Optional<Publication> publicationOpt = this.getPublication(publicationId);
+
+        if (!publicationOpt.isPresent()) {
+            System.out.println("Publicatior " + publicationId + " does not exists.");
+        }
+
+        Publication publication = publicationOpt.get();
+        publication.setCurator(curator);
+        publication.setEstado(3); // bloqueado
+        publication.setRanking(0);
+
+        updatePublication(publication);
+
+        Publication publicationResult = publicationRepository.save(publication);
+
+        return publicationResult;
+    }
+
     public Publication curatePublication(Long publicationId, String curator_id) {
         Optional<User> curatorOpt = userRepository.findById(curator_id);
 
@@ -67,6 +94,10 @@ public class PublicationService {
         publication.setEstado(2); // verificado
         publication.setVerified(true);
         publication.setCurationDate(new Date());
+        float ranking = publication.getRanking();
+        ranking = ranking + 10000;
+        publication.setRanking(ranking);
+        updatePublication(publication);
         
         Publication publicationResult = publicationRepository.save(publication);
 
@@ -130,10 +161,16 @@ public class PublicationService {
 
     public List<Publication> getPublicationsFromProfessor(String professorEmail) {
 
-        PublicationSpecification spec = new PublicationSpecification(
+        PublicationSpecification specProfe = new PublicationSpecification(
                 new SearchCriteria("professor", ":", professorEmail));
 
-        return publicationRepository.findAll(spec,
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.where(specProfe).and(
+                not(specEstado_3));
+
+        return publicationRepository.findAll(specification,
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
 
@@ -145,13 +182,21 @@ public class PublicationService {
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
 
-    public List<Publication> getPublicationsFromCategory(int idCategory) {
+    public Page<Publication> getPublicationsFromCategory(int idCategory, int page, int number) {
 
         PublicationSpecification spec = new PublicationSpecification(
                 new SearchCriteria("category", ":", idCategory));
 
-        return publicationRepository.findAll(spec,
-                Sort.by(Sort.Direction.DESC, "ranking"));
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.where(spec).and(
+                not(specEstado_3));
+
+        return publicationRepository.findAll(specification,
+                PageRequest.of(page, number, Sort.by(Sort.Direction.DESC,"ranking")));
+        //List<Publication> publications = publicationRepository.findAll(spec, Sort.by(Sort.Direction.DESC, "ranking"));
+        //return new PageImpl<Publication>(publications, pageable, publications.size());
     }
 
     public List<Publication> getPublicationsfromTagName(String tagName) {
@@ -203,11 +248,16 @@ public class PublicationService {
             Set<Likes> userLike = user.getLike();
             userLike.add(likeResult);
             publication.getPublicationLike().add(likeResult);
+            float ranking = publication.getRanking();
+            ranking = ranking + 5;
+            publication.setRanking(ranking);
+            updatePublication(publication);
         } else {
+            float ranking = publication.getRanking();
+            ranking = ranking - 5;
+            publication.setRanking(ranking);
+            updatePublication(publication);
             likeRepository.delete(likes.get(0));
-            //Set<Likes> userLike = user.getLike();
-            //userLike.remove(likeResult);
-            //publication.getPublicationLike().remove(likeResult);
         }
 
         return likeResult;
@@ -235,7 +285,13 @@ public class PublicationService {
     }
 
     public Page<Publication> getLastNPublications(int page, int number) {
-        return publicationRepository.findAll(PageRequest.of(page, number,
+
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.not(specEstado_3);
+
+        return publicationRepository.findAll(specification, PageRequest.of(page, number,
                 Sort.by(Sort.Direction.DESC,"createdAt")));
     }
 
@@ -261,5 +317,21 @@ public class PublicationService {
 
     public List<IDatePublicationCount> datePublicationsCountsByProfessor(String professor_id) {
         return publicationRepository.countTotalPublicationByDateInterface(professor_id);
+    }
+
+
+    public Page<Publication> getTopNPublications(int page, int number) {
+        return publicationRepository.findAll(PageRequest.of(page, number,
+                Sort.by(Sort.Direction.DESC,"ranking")));
+    }
+
+    public boolean verify_content(String resourcePath, User user) {
+        List<Publication> publications = getPublicationsFromProfessor(user.getEmail());
+        for(Publication publication: publications){
+            if(resourcePath.equals(publication.getResource_path())){
+                return true;
+            }
+        }
+        return false;
     }
 }

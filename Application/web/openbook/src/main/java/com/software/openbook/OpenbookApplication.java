@@ -41,6 +41,10 @@ public class OpenbookApplication implements CommandLineRunner {
         InitializeCategories();
     }
 
+    public void InitializeAdmin() {
+
+    }
+
     public void InitializeCurators() {
         // create a curador profile
         Curator curator = new Curator("curator@gmail.com","curator123","123456", "Ernesto","Cuadros");
