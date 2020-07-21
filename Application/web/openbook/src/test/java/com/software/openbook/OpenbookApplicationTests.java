@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
-/*@SpringBootTest
+@SpringBootTest
 class OpenbookApplicationTests {
     @Autowired
     private AuthService authService;
@@ -36,7 +36,7 @@ class OpenbookApplicationTests {
     private CommentService commentService;
     @Autowired
     private CategoryService categoryService;
-
+/*
     @Test
     void contextLoads() {
     }
@@ -157,10 +157,10 @@ class OpenbookApplicationTests {
         //post.setManyTags(Collections.singleton(tag1));
         //post.setManyTags(Collections.singleton(tag2));
         for(int i = 0; i < n; i++) {
-            publicationService.addPublication(posts[i], emailProfessor);
+            publiService.addPublication(posts[i], emailProfessor);
         }
 
-        List<Publication> pubs = publicationService.getPublicationsfromTagName(tagName1);
+        List<Publication> pubs = publiService.getPublicationsfromTagName(tagName1);
 
         assertEquals("Publications number with tag " + tagName1 + " incorrect",
                 n, pubs.size());
@@ -200,7 +200,7 @@ class OpenbookApplicationTests {
         assertEquals("Curator with " + curatorEmail1 + "not registered", true,
                 curatorOptional1.isPresent());
 
-        Optional<Publication> pub = publicationService.getPublication(publicationId);
+        Optional<Publication> pub = publiService.getPublication(publicationId);
 
         assertEquals("Publication id " + publicationId + "not registered", true,
                 pub.isPresent());
@@ -210,9 +210,9 @@ class OpenbookApplicationTests {
         assertEquals("Publication id " + publicationId + "is already curated!", false,
                 publication.getVerified());
 
-        Publication pub2 = publicationService.curatePublication(publicationId, curatorEmail1);
+        Publication pub2 = publiService.curatePublication(publicationId, curatorEmail1);
 
-        Optional<Publication> pub3 = publicationService.getPublication(publicationId);
+        Optional<Publication> pub3 = publiService.getPublication(publicationId);
 
         assertEquals("Publication id " + publicationId + "wasn't curated!", true,
                 pub3.get().getVerified());
@@ -234,26 +234,26 @@ class OpenbookApplicationTests {
         assertEquals("Student " + studentEmail2 + "not registered", true,
                 userOptional2.isPresent());
 
-        Optional<Publication> pub = publicationService.getPublication(publicationId);
+        Optional<Publication> pub = publiService.getPublication(publicationId);
 
         assertEquals("Publication id " + publicationId + "not registered", true,
                 pub.isPresent());
 
         List<Likes> likesList;
-        likesList = publicationService.getLikeFromPublicationAndUser(publicationId, studentEmail1);
+        likesList = publiService.getLikeFromPublicationAndUser(publicationId, studentEmail1);
 
         assertEquals("Student " + studentEmail1 + " already like publication " +
                 publicationId , 0, likesList.size());
 
-        likesList = publicationService.getLikeFromPublicationAndUser(publicationId, studentEmail2);
+        likesList = publiService.getLikeFromPublicationAndUser(publicationId, studentEmail2);
 
         assertEquals("Student " + studentEmail2 + " already like publication " +
                 publicationId , 0, likesList.size());
 
-        publicationService.likePublication(publicationId, studentEmail1);
-        publicationService.likePublication(publicationId, studentEmail2);
+        publiService.likePublication(publicationId, studentEmail1);
+        publiService.likePublication(publicationId, studentEmail2);
 
-        List<Likes> likesPubs = publicationService.getLikesFromPublication(publicationId);
+        List<Likes> likesPubs = publiService.getLikesFromPublication(publicationId);
 
         assertEquals("Likes for " + publicationId + "don't match ", 2,
                 likesPubs.size());
@@ -269,7 +269,7 @@ class OpenbookApplicationTests {
 
         long publicationId = 100;
 
-        Optional<Publication> pub = publicationService.getPublication(publicationId);
+        Optional<Publication> pub = publiService.getPublication(publicationId);
 
         assertEquals("Publication id " + publicationId + "not registered", true,
                 pub.isPresent());
@@ -283,10 +283,10 @@ class OpenbookApplicationTests {
             visitstmp = visitstmp + 1;
             publication.setVisits(visitstmp);
         }
-        publicationService.updatePublication(publication);
+        publiService.updatePublication(publication);
         //end
 
-        Optional<Publication> pub2 = publicationService.getPublicationWithLikes(publicationId);
+        Optional<Publication> pub2 = publiService.getPublicationWithLikes(publicationId);
 
         assertEquals("Publication id " + publicationId + "not registered", true,
                 pub2.isPresent());
@@ -298,10 +298,10 @@ class OpenbookApplicationTests {
 
         publication.setRanking((float) ranking);
 
-        publicationService.updatePublication(publication);
+        publiService.updatePublication(publication);
 
         //Retrieve publication to ensure it was stored in bd
-        pub = publicationService.getPublication(publicationId);
+        pub = publiService.getPublication(publicationId);
 
         assertEquals("Publication id " + publicationId + "not registered", true,
                 pub.isPresent());
@@ -321,7 +321,7 @@ class OpenbookApplicationTests {
         assertEquals("Curator with " + curatorEmail1 + "not registered", true,
                 curatorOptional1.isPresent());
 
-        List<Publication> publications = publicationService.getPublicationsFromCurator(curatorEmail1);
+        List<Publication> publications = publiService.getPublicationsFromCurator(curatorEmail1);
 
         assertEquals("Quantity of curated publications for " + curatorEmail1 + "not match",
                 1, publications.size());
@@ -329,8 +329,7 @@ class OpenbookApplicationTests {
 
     @Test
     public void printPublicationsfromIdCategory() {
-        Page<Publication> publications = publicationService.getPublicationsFromCategory(
-                2, 0, 10);
+        List<Publication> publications = publiService.getPublicationsFromCategory(2);
         //Sorted by ranking
         for (Publication pub: publications) {
             System.out.println(pub.getId()+"  "+ pub.getRanking());
@@ -340,7 +339,7 @@ class OpenbookApplicationTests {
     @Test
     public void printPublicationsFromTagName() {
         String tagName1 = "curso_2020";
-        List<Publication> publications = publicationService.getPublicationsfromTagName(tagName1);
+        List<Publication> publications = publiService.getPublicationsfromTagName(tagName1);
 
         //Sorted by ranking
         for (Publication pub: publications) {
@@ -353,7 +352,7 @@ class OpenbookApplicationTests {
         String searchStr = "title 5";
 
         System.out.println("Searching: " + searchStr);
-        Page<Publication> publications = publicationService.findPublicationByKeywords(searchStr,
+        Page<Publication> publications = publiService.findPublicationByKeywords(searchStr,
                 PageRequest.of(0, 4));
         System.out.println("Total Pages: " + publications.getTotalPages());
         System.out.println("Total Elements: " + publications.getTotalElements());
@@ -389,7 +388,7 @@ class OpenbookApplicationTests {
     public void printLastNPublications() {
         int numberPub = 5;
 
-        Page<Publication> publications = publicationService.getLastNPublications(0, numberPub);
+        Page<Publication> publications = publiService.getLastNPublications(0, numberPub);
         System.out.println("Showing last " + numberPub + " publications");
         for (Publication publication:publications) {
             System.out.println(publication.getId() + " "+ publication.getDescription()
@@ -405,14 +404,14 @@ class OpenbookApplicationTests {
         assertEquals("Curator with " + curatorEmail1 + "not registered", true,
                 curatorOptional1.isPresent());
 
-        List<Publication> pubs = publicationService.getPublicationsToVerifyByCurator(curatorEmail1);
+        List<Publication> pubs = publiService.getPublicationsToVerifyByCurator(curatorEmail1);
         System.out.println("Publications pendient for verification");
         for(Publication publication: pubs) {
             System.out.println(publication.getId() + " " + publication.getDescription());
         }
         //assertEquals("Wrong number of pendient for verification for " + curatorEmail1, 0, pubs.size());
 
-        pubs = publicationService.getPublicationsVerifiedByCurator(curatorEmail1);
+        pubs = publiService.getPublicationsVerifiedByCurator(curatorEmail1);
 
         //assertEquals("Wrong number verified for " + curatorEmail1, 1, pubs.size());
         System.out.println("Publications verified");
@@ -437,7 +436,7 @@ class OpenbookApplicationTests {
         //String emailProfessor = "yamilet@utec.edu.pe";
 
         List<IPublicationLikeCount> iPublicationLikeCounts;
-        iPublicationLikeCounts = publicationService.publicationLikeCountsByProfessor(emailProfessor);
+        iPublicationLikeCounts = publiService.publicationLikeCountsByProfessor(emailProfessor);
 
         for(IPublicationLikeCount pub: iPublicationLikeCounts) {
             System.out.println(pub.getPublicationId()+" "+pub.getTotalPublication());
@@ -451,7 +450,7 @@ class OpenbookApplicationTests {
         //String emailProfessor = "yamilet@utec.edu.pe";
 
         List<IDatePublicationCount> iDatePublicationCounts;
-        iDatePublicationCounts = publicationService.datePublicationsCountsByProfessor(emailProfessor);
+        iDatePublicationCounts = publiService.datePublicationsCountsByProfessor(emailProfessor);
 
         for(IDatePublicationCount pub: iDatePublicationCounts) {
             System.out.println(pub.getPublicationDate()+" "+pub.getTotalPublication());
@@ -492,6 +491,44 @@ class OpenbookApplicationTests {
         }
     }
 
+    @Test
+    public void test_ranking() {
+        List<Publication> publications = uiService.getAllPublications();
+        for(Publication publication: publications)
+        {
+            long visits = publication.getVisits();
+            List<Likes> likes = publicationService.getLikesFromPublication(publication.getId());
+            float ranking = publication.getRanking();
+            ranking = (float) (visits*0.05+likes.size()*5);
+            publication.setRanking(ranking);
+        }
+    }
+*/
+
+    @Test
+    public void curator_registration() {
+        String curatorEmail1 = "curator1@utec.edu.pe";
+        String curatorEmail2 = "curator2@utec.edu.pe";
+
+        Curator curator1 = new Curator(curatorEmail1, "curator1", "654321", "Name 1",
+                "Surname 21");
+        Curator curator2 = new Curator(curatorEmail2, "curator2", "654321", "Name 12",
+                "Surname 22");
+
+        authService.addUser(curator1);
+        authService.addUser(curator2);
+
+        Optional<User> curatorOptional1 = authService.getUser(curatorEmail1);
+
+        assertEquals("Curator with " + curatorEmail1 + "not registered", true,
+                curatorOptional1.isPresent());
+
+        Optional<User> curatorOptional2 = authService.getUser(curatorEmail2);
+
+        assertEquals("Curator with " + curatorEmail2 + "not registered", true,
+                curatorOptional2.isPresent());
+    }
+}
 //    @Test
 //    public void test_ranking() {
 //        List<Publication> publications = uiService.getAllPublications();
@@ -504,5 +541,3 @@ class OpenbookApplicationTests {
 //            publication.setRanking(ranking);
 //        }
 //    }
-
-}*/
