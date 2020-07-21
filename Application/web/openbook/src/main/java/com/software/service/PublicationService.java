@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static org.springframework.data.jpa.domain.Specification.not;
+
 @Service
 public class PublicationService {
     @Autowired
@@ -159,10 +161,16 @@ public class PublicationService {
 
     public List<Publication> getPublicationsFromProfessor(String professorEmail) {
 
-        PublicationSpecification spec = new PublicationSpecification(
+        PublicationSpecification specProfe = new PublicationSpecification(
                 new SearchCriteria("professor", ":", professorEmail));
 
-        return publicationRepository.findAll(spec,
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.where(specProfe).and(
+                not(specEstado_3));
+
+        return publicationRepository.findAll(specification,
                 Sort.by(Sort.Direction.DESC, "ranking"));
     }
 
@@ -178,7 +186,15 @@ public class PublicationService {
 
         PublicationSpecification spec = new PublicationSpecification(
                 new SearchCriteria("category", ":", idCategory));
-        return publicationRepository.findAll(spec, PageRequest.of(page, number, Sort.by(Sort.Direction.DESC,"ranking")));
+
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.where(spec).and(
+                not(specEstado_3));
+
+        return publicationRepository.findAll(specification,
+                PageRequest.of(page, number, Sort.by(Sort.Direction.DESC,"ranking")));
         //List<Publication> publications = publicationRepository.findAll(spec, Sort.by(Sort.Direction.DESC, "ranking"));
         //return new PageImpl<Publication>(publications, pageable, publications.size());
     }
@@ -269,7 +285,13 @@ public class PublicationService {
     }
 
     public Page<Publication> getLastNPublications(int page, int number) {
-        return publicationRepository.findAll(PageRequest.of(page, number,
+
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.not(specEstado_3);
+
+        return publicationRepository.findAll(specification, PageRequest.of(page, number,
                 Sort.by(Sort.Direction.DESC,"createdAt")));
     }
 

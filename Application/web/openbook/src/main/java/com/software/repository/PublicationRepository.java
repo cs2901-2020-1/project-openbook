@@ -32,7 +32,8 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
             "ON cat.id = pu.category_id " +
             "INNER JOIN Users pro " +
             "ON pro.email = pu.professor_id " +
-            "AND pro.user_type = 'Professor' ) p_search " +
+            "AND pro.user_type = 'Professor' " +
+            "AND pu.estado <> 3) p_search " +
             "WHERE p_search.document @@ to_tsquery(:query)) " +
             "ORDER BY pub2.ranking DESC",
             countQuery= "SELECT count(pub2.id) FROM publication pub2 " +
@@ -48,7 +49,8 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
                     "ON cat.id = pu.category_id " +
                     "INNER JOIN users pro\n" +
                     "ON pro.email = pu.professor_id " +
-                    "AND pro.user_type = 'Professor' ) p_search " +
+                    "AND pro.user_type = 'Professor' " +
+                    "AND pu.estado <> 3) p_search " +
                     "WHERE p_search.document @@ to_tsquery(:query))",
             nativeQuery = true)
     Page<Publication> findPublicationsFullTextSearchByDescription(@Param("query") String query, Pageable pageable);
