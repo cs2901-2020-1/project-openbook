@@ -142,8 +142,11 @@
 }
 .thead-default {
   th {
-    //color: $gray;
-    //background-color: $bmd-inverse-lighter; //$gray-lighter;
+    th {
+      color: #1979a9;
+      background-color: #1979a9;
+      border-color: #1979a9;
+    }
   }
 }
 

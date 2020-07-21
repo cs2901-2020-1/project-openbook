@@ -11,12 +11,15 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
     @Column(name = "description",length = 100)
     private String description;
+
+    @Column(name = "name",length = 100)
+    private String name;
 
     @OneToMany(mappedBy = "category")
     private List<Publication> publication;
@@ -25,9 +28,11 @@ public class Category {
 
     }
 
-    public Category(String description) {
+    public Category(int id, String description) {
+        this.id = id;
         this.description = description;
     }
+
 
     public int getId() {
         return id;
@@ -44,5 +49,15 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 
 }

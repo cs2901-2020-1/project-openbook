@@ -30,17 +30,26 @@ public class PublicationSpecification implements Specification<Publication> {
             if (root.get(criteria.getKey()).getJavaType() == String.class) {
                 return criteriaBuilder.like(
                         root.<String>get(criteria.getKey()), "%" + criteria.getValue() + "%");
+            // Publications by professor
             } else if( root.get(criteria.getKey()).getJavaType() == Professor.class) {
 
                 Join<Publication, Professor> profJoin = root.join(Publication_.professor);
 
                 return criteriaBuilder.equal(profJoin.get(Professor_.email), criteria.getValue());
+            // Publications by curator
+            } else if (root.get(criteria.getKey()).getJavaType() == Curator.class) {
+
+                Join<Publication, Curator> curatorJoin = root.join(Publication_.curator);
+
+                return criteriaBuilder.equal(curatorJoin.get(Curator_.email), criteria.getValue());
+            // Publications by category
             } else if( root.get(criteria.getKey()).getJavaType() == Category.class ) {
 
                 Join<Publication, Category> categoryJoin = root.join(Publication_.category);
 
                 return criteriaBuilder.equal(categoryJoin.get(Category_.id), criteria.getValue());
 
+            //Publications by tags
             } else if( root.get(criteria.getKey()).getJavaType() == Set.class ) {
 
                 SetJoin<Publication, Tag> tagSetJoin = root.join(Publication_.manyTags);

@@ -1,4 +1,3 @@
-
 (function ($) {
     "use strict";
 
@@ -12,7 +11,7 @@
             else {
                 $(this).removeClass('has-val');
             }
-        })    
+        })
     })
 
     /*==================================================================
@@ -35,7 +34,7 @@
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
-           hideValidate(this);
+            hideValidate(this);
         });
     });
 
@@ -71,7 +70,7 @@ function student_registration(){
 
     $("#student_button").css("background-color","white");
     $("#student_button").css("color","black");
-    
+
 
     $("#profesor_button").css("background-color","#009ada");
     $("#profesor_button").css("color","white");
@@ -80,31 +79,31 @@ function student_registration(){
     content = '<form action="/do_register_student" method="post" class="contact100-form validate-form">\
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Nombres :</span>\
-                    <input class="input100" type="text" name="name" placeholder="Ingresa tus nombres">\
+                    <input class="input100" type="text" name="name" placeholder="Ingresa tus nombres" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Apellidos :</span>\
-                    <input class="input100" type="text" name="surname" placeholder="Ingresa tus apellidos">\
+                    <input class="input100" type="text" name="surname" placeholder="Ingresa tus apellidos" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Fecha de nacimiento :</span>\
-                    <input class="input100" type="date" name="date" placeholder="Ingresa tu fecha de nacimiento">\
+                    <input class="input100" type="date" name="date" placeholder="Ingresa tu fecha de nacimiento" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
-                <div class="wrap-input100 validate-input" data-validate = "Ingresa un email valido: ex@abc.xyz">\
+                <div class="wrap-input100 validate-input" data-validate = "Ingresa un email valido: ex@abc.xyz" required>\
                     <span class="label-input100">Email:</span>\
-                    <input maxlength="30" class="input100" type="email" name="email" placeholder="Ingrese su correo electrónico">\
+                    <input maxlength="30" class="input100" type="email" name="email" placeholder="Ingrese su correo electrónico" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Password:</span>\
-                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña">\
+                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
@@ -121,7 +120,7 @@ function profesor_registration(){
 
     $("#student_button").css("background-color","#009ada");
     $("#student_button").css("color","white");
-    
+
     $("#profesor_button").css("background-color","white");
 
     $("#profesor_button").css("color","black");
@@ -129,25 +128,25 @@ function profesor_registration(){
     content = '<form action="/do_register_profesor" method="post" class="contact100-form validate-form">\
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Nombres :</span>\
-                    <input class="input100" type="text" name="name" placeholder="Ingresa tus nombres">\
+                    <input class="input100" type="text" name="name" placeholder="Ingresa tus nombres" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Apellidos :</span>\
-                    <input class="input100" type="text" name="surname" placeholder="Ingresa tus apellidos">\
+                    <input class="input100" type="text" name="surname" placeholder="Ingresa tus apellidos" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate = "Ingresa un email valido: ex@abc.xyz">\
                     <span class="label-input100">Email:</span>\
-                    <input maxlength="30" class="input100" type="email" name="email" placeholder="Ingrese su correo electrónico">\
+                    <input maxlength="30" class="input100" type="email" name="email" placeholder="Ingrese su correo electrónico" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
                 <div class="wrap-input100 validate-input" data-validate="Ups...Olvidaste llenar este campo">\
                     <span class="label-input100">Password:</span>\
-                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña">\
+                    <input class="input100" type="password" name="password" placeholder="Ingrese una contraseña" required>\
                     <span class="focus-input100"></span>\
                 </div>\
 \
