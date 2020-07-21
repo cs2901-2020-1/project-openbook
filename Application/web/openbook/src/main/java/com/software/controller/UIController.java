@@ -888,6 +888,20 @@ public class UIController {
         return "redirect:/inicio";
     }
 
+    @PostMapping("/deleteInBackPack")
+    public String deleteInBackPack(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){
+
+        String email = (String) session.getAttribute("EMAIL");
+        //Logger log = LoggerFactory.getLogger(OpenbookApplication.class);
+        User user = authService.getUser(email).get();
+        String tipo = user.getTipo();
+
+        Publication publication = uiService.getPublicationById(p_id).get();
+
+        uiService.deleteInMochila(publication, user);
+        return "redirect:/mochila";
+    }
+
     @PostMapping(value = "/addLike")
     public String addLike(Model model, @RequestParam(name = "p_id") Long p_id , HttpSession session){
 

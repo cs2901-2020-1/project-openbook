@@ -218,6 +218,12 @@
                                         <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                                     </div>
                                 </div>
+                                <div class="stats">
+                                    <form action="/deleteInBackPack" method="post">
+                                        <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                                        <button type="submit" class="btn btn-danger"><i class="material-icons">backpack</i></button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

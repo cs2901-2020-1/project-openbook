@@ -186,12 +186,6 @@
                                                 <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                                             </div>
                                         </div>
-                                        <div class="stats">
-                                            <form action="/saveInBackPack" method="post">
-                                                <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
-                                                <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
-                                            </form>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -225,12 +219,6 @@
                                             <div th:case="3">
                                                 <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                                             </div>
-                                        </div>
-                                        <div class="stats">
-                                            <form action="/saveInBackPack" method="post">
-                                                <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
-                                                <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -277,12 +265,6 @@
                                     <div th:case="3">
                                         <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                                     </div>
-                                </div>
-                                <div class="stats">
-                                    <form action="/saveToVerify" method="post">
-                                        <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                        <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
-                                    </form>
                                 </div>
                             </div>
                         </div>

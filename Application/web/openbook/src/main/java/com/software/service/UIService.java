@@ -83,6 +83,24 @@ public class UIService {
 
     }
 
+    public void deleteInMochila(Publication publication, User user){
+
+        Iterable<Mochila> mochilas= mochilaRepository.findAll();
+
+        for (Mochila mochila: mochilas) {
+            if(mochila.getUser_id().getEmail().equals(user.getEmail())){
+                if(mochila.getPublication_id().getId().equals(publication.getId())) {
+                    float ranking = publication.getRanking();
+                    ranking = ranking - 40;
+                    publication.setRanking(ranking);
+                    publicationService.updatePublication(publication);
+
+                    mochilaRepository.delete(mochila);
+                    break;
+                }
+            }
+        }
+    }
 
 
     public List<Publication> getUserMochila(User user){
