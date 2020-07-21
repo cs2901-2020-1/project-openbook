@@ -205,6 +205,9 @@
                         <div th:case="2">
                           <i class="material-icons">local_offer</i> Verificado
                         </div>
+                        <div th:case="3">
+                          <i class="material-icons">local_offer</i> <a class="danger-link" disabled>Bloqueado</a>
+                        </div>
                       </div>
                       <div class="stats">
                         <form action="/saveInBackPack" method="post">
@@ -241,6 +244,9 @@
                         </div>
                         <div th:case="2">
                           <i class="material-icons">local_offer</i> Verificado
+                        </div>
+                        <div th:case="3">
+                          <i class="material-icons">local_offer</i> <a class="danger-link" disabled>Bloqueado</a>
                         </div>
                       </div>
                       <div class="stats">
@@ -293,6 +299,9 @@
                     </div>
                     <div th:case="2">
                       <i class="material-icons">local_offer</i> Verificado
+                    </div>
+                    <div th:case="3">
+                      <i class="material-icons">local_offer</i> <a class="danger-link" disabled>Bloqueado</a>
                     </div>
                   </div>
                     <form action="/saveInBackPack" method="post">
