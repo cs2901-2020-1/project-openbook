@@ -46,7 +46,7 @@
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item  ">
+                <li class="nav-item  active">
                     <a class="nav-link" href="/inicio">
                         <i class="material-icons">home</i>
                         <p>Pagina Principal</p>
@@ -58,40 +58,20 @@
                         <p>Perfil</p>
                     </a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/mochila">
-                        <i class="material-icons">backpack</i>
-                        <p>Mochila</p>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addUserAdmin">
+                        <i class="material-icons">account_box</i>
+                        <p>Añadir curador</p>
                     </a>
                 </li>
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/publicarContenido">
-                        <i class="material-icons">content_paste</i>
-                        <p>Publicar Contenido</p>
-                    </a>
-                </li>
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/publications">
-                        <i class="material-icons">publication</i>
-                        <p>Mis Publicaciones</p>
-                    </a>
-                </li>
-          <!--      <li class="nav-item ">
-                    <a class="nav-link" href="/dashboardui">
-                        <i class="material-icons">dashboard</i>
-                        <p>Tablero</p>
-                    </a>
-                </li> -->
 
                 <!--<li class="nav-item ">
-                    <a class="nav-link" href="/notifications">
-                        <i class="material-icons">notifications</i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="nav-item active-pro ">
+                  <a class="nav-link" href="/notifications">
+                    <i class="material-icons">notifications</i>
+                    <p>Notifications</p>
+                  </a>
+                </li>-->
+                <!-- <li class="nav-item active-pro ">
                       <a class="nav-link" href="./upgrade.html">
                           <i class="material-icons">unarchive</i>
                           <p>Upgrade to PRO</p>
@@ -105,7 +85,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <h2 class="navbar-brand">Mochila</h2>
+                    <h2 class="navbar-brand">Pagina Principal</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -116,7 +96,7 @@
                 <div class="collapse navbar-collapse justify-content-end">
                     <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="search" name="search" id="search" class="form-control" placeholder="Search..." aria-label="Search">
+                            <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -127,6 +107,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">dashboard</i>
+
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
@@ -136,8 +117,8 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Mochila"
-                               data-content="En este apartado, usted puede ver las publicaciones que ha guardado en la mochila. Además, al hacer click en descargar, todas las publicaciones, serán descargadas">
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Inicio"
+                               data-content="¡Bienvenido! Usted ha entrado con cuenta de curador. Para empezar al proceso, por favor, haga click en algún contenido. Si desea guardarlo para ver más tarde, haga click en el logo de">
                                 <i class="material-icons">help</i>
                             </a>
                         </li>
@@ -166,40 +147,107 @@
 
         <div class="content" >
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <button type="button"  class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-                            Descargar
-                        </button>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+
+                    <!--Controls-->
+                    <div class="controls-top">
+
+                    </div>
+                    <!--/.Controls-->
+
+                    <!--Slides-->
+                    <div class="carousel-inner" role="listbox">
+
+                        <!--First slide-->
+                        <div class="carousel-item active">
+
+                            <div class="col-md-4" style="float:left" th:each="publicationCarousel: ${publicationsCarousel_0}">
+                                <div class="card card-chart">
+                                    <img class="card-img-top" th:src="'/getImage?id='+${publicationCarousel.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                                    <div class="card-header card-header-success">
+                                        <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
                                     </div>
-                                    <div class="modal-body">
-                                        Estas seguro de que quieres descargar el contenido?
+                                    <div class="card-body" style="min-height: 10rem;">
+                                        <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                                        <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                                     </div>
-                                    <div class="modal-footer">
-                                        <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
-                                        <a type="button" href="/zip-download" class="btn btn-primary">Si</a>
+                                    <div class="card-footer">
+                                        <div class="stats" th:switch="${publicationCarousel.getEstado()}">
+                                            <div th:case="0">
+                                                <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
+                                            </div>
+                                            <div th:case="1">
+                                                <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
+                                            </div>
+                                            <div th:case="2">
+                                                <i class="material-icons">local_offer</i> Verificado
+                                            </div>
+                                            <div th:case="3">
+                                                <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!--/.First slide-->
+
+                        <!--Second slide-->
+                        <div class="carousel-item">
+
+                            <div class="col-md-4" style="float:left" th:each="publicationCarousel: ${publicationsCarousel_1}">
+                                <div class="card card-chart">
+                                    <img class="card-img-top" th:src="'/getImage?id='+${publicationCarousel.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                                    <div class="card-header card-header-success">
+                                        <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
+                                    </div>
+                                    <div class="card-body" style="min-height: 10rem;">
+                                        <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                                        <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="stats" th:switch="${publicationCarousel.getEstado()}">
+                                            <div th:case="0">
+                                                <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
+                                            </div>
+                                            <div th:case="1">
+                                                <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
+                                            </div>
+                                            <div th:case="2">
+                                                <i class="material-icons">local_offer</i> Verificado
+                                            </div>
+                                            <div th:case="3">
+                                                <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--/.Second slide-->
+
                     </div>
+                    <!--/.Slides-->
+                    <center>
+                        <a class="btn btn-success" href="#multi-item-example" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="btn btn-success" href="#multi-item-example" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </center>
                 </div>
                 <div class="row" >
                     <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
                         <div class="card card-chart">
-                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}"  alt="Card image cap" style="object-fit: cover; height: 300px;">
                             <div class="card-header card-header-success">
                                 <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                             </div>
-                            <div class="card-body" style="min-height: 12rem;">
+                            <div class="card-body">
                                 <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                             </div>
@@ -217,12 +265,6 @@
                                     <div th:case="3">
                                         <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                                     </div>
-                                </div>
-                                <div class="stats">
-                                    <form action="/deleteInBackPack" method="post">
-                                        <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                        <button type="submit" class="btn btn-danger"><i class="material-icons">backpack</i></button>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -261,12 +303,10 @@
 <script src="../assets/demo/demo.js"></script>
 <script>
     $(document).ready(function() {
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
         $().ready(function() {
             $sidebar = $('.sidebar');
 
+            $('[data-toggle="popover"]').popover()
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 
             $full_page = $('.full-page');

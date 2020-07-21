@@ -325,7 +325,7 @@
                         <th class="text-dark" scope="col"><h4>Verificado por</h4></th>
                         </thead>
                         <tbody>
-                        <tr th:each="publication: ${publications}" >
+                        <tr th:each="publication: ${publications}" data-spy="scroll">
                           <td ><p class="text-secondary" th:text="${publication.getTitle()}"></p></td>
                           <td><p th:text="${publication.getCategory().getDescription()}"></p></td>
                           <td><p th:text="${publication.getVisits()}"></p></td>

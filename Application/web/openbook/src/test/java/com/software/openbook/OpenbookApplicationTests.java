@@ -20,9 +20,9 @@ import java.util.Set;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
-/*@SpringBootTest
+@SpringBootTest
 class OpenbookApplicationTests {
-    @Autowired
+ /*   @Autowired
     private AuthService authService;
     @Autowired
     private CategoryService catService;
@@ -35,12 +35,12 @@ class OpenbookApplicationTests {
     @Autowired
     private CommentService commentService;
     @Autowired
-    private CategoryService categoryService;
-
+    private CategoryService categoryService;*/
+/*
     @Test
     void contextLoads() {
     }
-/*
+
     @Test
     public void students_registration() {
         String email1 = "osman.vilchez@utec.edu.pe";
@@ -490,10 +490,9 @@ class OpenbookApplicationTests {
             System.out.println(comment.getId()+" "+comment.getText_comment()+ " " + comment.getCreatedAt()
                     +" from comment: " + comment.getParentComment().getText_comment());
         }
-<<<<<<< HEAD
-    } */
+    }
 
-/*@Test
+    @Test
     public void test_ranking() {
         List<Publication> publications = uiService.getAllPublications();
         for(Publication publication: publications)
@@ -504,8 +503,33 @@ class OpenbookApplicationTests {
             ranking = (float) (visits*0.05+likes.size()*5);
             publication.setRanking(ranking);
         }
-    }*/
+    }
+*/
+/*
+    @Test
+    public void curator_registration() {
+        String curatorEmail1 = "curator1@utec.edu.pe";
+        String curatorEmail2 = "curator2@utec.edu.pe";
 
+        Curator curator1 = new Curator(curatorEmail1, "curator1", "654321", "Name 1",
+                "Surname 21");
+        Curator curator2 = new Curator(curatorEmail2, "curator2", "654321", "Name 12",
+                "Surname 22");
+
+        authService.addUser(curator1);
+        authService.addUser(curator2);
+
+        Optional<User> curatorOptional1 = authService.getUser(curatorEmail1);
+
+        assertEquals("Curator with " + curatorEmail1 + "not registered", true,
+                curatorOptional1.isPresent());
+
+        Optional<User> curatorOptional2 = authService.getUser(curatorEmail2);
+
+        assertEquals("Curator with " + curatorEmail2 + "not registered", true,
+                curatorOptional2.isPresent());
+    }
+}
 //    @Test
 //    public void test_ranking() {
 //        List<Publication> publications = uiService.getAllPublications();
@@ -517,6 +541,5 @@ class OpenbookApplicationTests {
 //            ranking = (float) (visits*0.05+likes.size()*5);
 //            publication.setRanking(ranking);
 //        }
-//    }
-
-//}
+//    }*/
+}

@@ -92,7 +92,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <h2 class="navbar-brand">Mochila</h2>
+                    <h2 class="navbar-brand">Por revisar</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -101,9 +101,9 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
+                    <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -157,6 +157,32 @@
 
         <div class="content" >
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button"  class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                            Descargar
+                        </button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Estas seguro de que quieres descargar el contenido?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
+                                        <a type="button" href="/zip-downloadCurator" class="btn btn-primary">Si</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row" >
                     <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
                         <div class="card card-chart">
@@ -167,22 +193,6 @@
                             <div class="card-body">
                                 <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats" th:switch="${publication.getEstado()}">
-                                    <div th:case="0">
-                                        <i class="material-icons">local_offer</i> No verificado aún
-                                    </div>
-                                    <div th:case="1">
-
-                                        <i class="material-icons">local_offer</i> Verificación en proceso
-                                    </div>
-                                    <div th:case="2">
-
-                                        <i class="material-icons">local_offer</i> Verificado
-                                    </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>

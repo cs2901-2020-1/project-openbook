@@ -321,7 +321,13 @@ public class PublicationService {
 
 
     public Page<Publication> getTopNPublications(int page, int number) {
-        return publicationRepository.findAll(PageRequest.of(page, number,
+
+        PublicationSpecification specEstado_3 = new PublicationSpecification(
+                new SearchCriteria("estado", ":", 3));
+
+        Specification<Publication> specification = Specification.not(specEstado_3);
+
+        return publicationRepository.findAll(specification, PageRequest.of(page, number,
                 Sort.by(Sort.Direction.DESC,"ranking")));
     }
 

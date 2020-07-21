@@ -46,7 +46,7 @@
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active ">
+          <li class="nav-item  active">
             <a class="nav-link" href="/inicio">
               <i class="material-icons">home</i>
               <p>Pagina Principal</p>
@@ -58,22 +58,32 @@
               <p>Perfil</p>
             </a>
           </li>
-
           <li class="nav-item ">
-            <a class="nav-link" href="/mochila">
-              <i class="material-icons">backpack</i>
-              <p>Mochila</p>
+            <a class="nav-link" href="/revisionsToDo">
+              <i class="material-icons">assignment_late</i>
+              <p>Por Revisar</p>
             </a>
           </li>
 
+          <li class="nav-item ">
+            <a class="nav-link" href="/getRevisions">
+              <i class="material-icons">assignment_turned_in</i>
+              <p>Mis Revisiones</p>
+            </a>
+          </li>
 
           <!--<li class="nav-item ">
             <a class="nav-link" href="/notifications">
               <i class="material-icons">notifications</i>
-              <p>Notificaciones</p>
+              <p>Notifications</p>
             </a>
           </li>-->
-
+          <!-- <li class="nav-item active-pro ">
+                <a class="nav-link" href="./upgrade.html">
+                    <i class="material-icons">unarchive</i>
+                    <p>Upgrade to PRO</p>
+                </a>
+            </li> -->
         </ul>
       </div>
     </div>
@@ -142,12 +152,13 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
+
+      <div class="content" >
         <div class="container-fluid">
           <div class="row" >
             <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
               <div class="card card-chart">
-                <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}"  alt="Card image cap" style="object-fit: cover; height: 300px;">
                 <div class="card-header card-header-success">
                   <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                 </div>
@@ -155,7 +166,6 @@
                   <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                   <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                 </div>
-
                 <div class="card-footer">
                   <div class="stats" th:switch="${publication.getEstado()}">
                     <div th:case="0">
@@ -186,17 +196,18 @@
         <nav aria-label="Pagination">
           <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${prev == 0 ? 'disabled': ''}">
-              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${prev}|}"><<</a>
+              <a class="page-link" th:href="@{|/searchContent?search=${keyword}&page=${prev}|}"><<</a>
             </li>
             <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active': ''}">
-              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${page}|}" th:text="${page}">1</a>
+              <a class="page-link" th:href="@{|/searchContent?search=${keyword}&page=${page}|}" th:text="${page}">1</a>
             </li>
             <li class="page-item" th:classappend="${current == last ? 'disabled': ''}">
-              <a class="page-link" th:href="@{|/searchContentCategory?id=${id}&page=${next}|}">>></a>
+              <a class="page-link" th:href="@{|/searchContent?search=${keyword}&page=${next}|}">>></a>
             </li>
           </ul>
         </nav>
       </div>
+
       <footer class="footer">
       </footer>
       <script>
@@ -384,13 +395,6 @@
 
         });
       });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-
     });
   </script>
 </body>

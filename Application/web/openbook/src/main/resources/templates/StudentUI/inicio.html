@@ -121,14 +121,7 @@
                   <a class="dropdown-item" th:each="category: ${categories}" th:href="@{|/searchContentCategory?id=${category.getId()}|}" th:text="${category.getDescription()}"></a>
                 </div>
               </li>
-              <!--<li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModalCenter">
-                  <i class="material-icons">help</i>
-                  <p class="d-lg-none d-md-block">
-                    Stats
-                  </p>
-                </a>
-              </li>-->
+
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>
@@ -188,6 +181,9 @@
                         <div th:case="2">
                           <i class="material-icons">local_offer</i> Verificado
                         </div>
+                        <div th:case="3">
+                          <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
+                        </div>
                       </div>
                       <div class="stats">
                         <form action="/saveInBackPack" method="post">
@@ -224,6 +220,9 @@
                         </div>
                         <div th:case="2">
                           <i class="material-icons">local_offer</i> Verificado
+                        </div>
+                        <div th:case="3">
+                          <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                         </div>
 
                       </div>
@@ -279,6 +278,9 @@
                     </div>
                     <div th:case="2">
                       <i class="material-icons">local_offer</i> Verificado
+                    </div>
+                    <div th:case="3">
+                      <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
                     </div>
 
                   </div>

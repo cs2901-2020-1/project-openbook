@@ -195,15 +195,19 @@ public class FileController {
 
         // Guardar el archivo
         // imagen
+        if(image_file.isEmpty()){
+            resourcePath = "src/main/resources/static/images/logo.jpg";
 
-        fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
+        } else {
+            fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
 
-        resourcePath = FILE_PATH + email + "_" + fileName;
+            resourcePath = FILE_PATH + email + "_" + fileName;
 
-        i = 1;
-        while(publicationService.verify_content(resourcePath,p)){
-            resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
-            i++;
+            i = 1;
+            while(publicationService.verify_content(resourcePath,p)){
+                resourcePath = FILE_PATH + email + "_" + i + "_" + fileName;
+                i++;
+            }
         }
 
         publication.setImage_path(resourcePath);
@@ -238,6 +242,32 @@ public class FileController {
 
 
         for (Publication publication : mochilaPublications) {
+            FileSystemResource resource = new FileSystemResource(publication.getResource_path());
+            ZipEntry zipEntry = new ZipEntry(resource.getFilename());
+            zipEntry.setSize(resource.contentLength());
+            zipOut.putNextEntry(zipEntry);
+            StreamUtils.copy(resource.getInputStream(), zipOut);
+            zipOut.closeEntry();
+        }
+        zipOut.finish();
+        zipOut.close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "mochila.zip" + "\"");
+    }
+
+    @GetMapping(value = "/zip-downloadCurator", produces="application/zip")
+    public void zipDownloadCurator( HttpServletResponse response, HttpSession session) throws IOException {
+
+        String email = (String) session.getAttribute("EMAIL");
+
+        User user = authService.getUser(email).get();
+
+        ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream());
+
+        List<Publication> publications = publicationService.getPublicationsToVerifyByCurator(email);
+
+
+        for (Publication publication : publications) {
             FileSystemResource resource = new FileSystemResource(publication.getResource_path());
             ZipEntry zipEntry = new ZipEntry(resource.getFilename());
             zipEntry.setSize(resource.contentLength());

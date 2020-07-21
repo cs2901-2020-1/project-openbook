@@ -96,9 +96,9 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
+                    <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -294,6 +294,14 @@
                                         <form action="/doVerify" method="post">
                                             <input style="display: none" th:value="${publication.getId()}" name="p_id">
                                             <button type="submit" class="btn btn-primary btn-lg btn-block">Validar Contenido</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div th:if="${sessionUser.getEmail() == publication.getCurator().getEmail()}">
+                                    <div>
+                                        <form action="/doBlock" method="post">
+                                            <input style="display: none" th:value="${publication.getId()}" name="p_id">
+                                            <button type="submit" class="btn btn-danger btn-lg btn-block">Bloquear Contenido</button>
                                         </form>
                                     </div>
                                 </div>
