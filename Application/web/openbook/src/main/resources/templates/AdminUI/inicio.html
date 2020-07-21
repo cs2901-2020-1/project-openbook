@@ -2,10 +2,14 @@
 =========================================================
 * Material Dashboard Dark Edition - v2.1.0
 =========================================================
+
 * Product Page: https://www.creative-tim.com/product/material-dashboard-dark
 * Copyright 2019 Creative Tim (http://www.creative-tim.com)
+
 * Coded by www.creative-tim.com
+
 =========================================================
+
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
@@ -34,10 +38,11 @@
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="/" class="simple-text logo-normal">
-            OPEN BOOK
+        <div class="logo"><a href="/inicio" class="simple-text logo-normal">
+            Open Book
         </a></div>
         <div class="sidebar-wrapper">
             <ul class="nav">
@@ -54,16 +59,9 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/revisionsToDo">
-                        <i class="material-icons">assignment_late</i>
-                        <p>Por Revisar</p>
-                    </a>
-                </li>
-
-                <li class="nav-item ">
-                    <a class="nav-link" href="/getRevisions">
-                        <i class="material-icons">assignment_turned_in</i>
-                        <p>Mis Revisiones</p>
+                    <a class="nav-link" href="/addUserAdmin">
+                        <i class="material-icons">notifications</i>
+                        <p>Añadir usuario</p>
                     </a>
                 </li>
 
@@ -87,7 +85,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">Publicacion</a>
+                    <h2 class="navbar-brand">Pagina Principal</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -109,6 +107,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">dashboard</i>
+
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
@@ -118,16 +117,12 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Verificación"
-                               data-content="Una puclicación tiene cuatro estados. No verificado, en proceso, verificado y rechazado:
-                                    <br />1. No verificado: Todas las publicaciones tendrán inicialmente este estado <br />
-                                    <br />2. En Proceso: Al hacer click en guardar para verificar, la publicación cambiará de estado a En proceso y se guardaran en el apartado, Por revisar de la barra lateral izquierda<br />
-                                    <br />3. Verificado: Una vez de puesta en marcha el proceso, el botón de En proceso cambiará a Validar. Para Validar, hacer click en Validar Contenido<br />
-                                    <br />4. Rechazado: Si detecta que el contenido es de mala calidad, proceda a rechazarlo<br />" data-html="true">
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Inicio"
+                               data-content="¡Bienvenido! Usted ha entrado con cuenta de curador. Para empezar al proceso, por favor, haga click en algún contenido. Si desea guardarlo para ver más tarde, haga click en el logo de">
                                 <i class="material-icons">help</i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item dropdown">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">person</i>
                                 <p class="d-lg-none d-md-block">
@@ -142,199 +137,163 @@
                                 </div>
 
                             </div>
+
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- End Navbar -->
+
         <div class="content" >
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-8 col-lg-8 col-md-8">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 th:text="${publication.getTitle()}"></h4>
-                            </div>
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="/getPDF" th:src="'/getPDF?id='+${publication.getId()}" allowfullscreen></iframe>
-                            </div>
-                        </div>
+                <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
 
-                        <div class="container mb-5 mt-5">
-                            <div class="card">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="text-center mb-5"> Comentarios </h3>
-                                        <hr>
-                                        <form action="/postComment" method="post" >
+                    <!--Controls-->
+                    <div class="controls-top">
 
+                    </div>
+                    <!--/.Controls-->
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <textarea placeholder="Escribe un comentario..." name="text_comment" class="form-control" rows="5"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                    <!--Slides-->
+                    <div class="carousel-inner" role="listbox">
+
+                        <!--First slide-->
+                        <div class="carousel-item active">
+
+                            <div class="col-md-4" style="float:left" th:each="publicationCarousel: ${publicationsCarousel_0}">
+                                <div class="card card-chart">
+                                    <img class="card-img-top" th:src="'/getImage?id='+${publicationCarousel.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                                    <div class="card-header card-header-success">
+                                        <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
+                                    </div>
+                                    <div class="card-body" style="min-height: 10rem;">
+                                        <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                                        <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="stats" th:switch="${publicationCarousel.getEstado()}">
+                                            <div th:case="0">
+                                                <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
                                             </div>
-
-                                            <input style="display: none" name="id_pub" th:value="${publication.getId()}">
-
-                                            <button type="submit" class="btn btn-primary pull-right">Comentar</button>
-                                            <div class="clearfix"></div>
-                                        </form>
-                                        <hr>
-
-                                        <div class="row">
-                                            <div class="col-md-12" th:each="comment : ${comments}">
-                                                <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" th:src="'/getImageProfesor?id='+${comment.getCommentAuthor().getEmail()}"  />
-                                                    <div class="media-body">
-                                                        <div class="row">
-                                                            <div class="col-8 d-flex">
-                                                                <h5 th:text="${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}">Maria Smantha</h5> <span th:text="'- ' +${comment.getCreatedAt()}"></span>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <div class="pull-right reply">
-                                                                <span>
-                                                                <a style="color: #0a6ebd" class="collapsed" role="button" data-toggle="collapse" th:href="'#comment'+${comment.getId()}" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-reply"></i> responder</a>
-                                                            </span>
-                                                                    </a> </div>
-                                                            </div>
-                                                        </div>
-                                                        <p th:text="${comment.getText_comment()}">
-                                                            It is a long established fact that a reader will be distracted by the readable content of a page.
-                                                        </p>
-                                                        <div th:each="subcomment : ${comment.getSubComments()}">
-                                                            <div class="media mt-4">
-                                                                <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" th:src="'/getImageProfesor?id='+${subcomment.getCommentAuthor().getEmail()}"  /></a>
-                                                                <div class="media-body">
-                                                                    <div class="row">
-                                                                        <div class="col-12 d-flex">
-                                                                            <h5 th:text="${subcomment.getCommentAuthor().getName()}+' '+${subcomment.getCommentAuthor().getSurname()}">Simona Disa</h5> <span th:text="'- '+${subcomment.getCreatedAt()}">- 3 hours ago</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p th:text="${subcomment.getText_comment()}">
-                                                                        letters, as opposed to using 'Content here, content here', making it look like readable English.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="comment-meta">
-
-                                                            <div class="in collapse" th:id="'comment'+${comment.getId()}"  aria-expanded="true" style="">
-                                                                <form action="/replyComment" method="post">
-                                                                    <div class="form-group">
-
-                                                                        <textarea name="text_comment" th:placeholder="'responde a '+${comment.getCommentAuthor().getName()} + ' ' + ${comment.getCommentAuthor().getSurname()}" class="form-control" rows="3"></textarea>
-                                                                    </div>
-                                                                    <input style="display: none" name="id_pub" th:value="${publication.getId()}">
-                                                                    <input style="display: none" name="id_comment_to" th:value="${comment.getId()}">
-                                                                    <button type="submit" class="btn btn-primary pull-right">Responder</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                            <div th:case="1">
+                                                <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
                                             </div>
+                                            <div th:case="2">
+                                                <i class="material-icons">local_offer</i> Verificado
+                                            </div>
+                                            <div th:case="3">
+                                                <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
+                                            </div>
+                                        </div>
+                                        <div class="stats">
+                                            <form action="/saveInBackPack" method="post">
+                                                <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
+                                                <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!--/.First slide-->
 
+                        <!--Second slide-->
+                        <div class="carousel-item">
+
+                            <div class="col-md-4" style="float:left" th:each="publicationCarousel: ${publicationsCarousel_1}">
+                                <div class="card card-chart">
+                                    <img class="card-img-top" th:src="'/getImage?id='+${publicationCarousel.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
+                                    <div class="card-header card-header-success">
+                                        <h4><a th:href="'/publication?id='+${publicationCarousel.getId()}" th:text="${publicationCarousel.getTitle()}">Libro 1</a></h4>
+                                    </div>
+                                    <div class="card-body" style="min-height: 10rem;">
+                                        <h4 class="card-title" th:text="'By -' + ${publicationCarousel.getProfessor().getName()}+' '+ ${publicationCarousel.getProfessor().getSurname()} " >Lorem Ipsum</h4>
+                                        <p class="card-category" th:text="${publicationCarousel.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="stats" th:switch="${publicationCarousel.getEstado()}">
+                                            <div th:case="0">
+                                                <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
+                                            </div>
+                                            <div th:case="1">
+                                                <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
+                                            </div>
+                                            <div th:case="2">
+                                                <i class="material-icons">local_offer</i> Verificado
+                                            </div>
+                                            <div th:case="3">
+                                                <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
+                                            </div>
+                                        </div>
+                                        <div class="stats">
+                                            <form action="/saveInBackPack" method="post">
+                                                <input style="display: none" th:value="${publicationCarousel.getId()}" name="p_id">
+                                                <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--/.Second slide-->
 
                     </div>
-                    <div class="col-md-4">
-                        <div class="card card-profile">
-                            <div class="card-avatar">
-                                <a href="#pablo">
-                                    <img class="img" th:src="'/getImageProfesor?id='+${publication.getProfessor().getEmail()}" />
-                                </a>
+                    <!--/.Slides-->
+                    <center>
+                        <a class="btn btn-success" href="#multi-item-example" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="btn btn-success" href="#multi-item-example" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </center>
+                </div>
+                <div class="row" >
+                    <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
+                        <div class="card card-chart">
+                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}"  alt="Card image cap" style="object-fit: cover; height: 300px;">
+                            <div class="card-header card-header-success">
+                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
                             </div>
                             <div class="card-body">
-                                <h6 class="card-category" th:text="${publication.getProfessor().getTitleId()}">CEO / Co-Founder</h6>
-                                <h4 class="card-title" th:text="${publication.getProfessor().getName()} +' '+${publication.getProfessor().getSurname()} ">Alec Thompson</h4>
-                                <p class="card-description" th:text="${publication.getProfessor().getDescription()}">
-                                </p>
-
-                            </div>
-
-                        </div>
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 th:text="${publication.getCategory().getDescription()}"></h4>
-                            </div>
-                            <div class="card-body">
+                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
                                 <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
                             </div>
-                        </div>
-                        <div>
-                            <form action="" method="post">
-                                <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="material-icons">favorite</i></button>
-                            </form>
-                        </div>
-
-
-                        <div th:switch="${publication.getEstado()}">
-                            <div th:case="0" >
-                                <div>
+                            <div class="card-footer">
+                                <div class="stats" th:switch="${publication.getEstado()}">
+                                    <div th:case="0">
+                                        <i class="material-icons text-warning">warning</i> <a class="warning-link" disabled>Sin verificar</a>
+                                    </div>
+                                    <div th:case="1">
+                                        <i class="material-icons text-info">update</i> <a class="info-link" disabled>Verificando</a>
+                                    </div>
+                                    <div th:case="2">
+                                        <i class="material-icons">local_offer</i> Verificado
+                                    </div>
+                                    <div th:case="3">
+                                        <i class="material-icons text-danger">warning</i> <a class="danger-link" disabled>Bloqueado</a>
+                                    </div>
+                                </div>
+                                <div class="stats">
                                     <form action="/saveToVerify" method="post">
                                         <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar para Verificar</button>
+                                        <button type="submit" class="btn btn-success"><i class="material-icons">backpack</i></button>
                                     </form>
                                 </div>
                             </div>
-                            <div th:case="1" >
-                                <div th:if="${sessionUser.getEmail() == publication.getCurator().getEmail()}">
-                                    <div>
-                                        <form action="/doVerify" method="post">
-                                            <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block">Validar Contenido</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div th:if="${sessionUser.getEmail() == publication.getCurator().getEmail()}">
-                                    <div>
-                                        <form action="/doBlock" method="post">
-                                            <input style="display: none" th:value="${publication.getId()}" name="p_id">
-                                            <button type="submit" class="btn btn-danger btn-lg btn-block">Bloquear Contenido</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div th:unless="${sessionUser.getEmail() == publication.getCurator().getEmail()}">
-                                    <div class="card card-profile">
-                                        <div class="card-body">
-                                            <p class="card-description" th:text="'Este Contenido está siendo verificado por ' + ${publication.getCurator().getName()}+ ' '+ ${publication.getCurator().getSurname()}">
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div th:case="2" >
-                                <div class="card card-profile">
-                                    <div class="card-body">
-                                        <p class="card-description" th:text="'Contenido verificado por ' + ${publication.getCurator().getName()}+ ' '+ ${publication.getCurator().getSurname()}" >
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
-
                     </div>
-
                 </div>
-
-
 
             </div>
         </div>
 
+        <footer class="footer">
+        </footer>
         <script>
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
@@ -342,7 +301,6 @@
         </script>
     </div>
 </div>
-
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.min.js"></script>
 <script src="../assets/js/core/popper.min.js"></script>
@@ -365,8 +323,8 @@
     $(document).ready(function() {
         $().ready(function() {
             $sidebar = $('.sidebar');
-            $('[data-toggle="popover"]').popover()
 
+            $('[data-toggle="popover"]').popover()
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 
             $full_page = $('.full-page');
@@ -522,13 +480,6 @@
 
             });
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        md.initDashboardPageCharts();
-
     });
 </script>
 </body>

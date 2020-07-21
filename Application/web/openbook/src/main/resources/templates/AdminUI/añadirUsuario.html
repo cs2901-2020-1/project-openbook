@@ -52,33 +52,33 @@
                         <p>Pagina Principal</p>
                     </a>
                 </li>
-                <li class="nav-item  ">
+                <li class="nav-item">
                     <a class="nav-link" href="/user">
                         <i class="material-icons">person</i>
                         <p>Perfil</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="/revisionsToDo">
-                        <i class="material-icons">assignment_late</i>
-                        <p>Por Revisar</p>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/addUserAdmin">
+                        <i class="material-icons">notifications</i>
+                        <p>Añadir usuario</p>
                     </a>
                 </li>
 
-                <li class="nav-item active">
-                    <a class="nav-link active" href="/getRevisions">
-                        <i class="material-icons">assignment_turned_in</i>
-                        <p>Mis Revisiones</p>
+          <!--      <li class="nav-item ">
+                    <a class="nav-link" href="/dashboardui">
+                        <i class="material-icons">dashboard</i>
+                        <p>Tablero</p>
                     </a>
-                </li>
+                </li> -->
 
                 <!--<li class="nav-item ">
-                  <a class="nav-link" href="/notifications">
-                    <i class="material-icons">notifications</i>
-                    <p>Notifications</p>
-                  </a>
-                </li>-->
-                <!-- <li class="nav-item active-pro ">
+                    <a class="nav-link" href="/notifications">
+                        <i class="material-icons">notifications</i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+                <li class="nav-item active-pro ">
                       <a class="nav-link" href="./upgrade.html">
                           <i class="material-icons">unarchive</i>
                           <p>Upgrade to PRO</p>
@@ -92,7 +92,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <h2 class="navbar-brand">Mochila</h2>
+                    <h2 class="navbar-brand">Añadir Usuario</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -103,7 +103,7 @@
                 <div class="collapse navbar-collapse justify-content-end">
                     <form class="navbar-form" action="/searchContent" method="post">
                         <div class="input-group no-border">
-                            <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
+                            <input type="search" name="search" id="search" class="form-control" placeholder="Search..." aria-label="Search">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -123,9 +123,10 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Revisados"
-                               data-content="En esta vista se muestran las revisiones que usted ha realizado">
+                            <a tabindex="0" class = "nav-link" href="javascript:void(0)" data-toggle="popover" data-trigger="focus" title="Guía-Publicación"
+                               data-content="Para subir un archivo, relleno  los campos disponibles. *La imágen no es necesaria para realizar la publicación">
                                 <i class="material-icons">help</i>
+
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -151,29 +152,75 @@
         </nav>
         <!-- End Navbar -->
 
-        <div class="content" >
+        <div class="content">
             <div class="container-fluid">
-                <div class="row" >
-                    <div class="col-xl-3 col-md-6 col-lg-12" th:each="publication: ${publications}">
-                        <div class="card card-chart">
-                            <img class="card-img-top" th:src="'/getImage?id='+${publication.getId()}" alt="Card image cap" style="object-fit: cover; height: 300px;">
-                            <div class="card-header card-header-success">
-                                <h4><a th:href="'/publication?id='+${publication.getId()}" th:text="${publication.getTitle()}">Libro 1</a></h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:id="'publication_alert'" th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                             th:text="${mensaje}"
+                             class="alert">
+                        </div>
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">Añadir Usuario</h4>
+                                <p class="card-category">Rellene los datos</p>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" th:text="'By -' + ${publication.getProfessor().getName()}+' '+ ${publication.getProfessor().getSurname()} " >Lorem Ipsum</h4>
-                                <p class="card-category" th:text="${publication.getDescription()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus quis lectus sollicitudin semper.</p>
+                                <form action="/do_register_curator" method="post" enctype="multipart/form-data">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Nombre</label>
+                                                <input name="name" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Apellido</label>
+                                                <input name="surname" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Email</label>
+                                                <input name="email" type="email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label >Password</label>
+                                                <input name="password" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Añadir</button>
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <footer class="footer">
+            <div class="container-fluid">
+                <nav class="float-left">
+
+                </nav>
+            </div>
         </footer>
         <script>
+              setTimeout(function() {
+              $('#publication_alert').fadeOut('fast');
+            }, 5000);
             const x = new Date().getFullYear();
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
@@ -186,6 +233,7 @@
 <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="https://unpkg.com/default-passive-events"></script>
 <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!--  Google Maps Plugin    -->
@@ -201,9 +249,9 @@
 <script>
     $(document).ready(function() {
         $().ready(function() {
-            $sidebar = $('.sidebar');
             $('[data-toggle="popover"]').popover()
-
+            $sidebar = $('.sidebar');
+            $('.mdb-select').materialSelect();
             $sidebar_img_container = $sidebar.find('.sidebar-background');
 
             $full_page = $('.full-page');
