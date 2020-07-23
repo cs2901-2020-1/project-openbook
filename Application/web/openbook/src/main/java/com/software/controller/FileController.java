@@ -95,7 +95,6 @@ public class FileController {
 
         User user  =  authService.getUser(id).get();
 
-
         String tipo = user.getTipo();
 
         switch (tipo){
