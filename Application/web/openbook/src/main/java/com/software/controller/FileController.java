@@ -196,7 +196,6 @@ public class FileController {
         // imagen
         if(image_file.isEmpty()){
             resourcePath = "src/main/resources/static/images/logo.jpg";
-
         } else {
             fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));
 

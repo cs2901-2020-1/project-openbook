@@ -757,7 +757,7 @@ public class UIController {
         if (email==null) {
             // alerta de que no está logueado
             model.addAttribute("publication", publication);
-            return "publication";
+            return "redirect:/publication";
         }
 
 
@@ -786,19 +786,7 @@ public class UIController {
             }
         }
 
-        switch (tipo){
-            case "profesor":
-                model.addAttribute("comments", comments);
-                model.addAttribute("publication", publication);
-                return "ProfesorUI/publication";
-            case "student":
-                model.addAttribute("comments", comments);
-                model.addAttribute("publication", publication);
-                return "StudentUI/publication";
-
-            default:
-                return "redirect:/error";
-        }
+        return "redirect:/publication";
 
     }
 
