@@ -195,7 +195,7 @@ public class FileController {
         // Guardar el archivo
         // imagen
         if(image_file.isEmpty()){
-            resourcePath = "src/main/resources/files/logo.jpg";
+            resourcePath = "src/main/resources/static/images/logo.jpg";
 
         } else {
             fileName = StringUtils.cleanPath(Objects.requireNonNull(image_file.getOriginalFilename()));

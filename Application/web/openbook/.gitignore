@@ -14,7 +14,6 @@ target/
 .sts4-cache
 java/resources/application.properties
 .pdf
-.jpg
 
 ### IntelliJ IDEA ###
 .idea
