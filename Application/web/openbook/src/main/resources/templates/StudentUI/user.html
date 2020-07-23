@@ -155,8 +155,8 @@
                   <p class="card-category">Estos son los datos de su cuenta</p>
                 </div>
                 <div class="card-body">
-                  <form action="/editUser" method="get">
 
+                  <form action="/editUser" method="get">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="input-group mb-3">
@@ -186,6 +186,23 @@
                             <span class="input-group-text" >Apellidos:</span>
                           </div>
                           <span th:text="${sessionUser.getSurname()}"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="wrap-input100">
+                          <span class="label-input100">Escuela :</span>
+                          <span th:text="${sessionUser.getSchool()}"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="wrap-input100">
+                          <span class="label-input100">Grado :</span>
+                          <span th:text="${sessionUser.getGrade()}"></span>
                         </div>
                       </div>
                     </div>
