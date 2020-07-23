@@ -62,7 +62,7 @@ class OpenbookApplicationTests {
         assertEquals("Student with " + email2 + "not registered", true,
                 studentOptional2.isPresent());
     }
-
+/*
     @Test
     public void professor_registration() {
         String profEmail1 = "yamilet@utec.edu.pe";
@@ -86,7 +86,8 @@ class OpenbookApplicationTests {
         assertEquals("Professor with " + profEmail2 + "not registered", true,
                 professorOptional2.isPresent());
     }
-
+*/
+    /*
     @Test
     public void curator_registration() {
         String curatorEmail1 = "curator1@utec.edu.pe";
