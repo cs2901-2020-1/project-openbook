@@ -246,7 +246,7 @@ public class AuthController {
         int totalPages = publications.getTotalPages();
         List<Integer> pages;
 
-        if(totalPages == 1) {
+        if(totalPages <= 1) {
             pages = IntStream.rangeClosed(1, 1).boxed().collect(Collectors.toList());
         } else if(totalPages == 2) {
             pages = IntStream.rangeClosed(1, 2).boxed().collect(Collectors.toList());
